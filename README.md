@@ -15,4 +15,4 @@ Lisäksi tarvitaan yksi liitostaulu, KappaleErikoistekniikka.
 
 Ohjelmaan voi kirjautua tavallisena käyttäjänä tai pääkäyttäjänä. Tavallinen käyttäjä voi selata nuotteja sekä lisätä uusia rivejä tietokantatauluihin Kappale, Säveltäjä ja Sovittaja. Pääkäyttäjä voi muokata kaikkia tietokantatauluja, lisätä ja poistaa rivejä sekä luoda ohjelmistoja (eli listauksia valituista kappaleista).
 
-[Tietokantakaavio] (kellonuotisto/kellonuotisto_kaavio.png)
+[Tietokantakaavio](kellonuotisto/kellonuotisto_kaavio.png)
