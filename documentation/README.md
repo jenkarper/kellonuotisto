@@ -1,4 +1,4 @@
-AIHEKUVAUS
+## AIHEKUVAUS
 
 Tavoitteena on luoda Käsikelloyhtye Sonukselle nuottiarkisto, josta voi hakea nuotteja kappaleen nimen, säveltäjän, sovittajan tai tyylilajin perusteella. Tietokannassa on viisi tietokantataulua:
 
@@ -11,8 +11,8 @@ Tavoitteena on luoda Käsikelloyhtye Sonukselle nuottiarkisto, josta voi hakea n
 Lisäksi tarvitaan yksi liitostaulu, KappaleErikoistekniikka.
 
 
-TOIMINNALLISUUDET
+## TOIMINNALLISUUDET
 
 Ohjelmaan voi kirjautua tavallisena käyttäjänä tai pääkäyttäjänä. Tavallinen käyttäjä voi selata nuotteja sekä lisätä uusia rivejä tietokantatauluihin Kappale, Säveltäjä ja Sovittaja. Pääkäyttäjä voi muokata kaikkia tietokantatauluja, lisätä ja poistaa rivejä sekä luoda ohjelmistoja (eli listauksia valituista kappaleista).
 
-Tietokantakaavio: https://github.com/jenkarper/kellonuotisto/blob/master/kellonuotisto_kaavio.png
+[Tietokantakaavio](kellonuotisto/kellonuotisto_kaavio.png)
