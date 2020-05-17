@@ -6,6 +6,12 @@
   </head>
 
   <body>
+
+      <ul>
+	<li><a href="{{ url_for('composers_index') }}">List composers</a></li>
+	<li><a href="{{ url_for('composers_form') }}">Add a composer</a></li>
+      </ul>
+
     {% block body %}
       <p>
         Content.

@@ -1,6 +1,10 @@
 from application import app, db
-from flask import render_template, request
+from flask import redirect, render_template, request, url_for
 from application.composers.models import Composer
+
+@app.route("/composers/", methods=["GET"])
+def composers_index():
+    return render_template("composers/list.html", composers = Composer.query.all())
 
 @app.route("/composers/new/")
 def composers_form():
@@ -13,4 +17,4 @@ def composers_create():
     db.session().add(c)
     db.session().commit()
   
-    return "If music be the food of love, sing on!"
+    return redirect(url_for("composers_index"))

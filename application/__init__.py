@@ -2,8 +2,6 @@ from flask import Flask
 app = Flask(__name__)
 
 from application import views
-
-# Tuodaan SQLAlchemy käyttöön
 from flask_sqlalchemy import SQLAlchemy
 # Käytetään tasks.db-nimistä SQLite-tietokantaa. Kolme vinoviivaa
 # kertoo, tiedosto sijaitsee tämän sovelluksen tiedostojen kanssa
