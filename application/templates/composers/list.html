@@ -8,6 +8,11 @@
     {% for composer in composers %}
     <tr>
       <td>{{ composer.name }}</td>
+      <td>
+         <form method="GET" action="{{ url_for('composers_modify') }}">
+            <input type="submit" value="Modify"/>
+         </form>
+      </td>
     </tr>
     {% endfor %}
   </table>

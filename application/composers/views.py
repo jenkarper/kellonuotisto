@@ -10,6 +10,10 @@ def composers_index():
 def composers_form():
     return render_template("composers/new.html")
 
+@app.route("/composers/modify/", methods=["GET"])
+def composers_modify():
+    return redirect(url_for("composers_index"))
+
 @app.route("/composers/", methods=["POST"])
 def composers_create():
     c = Composer(request.form.get("name"))
