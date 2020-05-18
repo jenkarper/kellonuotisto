@@ -15,4 +15,10 @@ Lisäksi tarvitaan yksi liitostaulu, KappaleErikoistekniikka.
 
 Ohjelmaan voi kirjautua tavallisena käyttäjänä tai pääkäyttäjänä. Tavallinen käyttäjä voi selata nuotteja sekä lisätä uusia rivejä tietokantatauluihin Kappale, Säveltäjä ja Sovittaja. Pääkäyttäjä voi muokata kaikkia tietokantatauluja, lisätä ja poistaa rivejä sekä luoda ohjelmistoja (eli listauksia valituista kappaleista).
 
-[Tietokantakaavio](kellonuotisto/kellonuotisto_kaavio.png)
+## LINKIT
+
+[Tietokantakaavio](https://github.com/jenkarper/kellonuotisto/blob/master/kellonuotisto_kaavio.png)
+
+[Käyttötapaukset](https://github.com/jenkarper/kellonuotisto/blob/master/documentation/userstories.md)
+
+[Sovellus Herokussa](https://kellonuotisto.herokuapp.com/)
