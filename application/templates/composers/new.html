@@ -2,7 +2,26 @@
   
 {% block body %}
 <form method="POST" action="{{ url_for('composers_create') }}">
-  <input type="text" name="name"/>
-  <input type="submit" value="Add"/>
+  <table>
+    <tr>
+      <td>
+        {{ form.name.label }}
+      </td>
+      <td>
+        {{ form.name }}
+      </td>
+      <td>
+        <ul>
+          {% for error in form.name.errors %}
+          <li>{{ error }}</li>
+          {% endfor %}
+        </ul>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="3">
+        <input type="submit" value="Add"/>
+      </td>
+    </tr>
 </form>
 {% endblock %}

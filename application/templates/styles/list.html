@@ -1,0 +1,14 @@
+{% extends "layout.html" %}
+
+{% block body %}
+  <table>
+    <tr>
+      <th>Style</th>
+    </tr>
+    {% for style in styles %}
+    <tr>
+      <td>{{ style.name }}</td>
+    </tr>
+    {% endfor %}
+  </table>
+{% endblock %}

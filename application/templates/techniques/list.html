@@ -1,0 +1,14 @@
+{% extends "layout.html" %}
+
+{% block body %}
+  <table>
+    <tr>
+      <th>Technique</th>
+    </tr>
+    {% for technique in techniques %}
+    <tr>
+      <td>{{ technique.name }}</td>
+    </tr>
+    {% endfor %}
+  </table>
+{% endblock %}

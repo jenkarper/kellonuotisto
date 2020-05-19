@@ -6,16 +6,29 @@
   </head>
 
   <body>
-
+      {% if current_user.is_authenticated %}
+      <p>
+	Kirjautunut nimellä {{ current_user.name }} <a href="{{ url_for('auth_logout') }}">Kirjaudu ulos</a>
+      </p>
+      {% else %}
+      <a href="{{ url_for('auth_login') }}">Kirjaudu</a>
+      {% endif %}
+      
       <ul>
 	<li><a href="{{ url_for('composers_index') }}">List composers</a></li>
+        <li><a href="{{ url_for('arrangers_index') }}">List arrangers</a></li>
+        <li><a href="{{ url_for('styles_index') }}">List styles</a></li>
+        <li><a href="{{ url_for('techniques_index') }}">List techniques</a></li>
 	<li><a href="{{ url_for('composers_form') }}">Add a composer</a></li>
+        <li><a href="{{ url_for('arrangers_form') }}">Add an arranger</a></li>
+        <li><a href="{{ url_for('styles_form') }}">Add a style</a></li>
+        <li><a href="{{ url_for('techniques_form') }}">Add a technique</a></li>
       </ul>
-
-    {% block body %}
+      
+      {% block body %}
       <p>
-        Content.
+	Content.
       </p>
-    {% endblock %}
-  </body>
+      {% endblock %}
+    </body>
 </html>

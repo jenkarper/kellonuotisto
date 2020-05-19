@@ -143,3 +143,4 @@ dmypy.json
 # Cython debug symbols
 cython_debug/
 >>>>>>> f6ff09e97c45e07b2711db36b44315212071799e
+sheetmusic.db
