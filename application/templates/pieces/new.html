@@ -11,16 +11,37 @@
 	  {{ form.name }}
 	</td>
         <td>
+	  <ul>
+	    {% for error in form.name.errors %}
+	    <li>{{ error }}</li>
+	    {% endfor %}
+	  </ul>
+	</td>
+        <td>
 	  {{ form.octaves.label }}
 	</td>
 	<td>
 	  {{ form.octaves }}
 	</td>
         <td>
+	  <ul>
+	    {% for error in form.octaves.errors %}
+	    <li>{{ error }}</li>
+	    {% endfor %}
+	  </ul>
+	</td>
+        <td>
 	  {{ form.length.label }}
 	</td>
 	<td>
 	  {{ form.length }}
+	</td>
+        <td>
+	  <ul>
+	    {% for error in form.length.errors %}
+	    <li>{{ error }}</li>
+	    {% endfor %}
+	  </ul>
 	</td>
       </tr>
       <tr>

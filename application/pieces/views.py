@@ -16,6 +16,9 @@ def pieces_form():
 def pieces_create():
     form = PieceForm(request.form)
 
+    if not form.validate():
+        return render_template("pieces/new.html", form = form)
+
     name = form.name.data
     octaves = form.octaves.data
     length = form.length.data

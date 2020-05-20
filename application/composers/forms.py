@@ -2,7 +2,7 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, validators
 
 class ComposerForm(FlaskForm):
-    name = StringField("Composer name", [validators.Length(min=5)])
+    name = StringField("Composer name", [validators.required(), validators.length(min=5), validators.length(max=50)])
 
     class Meta:
         csrf = False

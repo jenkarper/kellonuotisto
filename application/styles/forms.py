@@ -2,7 +2,7 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, validators
 
 class StyleForm(FlaskForm):
-    name = StringField("Style name", [validators.Length(min=5)])
+    name = StringField("Style name", [validators.required(), validators.length(min=5), validators.length(max=20)])
  
     class Meta:
         csrf = False
