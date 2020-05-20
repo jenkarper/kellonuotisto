@@ -1,0 +1,14 @@
+{% extends "layout.html" %}
+
+{% block body %}
+  <table>
+    <tr>
+      <th>Arranger</th>
+    </tr>
+    {% for arranger in arrangers %}
+    <tr>
+      <td>{{ arranger.name }}</td>
+    </tr>
+    {% endfor %}
+  </table>
+{% endblock %}

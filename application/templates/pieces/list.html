@@ -1,0 +1,19 @@
+{% extends "layout.html" %}
+
+{% block body %}
+  <table>
+    <tr>
+      <th>Name</th>
+      <th>Octaves</th>
+      <th>Length (in minutes)</th>
+    </tr>
+    {% for piece in pieces %}
+    <tr>
+      <td>{{ piece.name }}</td>
+      <td>{{ piece.octaves }}</td>
+      <td>{{ piece.length }}</td>
+    </tr>
+    {% endfor %}
+  </table>
+{% endblock %}
+
