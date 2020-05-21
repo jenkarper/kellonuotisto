@@ -10,12 +10,12 @@ def techniques_index():
     return render_template("techniques/list.html", techniques = Technique.query.all())
 
 @app.route("/techniques/new/")
-@login_required
+#@login_required
 def techniques_form():
     return render_template("techniques/new.html", form = TechniqueForm())
 
 @app.route("/techniques/", methods=["POST"])
-@login_required
+#@login_required
 def techniques_create():
     form = TechniqueForm(request.form)
 

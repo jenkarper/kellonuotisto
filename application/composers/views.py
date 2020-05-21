@@ -10,17 +10,17 @@ def composers_index():
     return render_template("composers/list.html", composers = Composer.query.all())
 
 @app.route("/composers/new/")
-@login_required
+#@login_required
 def composers_form():
     return render_template("composers/new.html", form = ComposerForm())
 
 @app.route("/composers/modify/", methods=["GET"])
-@login_required
+#@login_required
 def composers_modify():
     return redirect(url_for("composers_index"))
 
 @app.route("/composers/", methods=["POST"])
-@login_required
+#@login_required
 def composers_create():
     form = ComposerForm(request.form)
 

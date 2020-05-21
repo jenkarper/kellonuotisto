@@ -10,12 +10,12 @@ def arrangers_index():
     return render_template("arrangers/list.html", arrangers = Arranger.query.all())
 
 @app.route("/arrangers/new/")
-@login_required
+#@login_required
 def arrangers_form():
     return render_template("arrangers/new.html", form = ArrangerForm())
 
 @app.route("/arrangers/", methods=["POST"])
-@login_required
+#@login_required
 def arrangers_create():
     form = ArrangerForm(request.form)
 

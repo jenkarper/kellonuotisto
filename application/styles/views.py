@@ -10,12 +10,12 @@ def styles_index():
     return render_template("styles/list.html", styles = Style.query.all())
 
 @app.route("/styles/new/")
-@login_required
+#@login_required
 def styles_form():
     return render_template("styles/new.html", form = StyleForm())
 
 @app.route("/styles/", methods=["POST"])
-@login_required
+#@login_required
 def styles_create():
     form = StyleForm(request.form)
 
