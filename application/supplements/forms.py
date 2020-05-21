@@ -1,0 +1,33 @@
+from flask_wtf import FlaskForm
+from wtforms import StringField, validators
+
+
+class ArrangerForm(FlaskForm):
+    name = StringField("Arranger name", [validators.required(), validators.length(min=5, max=50)])
+ 
+    class Meta:
+        csrf = False
+
+
+class ComposerForm(FlaskForm):
+    name = StringField("Composer name", [validators.required(), validators.length(min=5, max=50)])
+
+    class Meta:
+        csrf = False
+
+
+class StyleForm(FlaskForm):
+    name = StringField("Style name", [validators.required(), validators.length(min=5, max=20)])
+ 
+    class Meta:
+        csrf = False
+
+
+class TechniqueForm(FlaskForm):
+    name = StringField("Technique name", [validators.required(), validators.length(min=3, max=20)])
+ 
+    class Meta:
+        csrf = False
+
+
+

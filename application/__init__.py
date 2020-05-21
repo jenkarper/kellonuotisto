@@ -5,10 +5,10 @@ app = Flask(__name__)
 from application import views
 from flask_sqlalchemy import SQLAlchemy
 
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///sheetmusic.db" # tietokannan nimi (/// = tiedosto sijaitsee tämän sovelluksen tiedostojen kanssa samassa paikassa
+app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///sheetmusic.db"
 app.config["SQLALCHEMY_ECHO"] = True # SQLAlchemy tulostaa kaikki SQL-kyselyt
 
-db = SQLAlchemy(app) # tietokannan käsittelyyn käytettävä db-olio
+db = SQLAlchemy(app)
 
 # Oman sovelluksen toiminnallisuudet
 from application import views
@@ -16,17 +16,8 @@ from application import views
 from application.pieces import models
 from application.pieces import views
 
-from application.composers import models
-from application.composers import views
-
-from application.arrangers import models
-from application.arrangers import views
-
-from application.styles import models
-from application.styles import views
-
-from application.techniques import models
-from application.techniques import views
+from application.supplements import models
+from application.supplements import views
 
 from application.auth import models
 from application.auth import views
