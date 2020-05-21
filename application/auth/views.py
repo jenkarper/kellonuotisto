@@ -3,17 +3,22 @@ from flask_login import login_user, logout_user
 
 from application import app, db
 from application.auth.models import User
-from application.auth.forms import LoginForm
+from application.auth.forms import LoginForm, RegistrationForm
 
 @app.route("/auth/register/")
 def auth_form():
-    return render_template("auth/register.html")
+    return render_template("auth/register.html", form = RegistrationForm())
 
 @app.route("/auth/", methods=["POST"])
 def auth_create():
-    name = request.form.get("name")
-    username = request.form.get("username")
-    password = request.form.get("password")
+    form = RegistrationForm(request.form)
+
+    if not form.validate():
+        return render_template("auth/register.html", form = form)
+
+    name = form.name.data
+    username = form.username.data
+    password = form.password.data
 
     u = User(name, username, password)
 
@@ -30,7 +35,7 @@ def auth_login():
     form = LoginForm(request.form)
     # mahdolliset validoinnit
 
-    user = User.query.filter_by(username=form.username.data, password=form.password.data).first()
+    user = User.query.filter_by(username=form.username.data, password_hash=form.password.data).first()
     if not user:
         return render_template("auth/loginform.html", form = form,
                                error = "No such username or password")

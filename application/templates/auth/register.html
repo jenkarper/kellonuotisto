@@ -3,16 +3,66 @@
   
 {% block body %}
 <form method="POST" action="{{ url_for('auth_create') }}">
-  <input type="text" name="name"/>
-  <label for="name">Name:</label>
-
-  <input type="text" name="username"/>
-  <label for="username">Username:</label>
-
-  <input type="password" name="password"/>
-  <label for="password">Password:</label>
-
-  <input type="submit" value="Register"/>
-</form>
+    <table>
+      <tr>
+	<td>
+	  {{ form.name.label }}
+	</td>
+	<td>
+	  {{ form.name }}
+	</td>
+        <td>
+	  <ul>
+	    {% for error in form.name.errors %}
+	    <span style="color: red;"><li>{{ error }}</li></span>
+	    {% endfor %}
+	  </ul>
+	</td>
+        <td>
+	  {{ form.username.label }}
+	</td>
+	<td>
+	  {{ form.username }}
+	</td>
+        <td>
+	  <ul>
+	    {% for error in form.username.errors %}
+	    <span style="color: red;"><li>{{ error }}</li></span>
+	    {% endfor %}
+	  </ul>
+	</td>
+        <td>
+	  {{ form.password.label }}
+	</td>
+	<td>
+	  {{ form.password }}
+	</td>
+        <td>
+	  <ul>
+	    {% for error in form.password.errors %}
+	    <span style="color: red;"><li>{{ error }}</li></span>
+	    {% endfor %}
+	  </ul>
+	</td>
+        <td>
+	  {{ form.password2.label }}
+	</td>
+	<td>
+	  {{ form.password2 }}
+	</td>
+        <td>
+	  <ul>
+	    {% for error in form.password2.errors %}
+	    <span style="color: red;"><li>{{ error }}</li></span>
+	    {% endfor %}
+	  </ul>
+	</td>
+      </tr>
+      <tr>
+	<td colspan="4">
+	  <input type="submit" value="Register"/>
+	</td>
+      </tr>
+  </form>
 {% endblock %}
 
