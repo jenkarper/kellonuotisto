@@ -5,6 +5,23 @@ from application import app, db
 from application.auth.models import User
 from application.auth.forms import LoginForm
 
+@app.route("/auth/register/")
+def auth_form():
+    return render_template("auth/register.html")
+
+@app.route("/auth/", methods=["POST"])
+def auth_create():
+    name = request.form.get("name")
+    username = request.form.get("username")
+    password = request.form.get("password")
+
+    u = User(name, username, password)
+
+    db.session().add(u)
+    db.session().commit()
+  
+    return redirect(url_for("auth_login"))
+
 @app.route("/auth/login", methods = ["GET", "POST"])
 def auth_login():
     if request.method == "GET":
