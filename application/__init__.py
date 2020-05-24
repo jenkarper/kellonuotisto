@@ -4,6 +4,8 @@ app = Flask(__name__)
 # Tietokanta
 from application import views
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy.engine import Engine
+from sqlalchemy import event
 
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///sheetmusic.db"
 app.config["SQLALCHEMY_ECHO"] = True # SQLAlchemy tulostaa kaikki SQL-kyselyt
@@ -38,6 +40,12 @@ login_manager.login_message = "Please login to use this functionality."
 def load_user(user_id):
     return User.query.get(user_id)
 
+# Viiteavainten tarkistus
+@event.listens_for(Engine, "connect")
+def set_sqlite_pragma(dbapi_connection, connection_record):
+    cursor = dbapi_connection.cursor()
+    cursor.execute("PRAGMA foreign_keys=ON")
+    cursor.close()
 
 # Tietokantataulujen luominen tarvittaessa
 db.create_all()
