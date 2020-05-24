@@ -1,4 +1,5 @@
 from flask import redirect, render_template, request, url_for
+from flask_login import login_required
 
 from application import app, db
 from application.pieces.models import Piece
@@ -9,10 +10,12 @@ def pieces_index():
     return render_template("pieces/list.html", pieces = Piece.query.all())
 
 @app.route("/pieces/new/")
+@login_required
 def pieces_form():
     return render_template("pieces/new.html", form = PieceForm())
 
 @app.route("/pieces/", methods=["POST"])
+@login_required
 def pieces_create():
     form = PieceForm(request.form)
 
