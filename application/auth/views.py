@@ -19,8 +19,9 @@ def auth_create():
     name = form.name.data
     username = form.username.data
     password = form.password.data
+    admin = form.admin.data
 
-    u = User(name, username, password)
+    u = User(name, username, password, admin)
 
     db.session().add(u)
     db.session().commit()

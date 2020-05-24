@@ -13,11 +13,13 @@ class User(db.Model):
     name = db.Column(db.String(144), nullable=False)
     username = db.Column(db.String(144), nullable=False)
     password_hash = db.Column(db.String(144), nullable=False)
+    admin = db.Column(db.Boolean, nullable=False)
 
-    def __init__(self, name, username, password_hash):
+    def __init__(self, name, username, password_hash, admin):
         self.name = name
         self.username = username
         self.password_hash = password_hash
+        self.admin = admin
   
     def get_id(self):
         return self.id
@@ -36,3 +38,6 @@ class User(db.Model):
     
     def check_password(self, password):
         return check_password_hash(self.password_hash, password)
+
+    def is_admin(self):
+        return self.admin
