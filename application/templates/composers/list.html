@@ -8,7 +8,9 @@
       {% for composer in composers %}
       <tr>
          <td>{{ composer.name }}</td>
-         <!--<td><a href="{{ url_for('composers_modify', composer_id=composer.id) }}">Muokkaa</a></td>-->
+         {% if current_user.admin %}
+         <td><a href="{{ url_for('composers_modify', composer_id=composer.id) }}">Muokkaa</a></td>
+         {% endif %}
       </tr>
       {% endfor %}
    </table>

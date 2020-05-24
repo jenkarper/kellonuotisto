@@ -30,6 +30,24 @@ def arrangers_create():
   
     return redirect(url_for("arrangers_index"))
 
+@app.route("/arrangers/modify/<arranger_id>", methods=["GET", "POST"])
+@login_required
+def arrangers_modify(arranger_id):
+
+    if request.method == "GET":
+        return render_template("arrangers/modify.html", form = ModifyForm(), arranger_id=arranger_id)
+
+    form = ModifyForm(request.form)
+
+    if not form.validate():
+        return render_template("arrangers/modify.html", form = form, arranger_id=arranger_id)
+
+    a = Arranger.query.get(arranger_id)
+    a.name = form.newname.data
+    db.session().commit()
+
+    return redirect(url_for("arrangers_index"))
+
 # COMPOSERS
 @app.route("/composers/", methods=["GET"])
 def composers_index():
@@ -45,13 +63,12 @@ def composers_form():
 def composers_modify(composer_id):
 
     if request.method == "GET":
-        print(composer_id)
         return render_template("composers/modify.html", form = ModifyForm(), composer_id=composer_id)
 
     form = ModifyForm(request.form)
 
     if not form.validate():
-        return render_template("composers/modify.html", form = form)
+        return render_template("composers/modify.html", form = form, composer_id=composer_id)
 
     c = Composer.query.get(composer_id)
     c.name = form.newname.data
@@ -99,6 +116,24 @@ def styles_create():
   
     return redirect(url_for("styles_index"))
 
+@app.route("/styles/modify/<style_id>", methods=["GET", "POST"])
+@login_required
+def styles_modify(style_id):
+
+    if request.method == "GET":
+        return render_template("styles/modify.html", form = ModifyForm(), style_id=style_id)
+
+    form = ModifyForm(request.form)
+
+    if not form.validate():
+        return render_template("styles/modify.html", form = form, style_id=style_id)
+
+    s = Style.query.get(style_id)
+    s.name = form.newname.data
+    db.session().commit()
+
+    return redirect(url_for("styles_index"))
+
 # TECHNIQUES
 @app.route("/techniques", methods=["GET"])
 def techniques_index():
@@ -122,4 +157,22 @@ def techniques_create():
     db.session().add(t)
     db.session().commit()
   
+    return redirect(url_for("techniques_index"))
+
+@app.route("/techniques/modify/<technique_id>", methods=["GET", "POST"])
+@login_required
+def techniques_modify(technique_id):
+
+    if request.method == "GET":
+        return render_template("techniques/modify.html", form = ModifyForm(), technique_id=technique_id)
+
+    form = ModifyForm(request.form)
+
+    if not form.validate():
+        return render_template("techniques/modify.html", form = form, technique_id=technique_id)
+
+    t = Technique.query.get(technique_id)
+    t.name = form.newname.data
+    db.session().commit()
+
     return redirect(url_for("techniques_index"))

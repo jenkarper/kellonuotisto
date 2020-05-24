@@ -8,6 +8,9 @@
     {% for technique in techniques %}
     <tr>
       <td>{{ technique.name }}</td>
+      {% if current_user.admin %}
+      <td><a href="{{ url_for('techniques_modify', technique_id=technique.id) }}">Muokkaa</a></td>
+      {% endif %}
     </tr>
     {% endfor %}
   </table>

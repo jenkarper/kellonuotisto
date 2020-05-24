@@ -11,8 +11,11 @@ class Piece(db.Model):
     length = db.Column(db.Integer, nullable=False)
     last_concert = db.Column(db.String(150), nullable=True)
 
-    def __init__(self, name, octaves, length):
+    #composer = db.Column(db.Integer, db.ForeignKey('composer.id'), nullable=False)
+
+    def __init__(self, name, octaves, length): #, composer_id):
         self.name = name
         self.octaves = octaves
         self.length = length
+        #self.composer_id = composer_id
 

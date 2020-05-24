@@ -5,6 +5,8 @@ from application import app, db
 from application.pieces.models import Piece
 from application.pieces.forms import PieceForm
 
+from application.supplements.models import Composer
+
 @app.route("/pieces", methods=["GET"])
 def pieces_index():
     return render_template("pieces/list.html", pieces = Piece.query.all())
