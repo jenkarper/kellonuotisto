@@ -3,7 +3,7 @@ from flask_login import login_required
 
 from application import app, db
 from application.supplements.models import Arranger, Composer, Style, Technique
-from application.supplements.forms import ArrangerForm, ComposerForm, DeleteForm, EditForm, StyleForm, TechniqueForm
+from application.supplements.forms import ArrangerForm, ComposerForm, EditForm, StyleForm, TechniqueForm
 
 # ARRANGERS
 @app.route("/arrangers", methods=["GET"])
@@ -76,6 +76,21 @@ def composers_edit(composer_id):
     db.session().commit()
 
     return redirect(url_for("composers_index"))
+
+@app.route("/composers/delete/<composer_id>", methods=["GET", "POST"])
+@login_required
+def composers_delete(composer_id):
+
+    if request.method == "GET":
+        return render_template("composers/delete.html", form = DeleteForm(), composer_id=composer_id)
+
+    form = DeleteForm(request.form)
+
+    c = Composer.query.get(composer_id)
+    db.session().delete(c)
+    db.session().commit()
+
+    return "Mission accomplished!"
 
 @app.route("/composers/", methods=["POST"])
 @login_required

@@ -3,13 +3,43 @@ from flask_login import login_required
 
 from application import app, db
 from application.pieces.models import Piece
-from application.pieces.forms import PieceForm
+from application.pieces.forms import EditForm, PieceForm, SearchForm
 
-from application.supplements.models import Composer
+from application.supplements.models import Composer, Arranger, Style
 
 @app.route("/pieces", methods=["GET"])
 def pieces_index():
     return render_template("pieces/list.html", pieces = Piece.query.all())
+
+@app.route("/pieces/<piece_id>/")
+def pieces_show(piece_id):
+    return render_template("pieces/show.html", piece = Piece.query.get(piece_id))
+
+@app.route("/pieces/edit/<piece_id>", methods=["GET", "POST"])
+def pieces_edit(piece_id):
+
+    if request.method == "GET":
+        return render_template("pieces/edit.html", form = EditForm(), piece_id=piece_id)
+
+    form = EditForm(request.form)
+
+    if not form.validate():
+        return render_template("pieces/edit.html", form = form, piece_id=piece_id)
+
+    p = Piece.query.get(piece_id)
+    
+    if form.newname.data is not None:
+        p.name = newname
+
+    if form.newoctaves.data is not None:
+        p.octaves = newoctaves
+
+    if form.newlength.data is not None:
+        p.length = newlength
+    
+    db.session().commit()
+
+    return redirect(url_for("arrangers_index"))
 
 @app.route("/pieces/new/")
 @login_required
