@@ -9,7 +9,7 @@
     <tr>
       <td>{{ arranger.name }}</td>
       {% if current_user.admin %}
-      <td><a href="{{ url_for('arrangers_modify', arranger_id=arranger.id) }}">Muokkaa</a></td>
+      <td><a href="{{ url_for('arrangers_edit', arranger_id=arranger.id) }}">Muokkaa</a></td>
       {% endif %}
     </tr>
     {% endfor %}

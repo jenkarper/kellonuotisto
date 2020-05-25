@@ -1,17 +1,15 @@
 {% extends "layout.html" %}
 
 {% block body %}
-  <table>
-    <tr>
-      <th>Name</th>
-      <th>Octaves</th>
-      <th>Length (in minutes)</th>
-    </tr>
-    {% for piece in pieces %}
-    <tr>
-      <td>{{ piece.name }}</td>
-      <td>{{ piece.octaves }}</td>
-      <td>{{ piece.length }}</td>
+  
+   <table>
+      <tr>
+         <th>Name</th>
+      </tr>
+      {% for piece in pieces %}
+      <tr>
+         <td>{{ piece.name }}</td>
+         <td><a href="{{ url_for('pieces_show', piece_id=piece.id) }}">Näytä tiedot</a></td>
     </tr>
     {% endfor %}
   </table>

@@ -3,7 +3,7 @@ from flask_login import login_required
 
 from application import app, db
 from application.supplements.models import Arranger, Composer, Style, Technique
-from application.supplements.forms import ArrangerForm, ComposerForm, StyleForm, TechniqueForm, ModifyForm
+from application.supplements.forms import ArrangerForm, ComposerForm, DeleteForm, EditForm, StyleForm, TechniqueForm
 
 # ARRANGERS
 @app.route("/arrangers", methods=["GET"])
@@ -30,17 +30,17 @@ def arrangers_create():
   
     return redirect(url_for("arrangers_index"))
 
-@app.route("/arrangers/modify/<arranger_id>", methods=["GET", "POST"])
+@app.route("/arrangers/edit/<arranger_id>", methods=["GET", "POST"])
 @login_required
-def arrangers_modify(arranger_id):
+def arrangers_edit(arranger_id):
 
     if request.method == "GET":
-        return render_template("arrangers/modify.html", form = ModifyForm(), arranger_id=arranger_id)
+        return render_template("arrangers/edit.html", form = EditForm(), arranger_id=arranger_id)
 
-    form = ModifyForm(request.form)
+    form = EditForm(request.form)
 
     if not form.validate():
-        return render_template("arrangers/modify.html", form = form, arranger_id=arranger_id)
+        return render_template("arrangers/edit.html", form = form, arranger_id=arranger_id)
 
     a = Arranger.query.get(arranger_id)
     a.name = form.newname.data
@@ -51,24 +51,25 @@ def arrangers_modify(arranger_id):
 # COMPOSERS
 @app.route("/composers/", methods=["GET"])
 def composers_index():
-    return render_template("composers/list.html", composers = Composer.query.all(), form = ModifyForm)
+    return render_template("composers/list.html", composers = Composer.query.all(), form = EditForm)
 
 @app.route("/composers/new/")
 @login_required
 def composers_form():
     return render_template("composers/new.html", form = ComposerForm())
 
-@app.route("/composers/modify/<composer_id>", methods=["GET", "POST"])
+@app.route("/composers/edit/<composer_id>", methods=["GET", "POST"])
 @login_required
-def composers_modify(composer_id):
+def composers_edit(composer_id):
 
     if request.method == "GET":
-        return render_template("composers/modify.html", form = ModifyForm(), composer_id=composer_id)
+        name = Composer.query.get(composer_id)
+        return render_template("composers/edit.html", form = EditForm(), composer_id=composer_id, name=name)
 
-    form = ModifyForm(request.form)
+    form = EditForm(request.form)
 
     if not form.validate():
-        return render_template("composers/modify.html", form = form, composer_id=composer_id)
+        return render_template("composers/edit.html", form = form, composer_id=composer_id)
 
     c = Composer.query.get(composer_id)
     c.name = form.newname.data
@@ -116,17 +117,17 @@ def styles_create():
   
     return redirect(url_for("styles_index"))
 
-@app.route("/styles/modify/<style_id>", methods=["GET", "POST"])
+@app.route("/styles/edit/<style_id>", methods=["GET", "POST"])
 @login_required
-def styles_modify(style_id):
+def styles_edit(style_id):
 
     if request.method == "GET":
-        return render_template("styles/modify.html", form = ModifyForm(), style_id=style_id)
+        return render_template("styles/edit.html", form = EditForm(), style_id=style_id)
 
-    form = ModifyForm(request.form)
+    form = EditForm(request.form)
 
     if not form.validate():
-        return render_template("styles/modify.html", form = form, style_id=style_id)
+        return render_template("styles/edit.html", form = form, style_id=style_id)
 
     s = Style.query.get(style_id)
     s.name = form.newname.data
@@ -159,17 +160,17 @@ def techniques_create():
   
     return redirect(url_for("techniques_index"))
 
-@app.route("/techniques/modify/<technique_id>", methods=["GET", "POST"])
+@app.route("/techniques/edit/<technique_id>", methods=["GET", "POST"])
 @login_required
-def techniques_modify(technique_id):
+def techniques_edit(technique_id):
 
     if request.method == "GET":
-        return render_template("techniques/modify.html", form = ModifyForm(), technique_id=technique_id)
+        return render_template("techniques/edit.html", form = EditForm(), technique_id=technique_id)
 
-    form = ModifyForm(request.form)
+    form = EditForm(request.form)
 
     if not form.validate():
-        return render_template("techniques/modify.html", form = form, technique_id=technique_id)
+        return render_template("techniques/edit.html", form = form, technique_id=technique_id)
 
     t = Technique.query.get(technique_id)
     t.name = form.newname.data

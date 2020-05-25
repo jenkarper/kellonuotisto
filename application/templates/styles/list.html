@@ -9,7 +9,7 @@
     <tr>
       <td>{{ style.name }}</td>
       {% if current_user.admin %}
-      <td><a href="{{ url_for('styles_modify', style_id=style.id) }}">Muokkaa</a></td>
+      <td><a href="{{ url_for('styles_edit', style_id=style.id) }}">Muokkaa</a></td>
       {% endif %}
     </tr>
     {% endfor %}

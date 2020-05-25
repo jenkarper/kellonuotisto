@@ -2,7 +2,7 @@
   
 {% block body %}
 
-<form method="POST" action="{{ url_for('techniques_modify', technique_id=technique_id) }}">
+<form method="POST" action="{{ url_for('techniques_edit', technique_id=technique_id) }}">
    <table>
       <tr>
          <td>{{ form.newname.label }}</td>
