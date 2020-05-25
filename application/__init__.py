@@ -7,8 +7,13 @@ from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.engine import Engine
 from sqlalchemy import event
 
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///sheetmusic.db"
-app.config["SQLALCHEMY_ECHO"] = True # SQLAlchemy tulostaa kaikki SQL-kyselyt
+import os
+
+if os.environ.get("HEROKU"):
+    app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get("DATABASE_URL")
+else:
+    app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///sheetmusic.db"
+    app.config["SQLALCHEMY_ECHO"] = True # SQLAlchemy tulostaa kaikki SQL-kyselyt
 
 db = SQLAlchemy(app)
 
@@ -41,12 +46,14 @@ def load_user(user_id):
     return User.query.get(user_id)
 
 # Viiteavainten tarkistus
-@event.listens_for(Engine, "connect")
-def set_sqlite_pragma(dbapi_connection, connection_record):
-    cursor = dbapi_connection.cursor()
-    cursor.execute("PRAGMA foreign_keys=ON")
-    cursor.close()
+#@event.listens_for(Engine, "connect")
+#def set_sqlite_pragma(dbapi_connection, connection_record):
+#    cursor = dbapi_connection.cursor()
+#    cursor.execute("PRAGMA foreign_keys=ON")
+#    cursor.close()
 
 # Tietokantataulujen luominen tarvittaessa
-db.create_all()
-
+try:
+    db.create_all()
+except:
+    pass
