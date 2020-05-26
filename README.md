@@ -2,18 +2,18 @@
 
 Tavoitteena on luoda Käsikelloyhtye Sonukselle nuottiarkisto, josta voi hakea nuotteja kappaleen nimen, säveltäjän, sovittajan tai tyylilajin perusteella. Tietokannassa on viisi tietokantataulua:
 
-- Kappale
-- Säveltäjä
-- Sovittaja
-- Tyylilaji
-- Erikoistekniikka
+- Piece
+- Composer
+- Arranger
+- Style
+- Technique
 
-Lisäksi tarvitaan yksi liitostaulu, KappaleErikoistekniikka.
+Lisäksi tarvitaan yksi liitostaulu, PieceTechnique.
 
 
 ## TOIMINNALLISUUDET
 
-Ohjelmaan voi kirjautua tavallisena käyttäjänä tai pääkäyttäjänä. Tavallinen käyttäjä voi selata nuotteja sekä lisätä uusia rivejä tietokantatauluihin Kappale, Säveltäjä ja Sovittaja. Pääkäyttäjä voi muokata kaikkia tietokantatauluja, lisätä ja poistaa rivejä sekä luoda ohjelmistoja (eli listauksia valituista kappaleista).
+Ohjelmaan voi kirjautua tavallisena käyttäjänä tai pääkäyttäjänä. Tavallinen käyttäjä voi selata nuotteja sekä lisätä uusia rivejä tietokantatauluihin. Pääkäyttäjä voi muokata kaikkia tietokantatauluja, lisätä ja poistaa rivejä sekä luoda ohjelmistoja (eli listauksia valituista kappaleista). Pääkäyttäjä voi myös luoda uusia käyttäjiä.
 
 ## LINKIT
 
@@ -21,4 +21,4 @@ Ohjelmaan voi kirjautua tavallisena käyttäjänä tai pääkäyttäjänä. Tava
 
 [Käyttötapaukset](https://github.com/jenkarper/kellonuotisto/blob/master/documentation/userstories.md)
 
-[Sovellus Herokussa](https://kellonuotisto.herokuapp.com/)
+[Sovellus Herokussa](https://kellonuotisto.herokuapp.com/) (Sovelluksen testaamiseen tarvitset testitunnukset. Username: 'kellotar', password: 'salainen'.)
