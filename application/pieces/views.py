@@ -9,7 +9,8 @@ from application.supplements.models import Composer, Arranger, Style, Technique
 
 @app.route("/pieces", methods=["GET"])
 def pieces_index():
-    return render_template("pieces/list.html", pieces = Piece.query.all())
+    pieces = db.session.query(Piece).order_by(Piece.name)
+    return render_template("pieces/list.html", pieces = pieces)
 
 @app.route("/pieces/<piece_id>/")
 def pieces_show(piece_id):
