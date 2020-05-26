@@ -1,13 +1,9 @@
 from application import db
+from application.models import Base
 from application.supplements.models import piece_technique, Technique
 
-class Piece(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    date_created = db.Column(db.DateTime, default=db.func.current_timestamp())
-    date_modified = db.Column(db.DateTime, default=db.func.current_timestamp(),
-    onupdate=db.func.current_timestamp())
+class Piece(Base):
 
-    name = db.Column(db.String(50), nullable=False)
     octaves = db.Column(db.String(150), nullable=False)
     length = db.Column(db.Integer, nullable=False)
 
@@ -24,4 +20,3 @@ class Piece(db.Model):
         self.composer_id = composer_id
         self.arranger_id = arranger_id
         self.style_id = style_id
-
