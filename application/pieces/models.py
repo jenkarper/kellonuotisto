@@ -9,7 +9,6 @@ class Piece(db.Model):
     name = db.Column(db.String(50), nullable=False)
     octaves = db.Column(db.String(150), nullable=False)
     length = db.Column(db.Integer, nullable=False)
-    last_concert = db.Column(db.String(150), nullable=True)
 
     composer_id = db.Column(db.Integer, db.ForeignKey('composer.id'), nullable=False)
     arranger_id = db.Column(db.Integer, db.ForeignKey('arranger.id'), nullable=False)
