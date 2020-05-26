@@ -17,7 +17,7 @@ Ohjelmaan voi kirjautua tavallisena käyttäjänä tai pääkäyttäjänä. Tava
 
 ## LINKIT
 
-[Tietokantakaavio](https://github.com/jenkarper/kellonuotisto/blob/master/kellonuotisto_kaavio.png)
+[Tietokantakaavio](https://github.com/jenkarper/kellonuotisto/blob/master/documentation/kellonuotisto_kaavio_updated.jpg)
 
 [Käyttötapaukset](https://github.com/jenkarper/kellonuotisto/blob/master/documentation/userstories.md)
 
