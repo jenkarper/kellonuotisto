@@ -33,9 +33,7 @@ class SearchForm(FlaskForm):
 
 # rivin muokkaus (kesken)
 class EditForm(FlaskForm):
-    newname = StringField("Piece name", [validators.required(), validators.length(min=5, max=50)])
-    newoctaves = StringField("Used octaves", [validators.required(), validators.length(min=1, max=20)])
-    newlength = IntegerField("Length (in minutes)")
+    technique = StringField("Special technique", [validators.required(), validators.length(min=3, max=50)])
 
 class DeleteForm(FlaskForm):
     delete = BooleanField("Delete row")

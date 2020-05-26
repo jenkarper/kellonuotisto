@@ -1,23 +1,28 @@
 {% extends "layout.html" %}
 
 {% block body %}
-   <table>
-      <tr>
-         <th>Name</th>
-         <th>Composer</th>
-         <th>Arranger</th>
-         <th>Style</th>
-         <th>Octaves</th>
-         <th>Length (minutes)</th>
-      </tr>
-      <tr>
-         <td>{{ piece.name }}</td>
-         <td>{{ piece.composer.name }}</td>
-         <td>{{ piece.arranger.name }}</td>
-         <td>{{ piece.style.name }}</td>
-         <td>{{ piece.octaves }}</td>
-         <td>{{ piece.length }}</td>
-   </table>
+<table>
+   <tr>
+      <th>Name</th>
+      <th>Composer</th>
+      <th>Arranger</th>
+      <th>Style</th>
+      <th>Octaves</th>
+      <th>Length (minutes)</th>
+   </tr>
+   <tr>
+      <td>{{ piece.name }}</td>
+      <td>{{ piece.composer.name }}</td>
+      <td>{{ piece.arranger.name }}</td>
+      <td>{{ piece.style.name }}</td>
+      <td>{{ piece.octaves }}</td>
+      <td>{{ piece.length }}</td>
+</table>
+
+<p>Kappaleessa käytettävät erikoistekniikat:</p>
+   {% for technique in piece.techniques %}
+   <ul>{{ technique.name }}</ul>
+   {% endfor %}
 
 {% if current_user.admin %}
 <p><a href="{{ url_for('pieces_edit', piece_id=piece.id) }}">Muokkaa</a></p>

@@ -1,6 +1,10 @@
 from application import db
+#from application.pieces.models import Piece
 
-from application.pieces.models import Piece
+piece_technique = db.Table('piece_technique',
+    db.Column('piece_id', db.Integer, db.ForeignKey('piece.id')),
+    db.Column('technique_id', db.Integer, db.ForeignKey('technique.id'))
+    )
 
 class Arranger(db.Model):
     id = db.Column(db.Integer, primary_key=True)
