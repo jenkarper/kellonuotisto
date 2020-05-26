@@ -1,0 +1,19 @@
+{% extends "layout.html" %}
+  
+{% block body %}
+
+<p>Poista rivi {{ name }}:</p>
+
+<form method="POST" action="{{ url_for('pieces_delete', piece_id=piece_id) }}">
+   <table>
+      <tr>
+         <td>{{ form.delete.label }}</td>
+         <td>{{ form.delete }}</td>
+         <td colspan="4">
+            <input type="submit" value="Poista"/>
+         </td>
+      </tr>
+   </table>
+</form>
+ 
+{% endblock %}

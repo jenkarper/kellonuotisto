@@ -1,0 +1,16 @@
+{% extends "layout.html" %}
+
+{% block body %}
+
+{% if current_user.admin %}
+<p><a href="{{ url_for('styles_edit', style_id=style.id) }}">Muokkaa</a></p>
+<p><a href="{{ url_for('styles_delete', style_id=style.id) }}">Poista koko rivi</a></p>
+{% endif %}
+
+<p>Tyylilajin {{ style.name }} kappaleet tietokannassa:</p>
+
+   {% for piece in style.pieces %}
+   <ul> {{ piece.name }} </ul>
+   {% endfor %}
+
+{% endblock %}

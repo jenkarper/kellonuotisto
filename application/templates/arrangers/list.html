@@ -8,9 +8,7 @@
     {% for arranger in arrangers %}
     <tr>
       <td>{{ arranger.name }}</td>
-      {% if current_user.admin %}
-      <td><a href="{{ url_for('arrangers_edit', arranger_id=arranger.id) }}">Muokkaa</a></td>
-      {% endif %}
+      <td><a href="{{ url_for('arrangers_show', arranger_id=arranger.id) }}">Näytä tiedot</a></td>
     </tr>
     {% endfor %}
   </table>

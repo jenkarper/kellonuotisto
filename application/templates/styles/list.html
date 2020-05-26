@@ -8,9 +8,7 @@
     {% for style in styles %}
     <tr>
       <td>{{ style.name }}</td>
-      {% if current_user.admin %}
-      <td><a href="{{ url_for('styles_edit', style_id=style.id) }}">Muokkaa</a></td>
-      {% endif %}
+      <td><a href="{{ url_for('styles_show', style_id=style.id) }}">Näytä tiedot</a></td>
     </tr>
     {% endfor %}
   </table>

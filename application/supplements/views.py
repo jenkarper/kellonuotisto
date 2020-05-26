@@ -3,12 +3,16 @@ from flask_login import login_required
 
 from application import app, db
 from application.supplements.models import Arranger, Composer, Style, Technique
-from application.supplements.forms import ArrangerForm, ComposerForm, EditForm, StyleForm, TechniqueForm
+from application.supplements.forms import ArrangerForm, ComposerForm, DeleteForm, EditForm, StyleForm, TechniqueForm
 
 # ARRANGERS
 @app.route("/arrangers", methods=["GET"])
 def arrangers_index():
     return render_template("arrangers/list.html", arrangers = Arranger.query.all())
+
+@app.route("/arrrangers/<arranger_id>/")
+def arrangers_show(arranger_id):
+    return render_template("arrangers/show.html", arranger = Arranger.query.get(arranger_id))
 
 @app.route("/arrangers/new/")
 @login_required
@@ -48,10 +52,35 @@ def arrangers_edit(arranger_id):
 
     return redirect(url_for("arrangers_index"))
 
+@app.route("/arrangers/delete/<arranger_id>", methods=["GET", "POST"])
+@login_required
+def arrangers_delete(arranger_id):
+
+    if request.method == "GET":
+        a = Arranger.query.get(arranger_id)
+        return render_template("arrangers/delete.html", form = DeleteForm(), arranger_id=arranger_id, name=a.name)
+
+    form = DeleteForm(request.form)
+
+    a = Arranger.query.get(arranger_id)
+
+    for piece in a.pieces:
+        if piece.composer_id == a.id:
+            return "This arranger is referred to in another table and cannot be deleted!"
+    
+    db.session().delete(a)
+    db.session().commit()
+
+    return "Deleted successfully!"
+
 # COMPOSERS
 @app.route("/composers/", methods=["GET"])
 def composers_index():
     return render_template("composers/list.html", composers = Composer.query.all(), form = EditForm)
+
+@app.route("/composers/<composer_id>/")
+def composers_show(composer_id):
+    return render_template("composers/show.html", composer = Composer.query.get(composer_id))
 
 @app.route("/composers/new/")
 @login_required
@@ -82,15 +111,21 @@ def composers_edit(composer_id):
 def composers_delete(composer_id):
 
     if request.method == "GET":
-        return render_template("composers/delete.html", form = DeleteForm(), composer_id=composer_id)
+        c = Composer.query.get(composer_id)
+        return render_template("composers/delete.html", form = DeleteForm(), composer_id=composer_id, name=c.name)
 
     form = DeleteForm(request.form)
 
     c = Composer.query.get(composer_id)
+
+    for piece in c.pieces:
+        if piece.composer_id == c.id:
+            return "This composer is referred to in another table and cannot be deleted!"
+    
     db.session().delete(c)
     db.session().commit()
 
-    return "Mission accomplished!"
+    return "Deleted successfully!"
 
 @app.route("/composers/", methods=["POST"])
 @login_required
@@ -111,6 +146,10 @@ def composers_create():
 @app.route("/styles", methods=["GET"])
 def styles_index():
     return render_template("styles/list.html", styles = Style.query.all())
+
+@app.route("/styles/<style_id>/")
+def styles_show(style_id):
+    return render_template("styles/show.html", style = Style.query.get(style_id))
 
 @app.route("/styles/new/")
 @login_required
@@ -149,6 +188,27 @@ def styles_edit(style_id):
     db.session().commit()
 
     return redirect(url_for("styles_index"))
+
+@app.route("/styles/delete/<style_id>", methods=["GET", "POST"])
+@login_required
+def styles_delete(style_id):
+
+    if request.method == "GET":
+        s = Style.query.get(style_id)
+        return render_template("styles/delete.html", form = DeleteForm(), style_id=style_id, name=s.name)
+
+    form = DeleteForm(request.form)
+
+    s = Style.query.get(style_id)
+
+    for piece in s.pieces:
+        if piece.style_id == s.id:
+            return "This style is referred to in another table and cannot be deleted!"
+    
+    db.session().delete(s)
+    db.session().commit()
+
+    return "Deleted successfully!"
 
 # TECHNIQUES
 @app.route("/techniques", methods=["GET"])

@@ -3,7 +3,7 @@ from flask_login import login_required
 
 from application import app, db
 from application.pieces.models import Piece
-from application.pieces.forms import EditForm, PieceForm, SearchForm
+from application.pieces.forms import DeleteForm, EditForm, PieceForm, SearchForm
 
 from application.supplements.models import Composer, Arranger, Style
 
@@ -40,6 +40,21 @@ def pieces_edit(piece_id):
     db.session().commit()
 
     return redirect(url_for("arrangers_index"))
+
+@app.route("/pieces/delete/<piece_id>", methods=["GET", "POST"])
+@login_required
+def pieces_delete(piece_id):
+
+    if request.method == "GET":
+        p = Piece.query.get(piece_id)
+        return render_template("pieces/delete.html", form = DeleteForm(), piece_id=piece_id, name=p.name)
+
+    p = Piece.query.get(piece_id)
+
+    db.session().delete(p)
+    db.session().commit()
+    
+    return "Deleted successfully!"
 
 @app.route("/pieces/new/")
 @login_required
@@ -92,4 +107,6 @@ def pieces_create():
     db.session().commit()
   
     return redirect(url_for("pieces_index"))
+
+
 

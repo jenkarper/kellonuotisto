@@ -8,9 +8,7 @@
       {% for composer in composers %}
       <tr>
          <td>{{ composer.name }}</td>
-         {% if current_user.admin %}
-         <td><a href="{{ url_for('composers_edit', composer_id=composer.id) }}">Muokkaa</a></td>
-         {% endif %}
+         <td><a href="{{ url_for('composers_show', composer_id=composer.id) }}">Näytä tiedot</a></td>
       </tr>
       {% endfor %}
    </table>

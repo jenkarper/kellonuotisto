@@ -1,0 +1,15 @@
+{% extends "layout.html" %}
+
+{% block body %}
+
+{% if current_user.admin %}
+<p><a href="{{ url_for('composers_edit', composer_id=composer.id) }}">Muokkaa</a></p>
+<p><a href="{{ url_for('composers_delete', composer_id=composer.id) }}">Poista koko rivi</a></p>
+{% endif %}
+
+<p>Säveltäjän {{ composer.name }} kappaleet tietokannassa:</p>
+   {% for piece in composer.pieces %}
+   <ul> {{ piece.name }} </ul>
+   {% endfor %}
+
+{% endblock %}
