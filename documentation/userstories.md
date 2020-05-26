@@ -4,7 +4,6 @@
 
 ### Ennen kirjautumista:
 
-- Käyttäjä voi luoda Kellonuotisto-sovellukseen oman käyttäjätunnuksen ja salasanan.
 - Käyttäjä voi kirjautua palveluun.
 
 ### Kirjautuneena:
@@ -23,6 +22,7 @@
 
 ### Ainoastaan Pääkäyttäjällä olevat oikeudet:
 
+- Pääkäyttäjä voi luoda uusia Käyttäjiä.
 - Pääkäyttäjä voi poistaa rivejä tietokantatauluista Piece, Composer, Arranger, Style ja Technique.
 - Pääkäyttäjä voi luoda ohjelmistolistauksen ja tallentaa sen omalle pääkäyttäjätililleen.
 
