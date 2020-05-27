@@ -2,6 +2,7 @@ from flask import redirect, render_template, request, url_for
 from flask_login import login_required
 
 from application import app, db
+from application.pieces.models import Piece
 from application.supplements.models import Arranger, Composer, Style, Technique
 from application.supplements.forms import ArrangerForm, ComposerForm, DeleteForm, EditForm, StyleForm, TechniqueForm
 

@@ -10,10 +10,7 @@ from application.supplements.models import Composer, Arranger, Style, Technique
 @app.route("/pieces", methods = ["GET"])
 def pieces_index():
     pieces = db.session.query(Piece).order_by(Piece.name)
-    lista = Piece.find_music_by_style()
-    print(lista is None)
-# pieces_by_style on NoneType
-    return render_template("pieces/list.html", pieces = pieces)#, pieces_by_style = Piece.find_music_by_style())
+    return render_template("pieces/list.html", pieces = pieces, pieces_by_style = Piece.count_pieces_by_style())
 
 @app.route("/pieces/<piece_id>/")
 def pieces_show(piece_id):
@@ -52,8 +49,8 @@ def pieces_edit(piece_id):
 def pieces_delete(piece_id):
 
     if request.method == "GET":
-        p = Piece.query.get(piece_id)
-        return render_template("pieces/delete.html", form = DeleteForm(), piece_id = piece_id, name = p.name)
+        piece = Piece.query.get(piece_id)
+        return render_template("pieces/delete.html", form = DeleteForm(), piece_id = piece_id, piece = piece)
 
     p = Piece.query.get(piece_id)
 

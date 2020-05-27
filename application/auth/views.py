@@ -1,5 +1,5 @@
 from flask import render_template, request, redirect, url_for
-from flask_login import login_user, logout_user
+from flask_login import login_user, logout_user, login_required
 
 from application import app, db
 from application.auth.models import User
@@ -9,7 +9,7 @@ from application.auth.forms import LoginForm, RegistrationForm
 def auth_form():
     return render_template("auth/register.html", form = RegistrationForm())
 
-@app.route("/auth/", methods=["POST"])
+@app.route("/auth/", methods = ["POST"])
 def auth_create():
     form = RegistrationForm(request.form)
 
@@ -26,7 +26,7 @@ def auth_create():
     db.session().add(u)
     db.session().commit()
   
-    return redirect(url_for("auth_login"))
+    return "User created successfully!"
 
 @app.route("/auth/login", methods = ["GET", "POST"])
 def auth_login():
@@ -39,7 +39,7 @@ def auth_login():
     user = User.query.filter_by(username=form.username.data, password_hash=form.password.data).first()
     if not user:
         return render_template("auth/loginform.html", form = form,
-                               error = "No such username or password")
+                               error = "Käyttäjätunnusta tai salasanaa ei löydy.")
 
 
     login_user(user)
@@ -48,4 +48,9 @@ def auth_login():
 @app.route("/auth/logout")
 def auth_logout():
     logout_user()
-    return redirect(url_for("index"))    
+    return redirect(url_for("index"))
+
+@app.route("/auth/list", methods = ["GET"])
+@login_required
+def auth_index():
+     return render_template("auth/list.html", users = User.query.all())

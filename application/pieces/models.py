@@ -24,19 +24,19 @@ class Piece(Base):
         self.style_id = style_id
 
     @staticmethod
-    def find_music_by_style():
+    def count_pieces_by_style():
         stmt = text("SELECT Style.name, COUNT(*), SUM(length)"
                     " FROM Piece"
                     " LEFT JOIN Style ON Style.id = Piece.style_id"
-                    " GROUP BY Style.name")
+                    " GROUP BY Style.name"
+                    " ORDER BY Style.name")
         res = db.engine.execute(stmt)
 
         response = []
         for row in res:
             response.append({"style":row[0], "pieces":row[1], "minutes":row[2]})
-            #print(row[0])
-            #print(row[1])
-            #print(row[2])
+
+        return response
 
     @staticmethod
     def find_music_by_composer(name):
@@ -46,5 +46,8 @@ class Piece(Base):
 
         res = db.engine.execute(stmt)
 
+        response = []
         for row in res:
-            print(row[0])
+            response.append({"style":row[0]})
+
+        return response

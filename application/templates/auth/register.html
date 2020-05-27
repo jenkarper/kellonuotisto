@@ -2,15 +2,14 @@
 
 {% extends "layout.html" %}
 {% block body %}
+
+<p>Luo uusi käyttäjä</p>
+
 <form method="POST" action="{{ url_for('auth_create') }}">
    <table>
    <tr>
-      <td>
-         {{ form.name.label }}
-      </td>
-      <td>
-         {{ form.name }}
-      </td>
+      <td>Käyttäjän nimi:</td>
+      <td>{{ form.name }}</td>
       <td>
          <ul>
             {% for error in form.name.errors %}
@@ -20,12 +19,8 @@
             {% endfor %}
          </ul>
       </td>
-      <td>
-         {{ form.username.label }}
-      </td>
-      <td>
-         {{ form.username }}
-      </td>
+      <td>Käyttäjätunnus:</td>
+      <td>{{ form.username }}</td>
       <td>
          <ul>
             {% for error in form.username.errors %}
@@ -35,18 +30,12 @@
             {% endfor %}
          </ul>
       </td>
-      <td>
-         {{ form.admin.label }}
-      </td>
-      <td>
-         {{ form.admin }}
-      </td>
-      <td>
-         {{ form.password.label }}
-      </td>
-      <td>
-         {{ form.password }}
-      </td>
+      <td>Admin-oikeudet:</td>
+      <td>{{ form.admin }}</td>
+   </tr>
+   <tr>
+      <td>Salasana:</td>
+      <td>{{ form.password }}</td>
       <td>
          <ul>
             {% for error in form.password.errors %}
@@ -56,12 +45,8 @@
             {% endfor %}
          </ul>
       </td>
-      <td>
-         {{ form.password2.label }}
-      </td>
-      <td>
-         {{ form.password2 }}
-      </td>
+      <td>Salasana uudestaan:</td>
+      <td>{{ form.password2 }}</td>
       <td>
          <ul>
             {% for error in form.password2.errors %}
@@ -74,7 +59,7 @@
    </tr>
    <tr>
       <td colspan="4">
-         <input type="submit" value="Register"/>
+         <input type="submit" value="Luo tunnus"/>
       </td>
    </tr>
 </form>
