@@ -1,24 +1,27 @@
-{% extends "layout.html" %}
-  
-{% block body %}
 
-<form method="POST" action="{{ url_for('arrangers_edit', arranger_id=arranger_id) }}">
-   <table>
-      <tr>
-         <td>{{ form.newname.label }}</td>
-         <td>{{ form.newname }}</td>
-         <td>
-            <ul>
-               {% for error in form.newname.errors %}
-               <li>{{ error }}</li>
-               {% endfor %}
-            </ul>
-         </td>
-         <td colspan="4">
-            <input type="submit" value="Päivitä"/>
-         </td>
-      </tr>
-   </table>
-</form>
-   
+{% extends "layout.html" %}
+{% block body %}
+<div class="mx-auto" style="width:800px;">
+   <h2>Sovittajat</h2>
+   <p>Valittuna: <i>{{ arranger.name }}</i></p>
+   <br>
+   <p>Syötä uusi nimi:</p>
+   <form method="POST" action="{{ url_for('arrangers_edit', arranger_id=arranger_id) }}">
+      <table>
+         <tr>
+            <td>{{ form.newname }}</td>
+            <td>
+               <ul>
+                  {% for error in form.newname.errors %}
+                  <li>{{ error }}</li>
+                  {% endfor %}
+               </ul>
+            </td>
+            <td colspan="4">
+               <input type="submit" value="Päivitä"/>
+            </td>
+         </tr>
+      </table>
+   </form>
+</div>
 {% endblock %}

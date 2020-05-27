@@ -1,19 +1,21 @@
+
 {% extends "layout.html" %}
-  
 {% block body %}
-
-<p>Poista rivi {{ name }}:</p>
-
-<form method="POST" action="{{ url_for('composers_delete', composer_id=composer_id) }}">
-   <table>
-      <tr>
-         <td>{{ form.delete.label }}</td>
-         <td>{{ form.delete }}</td>
-         <td colspan="4">
-            <input type="submit" value="Poista"/>
-         </td>
-      </tr>
-   </table>
-</form>
-   
+<div class="mx-auto" style="width:800px;">
+   <h2>Säveltäjät</h2>
+   <p>Valittuna: <i>{{ composer.name }}</i></p>
+   <br>
+   <p>Poista rivi <i>{{ composer.name }}</i>:</p>
+   <form method="POST" action="{{ url_for('composers_delete', composer_id=composer_id) }}">
+      <table>
+         <tr>
+            <td>Vahvista poisto</td>
+            <td>{{ form.delete }}</td>
+            <td colspan="4">
+               <input type="submit" value="Poista"/>
+            </td>
+         </tr>
+      </table>
+   </form>
+</div>
 {% endblock %}

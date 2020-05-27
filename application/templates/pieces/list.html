@@ -1,32 +1,38 @@
+
 {% extends "layout.html" %}
-
 {% block body %}
-
-   {% if pieces_by_style is defined %}
-   <p>Tietokannan kappalemäärät tyylilajeittain:</p>
+<div class="mx-auto" style="width:800px;">
+   <h2>Kappaleet</h2>
+   <br>
    <table>
       <tr>
-         <th>Tyylilaji</th>
-         <th>Kappaleita</th>
-      </tr>
-      <tr>
-      {% for row in pieces_by_style %}
-         <td>{{ row.style }}<td>
-         <td>{{ row.pieces }}</td>
-      {% endfor %}
-      </tr>
-   </table>
-   {% endif %}
-   <table>
-      <tr>
-         <th>Name</th>
+         <th>Nimi</th>
       </tr>
       {% for piece in pieces %}
       <tr>
          <td>{{ piece.name }}</td>
          <td><a href="{{ url_for('pieces_show', piece_id=piece.id) }}">Näytä tiedot</a></td>
-    </tr>
-    {% endfor %}
-  </table>
+      </tr>
+      {% endfor %}
+   </table>
+   <br>
+   {% if pieces_by_style is defined %}
+   <h4>Tietokannan nuotit tyylilajeittain:</h4>
+   <table>
+      <tr>
+         <th style="padding:10px" align="center">Tyylilaji</th>
+         <th style="padding:10px" align="center">Kappaleita</th>
+         <th style="padding:10px" align="center">Minuutteja</th>
+      </tr>
+      {% for entry in pieces_by_style %}
+      <tr>
+         <td>{{ entry.style }}<td>
+         <td>{{ entry.pieces }}</td>
+         <td>{{ entry.minutes }}</td>
+      </tr>
+      {% endfor %}
+   </table>
+   {% endif %}
+</div>
 {% endblock %}
 

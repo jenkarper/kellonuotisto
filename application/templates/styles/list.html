@@ -1,15 +1,25 @@
-{% extends "layout.html" %}
 
+{% extends "layout.html" %}
 {% block body %}
-  <table>
-    <tr>
-      <th>Style</th>
-    </tr>
-    {% for style in styles %}
-    <tr>
-      <td>{{ style.name }}</td>
-      <td><a href="{{ url_for('styles_show', style_id=style.id) }}">Näytä tiedot</a></td>
-    </tr>
-    {% endfor %}
-  </table>
+<div class="mx-auto" style="width:800px;">
+   <h2>Tyylilajit</h2>
+   <br>
+   <table>
+      <tr>
+         <th>Tyylilaji</th>
+      </tr>
+      {% for style in styles %}
+      <tr>
+         <td>{{ style.name }}</td>
+         {% if current_user.is_authenticated %}
+         <td><a href="{{ url_for('styles_edit', style_id=style.id) }}">Muokkaa</a></td>
+            {% if current_user.admin %}
+            <td> tai </td>
+            <td><a href="{{ url_for('styles_delete', style_id=style.id) }}">poista koko rivi</a></td>
+            {% endif %}
+         {% endif %}
+      </tr>
+      {% endfor %}
+   </table>
+</div>
 {% endblock %}

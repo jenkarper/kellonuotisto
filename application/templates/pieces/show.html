@@ -1,31 +1,46 @@
+
 {% extends "layout.html" %}
-
 {% block body %}
-<table>
-   <tr>
-      <th>Name</th>
-      <th>Composer</th>
-      <th>Arranger</th>
-      <th>Style</th>
-      <th>Octaves</th>
-      <th>Length (minutes)</th>
-   </tr>
-   <tr>
-      <td>{{ piece.name }}</td>
-      <td>{{ piece.composer.name }}</td>
-      <td>{{ piece.arranger.name }}</td>
-      <td>{{ piece.style.name }}</td>
-      <td>{{ piece.octaves }}</td>
-      <td>{{ piece.length }}</td>
-</table>
-
-<p>Kappaleessa käytettävät erikoistekniikat:</p>
-   {% for technique in piece.techniques %}
-   <ul>{{ technique.name }}</ul>
-   {% endfor %}
-
-{% if current_user.admin %}
-<p><a href="{{ url_for('pieces_edit', piece_id=piece.id) }}">Muokkaa</a></p>
-<p><a href="{{ url_for('pieces_delete', piece_id=piece.id) }}">Poista koko rivi</a></p>
-{% endif %}
+<div class="mx-auto" style="width:800px;">
+   <h2>Kappaleet</h2>
+   <p>Valittuna: <i>{{ piece.name }}</i></p>
+   {% if current_user.is_authenticated %}
+   <p><a href="{{ url_for('pieces_edit', piece_id=piece.id) }}">Muokkaa</a></p>
+      {% if current_user.admin %}
+      <p><a href="{{ url_for('pieces_delete', piece_id=piece.id) }}">Poista koko rivi</a></p>
+      {% endif %}
+   {% endif %}
+   <br>
+   <table>
+      <tr>
+         <td><b>Nimi</b></td>
+         <td>{{ piece.name }}</td>
+      </tr>
+      <tr>
+         <td><b>Säveltäjä</b></td>
+         <td>{{ piece.composer.name }}</td>
+      </tr>
+      <tr>
+         <td><b>Sovittaja</b></td>
+         <td>{{ piece.arranger.name }}</td>
+      </tr>
+      <tr>
+         <td><b>Tyylilaji</b></td>
+         <td>{{ piece.style.name }}</td>
+      </tr>
+      <tr>
+         <td><b>Oktaavit</b></td>
+         <td>{{ piece.octaves }}</td>
+      </tr>
+      <tr>
+         <td><b>Pituus</b></td>
+         <td>{{ piece.length }}</td>
+      </tr>
+   </table>
+   <br>
+   <p><b>Kappaleessa käytettävät erikoistekniikat:</b></p>
+      {% for technique in piece.techniques %}
+      <ul>{{ technique.name }}</ul>
+      {% endfor %}
+</div>
 {% endblock %}

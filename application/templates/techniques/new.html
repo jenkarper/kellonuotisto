@@ -1,27 +1,29 @@
-  {% extends "layout.html" %}
 
-  {% block body %}
-  <form method="POST" action="{{ url_for('techniques_create') }}">
-    <table>
-      <tr>
-	<td>
-	  {{ form.name.label }}
-	</td>
-	<td>
-	  {{ form.name }}
-	</td>
-        <td>
-	  <ul>
-	    {% for error in form.name.errors %}
-	    <li>{{ error }}</li>
-	    {% endfor %}
-	  </ul>
-	</td>
-      </tr>
-      <tr>
-	<td colspan="3">
-	  <input type="submit" value="Add a new technique"/>
-	</td>
-      </tr>
-  </form>
-  {% endblock %}
+{% extends "layout.html" %}
+{% block body %}
+<div class="mx-auto" style="width:800px;">
+   <h2>Erikoistekniikat</h2>
+   <br>
+   <p>Lisää uusi erikoistekniikka</p>
+   <form method="POST" action="{{ url_for('techniques_create') }}">
+      <table>
+         <tr>
+	    <td>Tekniikka</td>
+	    <td>{{ form.name }}</td>
+            <td>
+	       <ul>
+	          {% for error in form.name.errors %}
+	          <li>{{ error }}</li>
+	          {% endfor %}
+	       </ul>
+            </td>
+         </tr>
+         <tr>
+	    <td colspan="3">
+	       <input type="submit" value="Lisää"/>
+            </td>
+         </tr>
+      </table>
+   </form>
+</div>
+{% endblock %}

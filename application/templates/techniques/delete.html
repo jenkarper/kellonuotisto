@@ -2,11 +2,11 @@
 {% extends "layout.html" %}
 {% block body %}
 <div class="mx-auto" style="width:800px;">
-   <h2>Sovittajat</h2>
-   <p>Valittuna: <i>{{ arranger.name }}</i></p>
+   <h2>Erikoistekniikat</h2>
+   <p>Valittuna: <i>{{ tech.name }}</i></p>
    <br>
-   <p>Poista rivi <i>{{ arranger.name }}</i>:</p>
-   <form method="POST" action="{{ url_for('arrangers_delete', arranger_id=arranger_id) }}">
+   <p>Poista rivi <i>{{ tech.name }}</i>:</p>
+   <form method="POST" action="{{ url_for('techniques_delete', technique_id=technique_id) }}">
       <table>
          <tr>
             <td>Vahvista poisto</td>

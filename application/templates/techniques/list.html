@@ -1,17 +1,21 @@
-{% extends "layout.html" %}
 
+{% extends "layout.html" %}
 {% block body %}
-  <table>
-    <tr>
-      <th>Technique</th>
-    </tr>
-    {% for technique in techniques %}
-    <tr>
-      <td>{{ technique.name }}</td>
-      {% if current_user.admin %}
-      <td><a href="{{ url_for('techniques_edit', technique_id=technique.id) }}">Muokkaa</a></td>
-      {% endif %}
-    </tr>
-    {% endfor %}
-  </table>
+<div class="mx-auto" style="width:800px;">
+   <h2>Erikoistekniikat</h2>
+   <br>
+   <table>
+      <tr>
+         <th>Erikoistekniikka</th>
+      </tr>
+      {% for technique in techniques %}
+      <tr>
+         <td>{{ technique.name }}</td>
+         {% if current_user.is_authenticated %}
+         <td><a href="{{ url_for('techniques_edit', technique_id=technique.id) }}">Muokkaa</a></td>
+         {% endif %}
+      </tr>
+      {% endfor %}
+   </table>
+</div>
 {% endblock %}

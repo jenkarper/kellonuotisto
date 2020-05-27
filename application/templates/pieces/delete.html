@@ -1,19 +1,21 @@
+
 {% extends "layout.html" %}
-  
 {% block body %}
-
-<p>Poista rivi {{ name }}:</p>
-
-<form method="POST" action="{{ url_for('pieces_delete', piece_id=piece_id) }}">
-   <table>
-      <tr>
-         <td>{{ form.delete.label }}</td>
-         <td>{{ form.delete }}</td>
-         <td colspan="4">
-            <input type="submit" value="Poista"/>
-         </td>
-      </tr>
-   </table>
-</form>
- 
+<div class="mx-auto" style="width:800px;">
+   <h2>Kappaleet</h2>
+   <p>Valittuna: <i>{{ piece.name }}</i></p>
+   <br>
+   <p>Poista rivi <i>{{ piece.name }}</i>:</p>
+   <form method="POST" action="{{ url_for('pieces_delete', piece_id=piece_id) }}">
+      <table>
+         <tr>
+            <td>Vahvista poisto: </td>
+            <td>{{ form.delete }}</td>
+            <td colspan="4">
+               <input type="submit" value="Poista"/>
+            </td>
+         </tr>
+      </table>
+   </form>
+</div>
 {% endblock %}

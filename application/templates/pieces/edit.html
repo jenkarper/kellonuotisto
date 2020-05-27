@@ -1,26 +1,28 @@
+
 {% extends "layout.html" %}
-  
 {% block body %}
-
-<p>Lisää erikoistekniikka:</p>
-
-<form method="POST" action="{{ url_for('pieces_edit', piece_id=piece_id) }}">
-   <table>
-      <tr>
-         <td>{{ form.technique.label }}</td>
-         <td>{{ form.technique }}</td>
-         <td>
-	  <ul>
-	    {% for error in form.technique.errors %}
-	    <li>{{ error }}</li>
-	    {% endfor %}
-	  </ul>
-	</td>
-         <td colspan="4">
-            <input type="submit" value="Päivitä"/>
-         </td>
-      </tr>
-   </table>
-</form>
-   
+<div class="mx-auto" style="width:800px;">
+   <h2>Kappaleet</h2>
+   <p>Valittuna: <i>{{ piece.name }}</i></p>
+   <br>
+   <p>Lisää erikoistekniikka:</p>
+   <form method="POST" action="{{ url_for('pieces_edit', piece_id=piece_id) }}">
+      <table>
+         <tr>
+            <td>{{ form.technique.label }}</td>
+            <td>{{ form.technique }}</td>
+            <td>
+	       <ul>
+	       {% for error in form.technique.errors %}
+	          <li>{{ error }}</li>
+	       {% endfor %}
+	       </ul>
+	    </td>
+            <td colspan="4">
+               <input type="submit" value="Päivitä"/>
+            </td>
+         </tr>
+      </table>
+   </form>
+</div>
 {% endblock %}

@@ -1,15 +1,15 @@
+
 {% extends "layout.html" %}
-  
 {% block body %}
+<div class="mx-auto" style="width:800px;">
+   <h2>Säveltäjät</h2>
+   <br>
+   <p>Lisää uusi säveltäjä</p>
    <form method="POST" action="{{ url_for('composers_create') }}">
       <table>
          <tr>
-         <td>
-            {{ form.name.label }}
-         </td>
-         <td>
-            {{ form.name }}
-         </td>
+         <td>Nimi:</td>
+         <td>{{ form.name }}</td>
          <td>
             <ul>
                {% for error in form.name.errors %}
@@ -17,11 +17,10 @@
                {% endfor %}
             </ul>
          </td>
-      </tr>
-      <tr>
          <td colspan="3">
-            <input type="submit" value="Add"/>
+            <input type="submit" value="Lisää"/>
          </td>
       </tr>
    </form>
+</div>
 {% endblock %}

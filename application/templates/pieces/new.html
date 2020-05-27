@@ -1,78 +1,64 @@
 
-
 {% extends "layout.html" %}
 {% block body %}
-<form method="POST" action="{{ url_for('pieces_create') }}">
-   <table>
-      <tr>
-         <td>
-            {{ form.name.label }}
-         </td>
-         <td>
-            {{ form.name }}
-         </td>
-         <td>
-            <ul>
-               {% for error in form.name.errors %}
-               <li>{{ error }}</li>
-               {% endfor %}
-            </ul>
-         </td>
-         <td>
-            {{ form.octaves.label }}
-         </td>
-         <td>
-            {{ form.octaves }}
-         </td>
-         <td>
-            <ul>
-               {% for error in form.octaves.errors %}
-               <li>{{ error }}</li>
-               {% endfor %}
-            </ul>
-         </td>
-         <td>
-            {{ form.length.label }}
-         </td>
-         <td>
-            {{ form.length }}
-         </td>
-         <td>
-            <ul>
-               {% for error in form.length.errors %}
-               <li>{{ error }}</li>
-               {% endfor %}
-            </ul>
-         </td>
-      </tr>
-      <tr>
-         <td>
-            {{ form.composer.label }}
-         </td>
-         <td>
-            {{ form.composer }}
-         </td>
-         <td>
-            {{ form.arranger.label }}
-         </td>
-         <td>
-            {{ form.arranger }}
-         </td>
-         <td>
-            {{ form.style.label }}
-         </td>
-         <td>
-            {{ form.style }}
-         </td>
-      <tr>
-         <td colspan="4">
-            <input type="submit" value="Add a new piece"/>
-         </td>
-      </tr>
-        
-            
-   </table>
-</form>
+<div class="mx-auto" style="width:800px;">
+   <h2>Kappaleet</h2>
+   <br>
+   <p>Lisää uusi kappale</p>
+   <form method="POST" action="{{ url_for('pieces_create') }}">
+      <table>
+         <tr>
+            <td>Kappaleen nimi</td>
+            <td>{{ form.name }}</td>
+            <td>
+               <ul>
+                  {% for error in form.name.errors %}
+                  <li>{{ error }}</li>
+                  {% endfor %}
+               </ul>
+            </td>
+         </tr>
+         <tr>
+            <td>Oktaavit</td>
+            <td>{{ form.octaves }}</td>
+            <td>
+               <ul>
+                  {% for error in form.octaves.errors %}
+                  <li>{{ error }}</li>
+                  {% endfor %}
+               </ul>
+            </td>
+         </tr>
+         <tr>
+            <td>Pituus (minuutteina)</td>
+            <td>{{ form.length }}</td>
+            <td>
+               <ul>
+                  {% for error in form.length.errors %}
+                  <li>{{ error }}</li>
+                  {% endfor %}
+               </ul>
+            </td>
+         </tr>
+         <tr>
+            <td>Säveltäjä</td>
+            <td>{{ form.composer }}</td>
+         </tr>
+         <tr>
+            <td>Sovittaja</td>
+            <td>{{ form.arranger }}</td>
+         <tr>
+            <td>Tyylilaji</td>
+            <td>{{ form.style }}</td>
+         </tr>
+         <tr>
+            <td colspan="2">
+               <input type="submit" value="Lisää"/>
+            </td>
+         </tr>
+      </table>
+   </form>
+</div>
 {% endblock %}
 
 

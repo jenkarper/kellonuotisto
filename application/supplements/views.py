@@ -13,7 +13,8 @@ def arrangers_index():
 
 @app.route("/arrrangers/<arranger_id>/")
 def arrangers_show(arranger_id):
-    return render_template("arrangers/show.html", arranger = Arranger.query.get(arranger_id))
+    arranger = Arranger.query.get(arranger_id)
+    return render_template("arrangers/show.html", arranger = arranger)
 
 @app.route("/arrangers/new/")
 @login_required
@@ -40,12 +41,13 @@ def arrangers_create():
 def arrangers_edit(arranger_id):
 
     if request.method == "GET":
-        return render_template("arrangers/edit.html", form = EditForm(), arranger_id=arranger_id)
+        arranger = Arranger.query.get(arranger_id)
+        return render_template("arrangers/edit.html", form = EditForm(), arranger_id=arranger_id, arranger=arranger)
 
     form = EditForm(request.form)
 
     if not form.validate():
-        return render_template("arrangers/edit.html", form = form, arranger_id=arranger_id)
+        return render_template("arrangers/edit.html", form = form, arranger_id=arranger_id, arranger=arranger)
 
     a = Arranger.query.get(arranger_id)
     a.name = form.newname.data
@@ -58,8 +60,8 @@ def arrangers_edit(arranger_id):
 def arrangers_delete(arranger_id):
 
     if request.method == "GET":
-        a = Arranger.query.get(arranger_id)
-        return render_template("arrangers/delete.html", form = DeleteForm(), arranger_id=arranger_id, name=a.name)
+        arranger = Arranger.query.get(arranger_id)
+        return render_template("arrangers/delete.html", form = DeleteForm(), arranger_id=arranger_id, arranger=arranger)
 
     form = DeleteForm(request.form)
 
@@ -81,7 +83,8 @@ def composers_index():
 
 @app.route("/composers/<composer_id>/")
 def composers_show(composer_id):
-    return render_template("composers/show.html", composer = Composer.query.get(composer_id))
+    composer = Composer.query.get(composer_id)
+    return render_template("composers/show.html", composer = composer)
 
 @app.route("/composers/new/")
 @login_required
@@ -93,13 +96,13 @@ def composers_form():
 def composers_edit(composer_id):
 
     if request.method == "GET":
-        name = Composer.query.get(composer_id)
-        return render_template("composers/edit.html", form = EditForm(), composer_id=composer_id, name=name)
+        composer = Composer.query.get(composer_id)
+        return render_template("composers/edit.html", form = EditForm(), composer_id = composer_id, composer = composer)
 
     form = EditForm(request.form)
 
     if not form.validate():
-        return render_template("composers/edit.html", form = form, composer_id=composer_id)
+        return render_template("composers/edit.html", form = form, composer_id = composer_id, composer = composer)
 
     c = Composer.query.get(composer_id)
     c.name = form.newname.data
@@ -112,8 +115,8 @@ def composers_edit(composer_id):
 def composers_delete(composer_id):
 
     if request.method == "GET":
-        c = Composer.query.get(composer_id)
-        return render_template("composers/delete.html", form = DeleteForm(), composer_id=composer_id, name=c.name)
+        composer = Composer.query.get(composer_id)
+        return render_template("composers/delete.html", form = DeleteForm(), composer_id=composer_id, composer = composer)
 
     form = DeleteForm(request.form)
 
@@ -148,10 +151,6 @@ def composers_create():
 def styles_index():
     return render_template("styles/list.html", styles = Style.query.all())
 
-@app.route("/styles/<style_id>/")
-def styles_show(style_id):
-    return render_template("styles/show.html", style = Style.query.get(style_id))
-
 @app.route("/styles/new/")
 @login_required
 def styles_form():
@@ -177,12 +176,13 @@ def styles_create():
 def styles_edit(style_id):
 
     if request.method == "GET":
-        return render_template("styles/edit.html", form = EditForm(), style_id=style_id)
+        style = Style.query.get(style_id)
+        return render_template("styles/edit.html", form = EditForm(), style_id = style_id, style = style)
 
     form = EditForm(request.form)
 
     if not form.validate():
-        return render_template("styles/edit.html", form = form, style_id=style_id)
+        return render_template("styles/edit.html", form = form, style_id = style_id, style = style)
 
     s = Style.query.get(style_id)
     s.name = form.newname.data
@@ -195,8 +195,8 @@ def styles_edit(style_id):
 def styles_delete(style_id):
 
     if request.method == "GET":
-        s = Style.query.get(style_id)
-        return render_template("styles/delete.html", form = DeleteForm(), style_id=style_id, name=s.name)
+        style = Style.query.get(style_id)
+        return render_template("styles/delete.html", form = DeleteForm(), style_id = style_id, style = style)
 
     form = DeleteForm(request.form)
 
@@ -241,12 +241,13 @@ def techniques_create():
 def techniques_edit(technique_id):
 
     if request.method == "GET":
-        return render_template("techniques/edit.html", form = EditForm(), technique_id=technique_id)
+        tech = Technique.query.get(technique_id)
+        return render_template("techniques/edit.html", form = EditForm(), technique_id=technique_id, tech = tech)
 
     form = EditForm(request.form)
 
     if not form.validate():
-        return render_template("techniques/edit.html", form = form, technique_id=technique_id)
+        return render_template("techniques/edit.html", form = form, technique_id=technique_id, tech = tech)
 
     t = Technique.query.get(technique_id)
     t.name = form.newname.data
