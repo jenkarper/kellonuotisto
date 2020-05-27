@@ -7,26 +7,29 @@ from application.pieces.forms import DeleteForm, EditForm, PieceForm, SearchForm
 
 from application.supplements.models import Composer, Arranger, Style, Technique
 
-@app.route("/pieces", methods=["GET"])
+@app.route("/pieces", methods = ["GET"])
 def pieces_index():
     pieces = db.session.query(Piece).order_by(Piece.name)
-    return render_template("pieces/list.html", pieces = pieces)
+    lista = Piece.find_music_by_style()
+    print(lista is None)
+# pieces_by_style on NoneType
+    return render_template("pieces/list.html", pieces = pieces)#, pieces_by_style = Piece.find_music_by_style())
 
 @app.route("/pieces/<piece_id>/")
 def pieces_show(piece_id):
     return render_template("pieces/show.html", piece = Piece.query.get(piece_id))
 
-@app.route("/pieces/edit/<piece_id>", methods=["GET", "POST"])
+@app.route("/pieces/edit/<piece_id>", methods = ["GET", "POST"])
 def pieces_edit(piece_id):
 
     if request.method == "GET":
-        return render_template("pieces/edit.html", form = EditForm(), piece_id=piece_id)
+        return render_template("pieces/edit.html", form = EditForm(), piece_id = piece_id)
 
     form = EditForm(request.form)
     
     # VALIDOINNISSA ON JOTAIN VIKAA!
     #if not form.validate():
-     #   return render_template("pieces/edit.html", form = form, piece_id=piece_id)
+     #   return render_template("pieces/edit.html", form = form, piece_id = piece_id)
 
     p = Piece.query.get(piece_id)
     technique = form.technique.data
@@ -44,13 +47,13 @@ def pieces_edit(piece_id):
 
     return redirect(url_for("pieces_index"))
 
-@app.route("/pieces/delete/<piece_id>", methods=["GET", "POST"])
+@app.route("/pieces/delete/<piece_id>", methods = ["GET", "POST"])
 @login_required
 def pieces_delete(piece_id):
 
     if request.method == "GET":
         p = Piece.query.get(piece_id)
-        return render_template("pieces/delete.html", form = DeleteForm(), piece_id=piece_id, name=p.name)
+        return render_template("pieces/delete.html", form = DeleteForm(), piece_id = piece_id, name = p.name)
 
     p = Piece.query.get(piece_id)
 
@@ -64,7 +67,7 @@ def pieces_delete(piece_id):
 def pieces_form():
     return render_template("pieces/new.html", form = PieceForm())
 
-@app.route("/pieces/", methods=["POST"])
+@app.route("/pieces/", methods = ["POST"])
 @login_required
 def pieces_create():
     form = PieceForm(request.form)

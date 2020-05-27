@@ -1,7 +1,22 @@
 {% extends "layout.html" %}
 
 {% block body %}
-  
+
+   {% if pieces_by_style is defined %}
+   <p>Tietokannan kappalemäärät tyylilajeittain:</p>
+   <table>
+      <tr>
+         <th>Tyylilaji</th>
+         <th>Kappaleita</th>
+      </tr>
+      <tr>
+      {% for row in pieces_by_style %}
+         <td>{{ row.style }}<td>
+         <td>{{ row.pieces }}</td>
+      {% endfor %}
+      </tr>
+   </table>
+   {% endif %}
    <table>
       <tr>
          <th>Name</th>
