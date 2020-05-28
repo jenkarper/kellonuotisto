@@ -20,7 +20,8 @@ def pieces_show(piece_id):
 def pieces_edit(piece_id):
 
     if request.method == "GET":
-        return render_template("pieces/edit.html", form = EditForm(), piece_id = piece_id)
+        piece = Piece.query.get(piece_id)
+        return render_template("pieces/edit.html", form = EditForm(), piece_id = piece_id, piece = piece)
 
     form = EditForm(request.form)
     
