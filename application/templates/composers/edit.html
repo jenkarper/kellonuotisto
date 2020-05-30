@@ -2,13 +2,14 @@
 {% extends "layout.html" %}
 {% block body %}
 <div class="mx-auto" style="width:800px;">
-   <h2>Säveltäjät</h2>
-   <p>Valittuna: <i>{{ composer.name }}</i></p>
+   <h3>{{ composer.name }}</h3>
+   <hr>
+   <p>Muokkaa nimeä <i>{{ composer.name }}</i></p>
    <br>
-   <p>Syötä uusi nimi:</p>
    <form method="POST" action="{{ url_for('composers_edit', composer_id=composer_id) }}">
       <table>
          <tr>
+            <td>Syötä uusi nimi:</td>
             <td>{{ form.newname }}</td>
             <td>
                <ul>

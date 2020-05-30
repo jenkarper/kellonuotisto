@@ -2,14 +2,14 @@
 {% extends "layout.html" %}
 {% block body %}
 <div class="mx-auto" style="width:800px;">
-   <h2>Kappaleet</h2>
+   <h2>Konsertit</h2>
    <hr>
-   <h5>Lisää uusi kappale</h5>
+   <h5>Lisää uusi konsertti</h5>
    <br>
-   <form method="POST" action="{{ url_for('pieces_create') }}">
+   <form method="POST" action="{{ url_for('concerts_create', piece_id = piece_id) }}">
       <table>
          <tr>
-            <td>Kappaleen nimi</td>
+            <td>Nimi:</td>
             <td>{{ form.name }}</td>
             <td>
                <ul>
@@ -20,37 +20,26 @@
             </td>
          </tr>
          <tr>
-            <td>Oktaavit</td>
-            <td>{{ form.octaves }}</td>
+            <td>Päivämäärä (muodossa pp.kk.vvvv):</td>
+            <td>{{ form.date }}</td>
             <td>
                <ul>
-                  {% for error in form.octaves.errors %}
+                  {% for error in form.date.errors %}
                   <li>{{ error }}</li>
                   {% endfor %}
                </ul>
             </td>
          </tr>
          <tr>
-            <td>Pituus (minuutteina)</td>
-            <td>{{ form.length }}</td>
+            <td>Paikka:</td>
+            <td>{{ form.venue }}</td>
             <td>
                <ul>
-                  {% for error in form.length.errors %}
+                  {% for error in form.venue.errors %}
                   <li>{{ error }}</li>
                   {% endfor %}
                </ul>
             </td>
-         </tr>
-         <tr>
-            <td>Säveltäjä</td>
-            <td>{{ form.composer }}</td>
-         </tr>
-         <tr>
-            <td>Sovittaja</td>
-            <td>{{ form.arranger }}</td>
-         <tr>
-            <td>Tyylilaji</td>
-            <td>{{ form.style }}</td>
          </tr>
          <tr>
             <td colspan="2">
@@ -61,5 +50,3 @@
    </form>
 </div>
 {% endblock %}
-
-

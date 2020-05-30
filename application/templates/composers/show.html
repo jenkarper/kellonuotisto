@@ -2,18 +2,22 @@
 {% extends "layout.html" %}
 {% block body %}
 <div class="mx-auto" style="width:800px;">
-   <h2>Säveltäjät</h2>
-   <p>Valittuna: <i>{{ composer.name }}</i></p>
+   <h3>{{ composer.name }}</h3>
    {% if current_user.is_authenticated %}
-   <p><a href="{{ url_for('composers_edit', composer_id=composer.id) }}">Muokkaa nimeä</a>
+   <hr>
+   <h5>Muokkausvaihtoehdot</h5>
+   <ul>
+      <li><a href="{{ url_for('composers_edit', composer_id=composer.id) }}">Muokkaa nimeä</a></li>
       {% if current_user.admin %}
-      <p><a href="{{ url_for('composers_delete', composer_id=composer.id) }}">poista koko rivi</a></p>
+      <li><a href="{{ url_for('composers_delete', composer_id=composer.id) }}">Poista koko rivi</a></li>
       {% endif %}
+   </ul>
    {% endif %}
-   <br>
-   <p><b>Säveltäjän <i>{{ composer.name }}</i> kappaleet tietokannassa:</b></p>
+   <hr>
+   <h5>Säveltäjän kappaleet tietokannassa</h5>
+   <ul>
    {% for piece in composer.pieces %}
-   <ul> {{ piece.name }} </ul>
+   <li> {{ piece.name }} </li>
    {% endfor %}
 </div>
 {% endblock %}

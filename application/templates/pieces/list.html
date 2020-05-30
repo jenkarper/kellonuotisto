@@ -3,6 +3,8 @@
 {% block body %}
 <div class="mx-auto" style="width:800px;">
    <h2>Kappaleet</h2>
+   <hr>
+   <h5>Kaikki tietokannassa olevat kappaleet</h5>
    <br>
    <table>
       <tr>
@@ -11,18 +13,21 @@
       {% for piece in pieces %}
       <tr>
          <td>{{ piece.name }}</td>
+         {% if current_user.is_authenticated %}
          <td><a href="{{ url_for('pieces_show', piece_id=piece.id) }}">Näytä tiedot</a></td>
+         {% endif %}
       </tr>
       {% endfor %}
    </table>
-   <br>
+   <hr>
    {% if pieces_by_style is defined %}
-   <h4>Tietokannan nuotit tyylilajeittain:</h4>
+   <h5>Tietokannan kappaleet tyylilajeittain</h5>
+   <br>
    <table>
       <tr>
-         <th style="padding:10px" align="center">Tyylilaji</th>
-         <th style="padding:10px" align="center">Kappaleita</th>
-         <th style="padding:10px" align="center">Minuutteja</th>
+         <th>Tyylilaji</th>
+         <th>Kappaleita</th>
+         <th>Minuutteja</th>
       </tr>
       {% for entry in pieces_by_style %}
       <tr>

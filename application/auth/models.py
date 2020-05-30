@@ -1,7 +1,12 @@
 from application import db
+from application.models import Base
+from application.pieces.models import Piece
+from application.concerts.models import Concert
 from werkzeug.security import check_password_hash
 
-class User(db.Model):
+from sqlalchemy.sql import text
+
+class User(Base):
 
     __tablename__ = "account" # koska 'user' on varattu avainsana PostgreSQL:ssä
   
@@ -41,3 +46,35 @@ class User(db.Model):
 
     def is_admin(self):
         return self.admin
+
+class Note(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    date_created = db.Column(db.DateTime, default=db.func.current_timestamp())
+    date_modified = db.Column(db.DateTime, default=db.func.current_timestamp(),
+                              onupdate=db.func.current_timestamp())
+
+    comment = db.Column(db.Text(), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('account.id'), nullable=False)
+    piece_id = db.Column(db.Integer, db.ForeignKey('piece.id'), nullable=True)
+    piece_name = db.Column(db.String(144), nullable=False)
+
+    def __init__(self, comment, user_id, piece_id, piece_name):
+        self.comment = comment
+        self.user_id = user_id
+        self.piece_id = piece_id
+        self.piece_name = piece_name
+
+    @staticmethod
+    def search_notes_by_piece_and_user(user_id, piece_id):
+        stmt = text("SELECT comment FROM Note"
+                    " WHERE user_id = :user_id"
+                    " AND piece_id = :piece_id").params(user_id=user_id, piece_id=piece_id)
+
+        res = db.engine.execute(stmt)
+
+        response = []
+        for row in res:
+            response.append({"comment":row[0]})
+
+        return response
+

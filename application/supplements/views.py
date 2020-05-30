@@ -4,38 +4,21 @@ from flask_login import login_required
 from application import app, db
 from application.pieces.models import Piece
 from application.supplements.models import Arranger, Composer, Style, Technique
-from application.supplements.forms import ArrangerForm, ComposerForm, DeleteForm, EditForm, StyleForm, TechniqueForm
+from application.supplements.forms import DeleteForm, EditForm, TechniqueForm
 
 # ARRANGERS
+# Palauttaa listanäkymän sovittajista
 @app.route("/arrangers", methods=["GET"])
 def arrangers_index():
     return render_template("arrangers/list.html", arrangers = Arranger.query.all())
 
+# Näyttää yhden sovittajan tiedot
 @app.route("/arrrangers/<arranger_id>/")
 def arrangers_show(arranger_id):
     arranger = Arranger.query.get(arranger_id)
     return render_template("arrangers/show.html", arranger = arranger)
 
-@app.route("/arrangers/new/")
-@login_required
-def arrangers_form():
-    return render_template("arrangers/new.html", form = ArrangerForm())
-
-@app.route("/arrangers/", methods=["POST"])
-@login_required
-def arrangers_create():
-    form = ArrangerForm(request.form)
-
-    if not form.validate():
-        return render_template("arrangers/new.html", form = form)
-    
-    a = Arranger(form.name.data)
-
-    db.session().add(a)
-    db.session().commit()
-  
-    return redirect(url_for("arrangers_index"))
-
+# Muokkaa yhden sovittajan tietoja
 @app.route("/arrangers/edit/<arranger_id>", methods=["GET", "POST"])
 @login_required
 def arrangers_edit(arranger_id):
@@ -55,6 +38,7 @@ def arrangers_edit(arranger_id):
 
     return redirect(url_for("arrangers_index"))
 
+# Poistaa yhden sovittajan tiedot
 @app.route("/arrangers/delete/<arranger_id>", methods=["GET", "POST"])
 @login_required
 def arrangers_delete(arranger_id):
@@ -74,7 +58,7 @@ def arrangers_delete(arranger_id):
     db.session().delete(a)
     db.session().commit()
 
-    return "Deleted successfully!"
+    return render_template("success.html")
 
 # COMPOSERS
 @app.route("/composers/", methods=["GET"])
@@ -85,11 +69,6 @@ def composers_index():
 def composers_show(composer_id):
     composer = Composer.query.get(composer_id)
     return render_template("composers/show.html", composer = composer)
-
-@app.route("/composers/new/")
-@login_required
-def composers_form():
-    return render_template("composers/new.html", form = ComposerForm())
 
 @app.route("/composers/edit/<composer_id>", methods=["GET", "POST"])
 @login_required
@@ -129,47 +108,12 @@ def composers_delete(composer_id):
     db.session().delete(c)
     db.session().commit()
 
-    return "Deleted successfully!"
-
-@app.route("/composers/", methods=["POST"])
-@login_required
-def composers_create():
-    form = ComposerForm(request.form)
-
-    if not form.validate():
-        return render_template("composers/new.html", form = form)
-
-    c = Composer(form.name.data)
-
-    db.session().add(c)
-    db.session().commit()
-  
-    return redirect(url_for("composers_index"))
+    return render_template("success.html")
 
 # STYLES
 @app.route("/styles", methods=["GET"])
 def styles_index():
     return render_template("styles/list.html", styles = Style.query.all())
-
-@app.route("/styles/new/")
-@login_required
-def styles_form():
-    return render_template("styles/new.html", form = StyleForm())
-
-@app.route("/styles/", methods=["POST"])
-@login_required
-def styles_create():
-    form = StyleForm(request.form)
-
-    if not form.validate():
-        return render_template("styles/new.html", form = form)
-
-    s = Style(form.name.data)
-
-    db.session().add(s)
-    db.session().commit()
-  
-    return redirect(url_for("styles_index"))
 
 @app.route("/styles/edit/<style_id>", methods=["GET", "POST"])
 @login_required
@@ -209,32 +153,43 @@ def styles_delete(style_id):
     db.session().delete(s)
     db.session().commit()
 
-    return "Deleted successfully!"
+    return render_template("success.html")
 
 # TECHNIQUES
 @app.route("/techniques", methods=["GET"])
 def techniques_index():
     return render_template("techniques/list.html", techniques = Technique.query.all())
 
-@app.route("/techniques/new/")
+@app.route("/pieces/techniques/<piece_id>", methods=["GET", "POST"])
 @login_required
-def techniques_form():
-    return render_template("techniques/new.html", form = TechniqueForm())
+def techniques_create(piece_id):
+    piece = Piece.query.get(piece_id)
 
-@app.route("/techniques/", methods=["POST"])
-@login_required
-def techniques_create():
+    if request.method == "GET":
+        return render_template("techniques/new.html", form = TechniqueForm(), piece = piece, piece_id = piece_id)
+
     form = TechniqueForm(request.form)
 
     if not form.validate():
-        return render_template("techniques/new.html", form = form)
+        return render_template("techniques/new.html", form = form, piece = piece, piece_id = piece_id)
 
-    t = Technique(form.name.data)
+    technique = form.name.data
+    t = Technique(technique)
 
-    db.session().add(t)
+    # tarkistetaan, onko erikoistekniikka jo tietokannassa
+
+    t = Technique.query.filter_by(name=form.name.data).first()
+
+    if t is None:
+        t = Technique(technique)
+        db.session().add(t)
+        db.session().flush()
+
+    piece.techniques.append(t)
+    
     db.session().commit()
-  
-    return redirect(url_for("techniques_index"))
+
+    return redirect(url_for("pieces_show", piece_id=piece_id))
 
 @app.route("/techniques/edit/<technique_id>", methods=["GET", "POST"])
 @login_required

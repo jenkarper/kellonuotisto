@@ -1,6 +1,6 @@
 from application.auth.models import User
 from flask_wtf import FlaskForm
-from wtforms import BooleanField, PasswordField, StringField, validators
+from wtforms import BooleanField, PasswordField, StringField, TextField, validators
 from wtforms.validators import DataRequired, EqualTo, ValidationError
   
 class LoginForm(FlaskForm):
@@ -25,6 +25,18 @@ class RegistrationForm(FlaskForm):
             raise ValidationError("Please use a different username.")
   
     class Meta:
-        csrf = False # Kytkee 'cross-site request forgery' -hyökkäyksiä vastaan turvautumisen pois päältä
+        csrf = False
 
+class PasswordForm(FlaskForm):
+    newpassword = PasswordField("Password", validators=[DataRequired(), validators.length(min=5, max=15)])
+    newpassword2 = PasswordField("Repeat password", validators=[DataRequired(), EqualTo("newpassword")])
+
+    class Meta:
+        csrf = False
+
+class NoteForm(FlaskForm):
+    comment = TextField("Comment", validators=[DataRequired()])
+
+    class Meta:
+        csrf = False
 

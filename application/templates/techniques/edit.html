@@ -2,10 +2,10 @@
 {% extends "layout.html" %}
 {% block body %}
 <div class="mx-auto" style="width:800px;">
-   <h2>Erikoistekniikat</h2>
-   <p>Valittuna: <i>{{ tech.name }}</i></p>
+   <h3>{{ tech.name }}</h3>
+   <hr>
+   <p>Muokkaa nimeä <i>{{ tech.name }}</i></p>
    <br>
-   <p>Syötä uusi nimi:</p>
    <form method="POST" action="{{ url_for('techniques_edit', technique_id=technique_id) }}">
       <table>
          <tr>

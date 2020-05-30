@@ -1,0 +1,27 @@
+
+{% extends "layout.html" %}
+{% block body %}
+<div class="mx-auto" style="width:800px;">
+   {% if current_user.admin %}
+   <h2>Käyttäjät</h2>
+   <hr>
+   <h5>Kaikki tietokannassa olevat käyttäjät</h5>
+   <br>
+   <table>
+      <tr>
+         <th>Nimi</th>
+         <th>Käyttäjätunnus</th>
+         <th>Admin</th>
+      </tr>
+      {% for user in users %}
+      <tr>
+         <td>{{ user.name }}<td>
+         <td>{{ user.username }}</td>
+         <td>{{ user.admin }}</td>
+      </tr>
+      {% endfor %}
+   </table>
+   {% endif %}
+</div>
+{% endblock %}
+

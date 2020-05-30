@@ -2,13 +2,14 @@
 {% extends "layout.html" %}
 {% block body %}
 <div class="mx-auto" style="width:800px;">
-   <h2>Erikoistekniikat</h2>
+   <h3>{{  piece.name  }}</h3>
+   <hr>
+   <h5>Lisää uusi erikoistekniikka</h5>
    <br>
-   <p>Lisää uusi erikoistekniikka</p>
-   <form method="POST" action="{{ url_for('techniques_create') }}">
+   <form method="POST" action="{{ url_for('techniques_create', piece_id = piece_id) }}">
       <table>
          <tr>
-	    <td>Tekniikka</td>
+	    <td>Tekniikan nimi: </td>
 	    <td>{{ form.name }}</td>
             <td>
 	       <ul>
@@ -17,9 +18,7 @@
 	          {% endfor %}
 	       </ul>
             </td>
-         </tr>
-         <tr>
-	    <td colspan="3">
+            <td colspan="3">
 	       <input type="submit" value="Lisää"/>
             </td>
          </tr>

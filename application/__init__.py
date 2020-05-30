@@ -20,14 +20,17 @@ db = SQLAlchemy(app)
 # Oman sovelluksen toiminnallisuudet
 from application import views
 
+from application.auth import models
+from application.auth import views
+
+from application.concerts import models
+from application.concerts import views
+
 from application.pieces import models
 from application.pieces import views
 
 from application.supplements import models
 from application.supplements import views
-
-from application.auth import models
-from application.auth import views
 
 # Kirjautuminen
 from application.auth.models import User
@@ -52,8 +55,10 @@ def load_user(user_id):
 #    cursor.execute("PRAGMA foreign_keys=ON")
 #    cursor.close()
 
-# Tietokantataulujen luominen tarvittaessa
+#Tietokantataulujen luominen tarvittaessa
 try:
     db.create_all()
 except:
     pass
+
+# db.create_all()

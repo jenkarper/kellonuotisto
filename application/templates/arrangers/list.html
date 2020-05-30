@@ -3,11 +3,13 @@
 {% block body %}
 <div class="mx-auto" style="width:800px;">
    <h2>Sovittajat</h2>
+   <hr>
+   <h5>Kaikki tietokannassa olevat sovittajat</h5>
    <br>
    <table>
       {% for arranger in arrangers %}
       <tr>
-         <td style="padding:10px">{{ arranger.name }}</td>
+         <td>{{ arranger.name }}</td>
          <td><a href="{{ url_for('arrangers_show', arranger_id=arranger.id) }}">Näytä tiedot</a></td>
       </tr>
       {% endfor %}

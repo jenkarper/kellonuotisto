@@ -2,9 +2,8 @@
 {% extends "layout.html" %}
 {% block body %}
 <div class="mx-auto" style="width:800px;">
-   <h2>Kappaleet</h2>
-   <p>Valittuna: <i>{{ piece.name }}</i></p>
-   <br>
+   <h3>{{ piece.name }}</h3>
+   <hr>
    <p>Poista rivi <i>{{ piece.name }}</i>:</p>
    <form method="POST" action="{{ url_for('pieces_delete', piece_id=piece_id) }}">
       <table>

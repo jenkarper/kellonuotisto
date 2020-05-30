@@ -1,0 +1,44 @@
+
+{% extends "layout.html" %}
+{% block body %}
+<div class="mx-auto" style="width:800px;">
+   <h3>{{ piece.name }}</h3>
+   <hr>
+   <h5>Lisää konsertti</h5>
+   <p>Tietokannassa olevat konsertit:</p>
+   {% for concert in concerts %}
+   <table>
+      <tr>
+         <th>Tunniste</th>
+         <th>Konsertin nimi</th>
+         <th>Päivämäärä</th>
+      </tr>
+      <tr>
+         <td>{{  concert.id  }}</td>
+         <td>{{  concert.name  }}</td>
+         <td>{{  concert.date  }}</td>
+      </tr>
+   </table>
+   {% endfor %}
+   <br>
+   <p>Kirjoita konsertin tunniste lomakkeen kenttään. Jos haluamaasi konserttia ei ole tietokannassa, <a href="{{  url_for('concerts_form')  }}">lisää</a> se ensin!</p>
+   <hr>
+   <form method="POST" action="{{ url_for('pieces_concerts', piece_id = piece.id) }}">
+      <table>
+         <tr>
+         <td>Konsertin tunniste:</td>
+         <td>{{ form.concert_id }}</td>
+         <td>
+            <ul>
+               {% for error in form.concert_id.errors %}
+                  <li>{{ error }}</li>
+               {% endfor %}
+            </ul>
+         </td>
+         <td colspan="3">
+            <input type="submit" value="Lisää"/>
+         </td>
+      </tr>
+   </form>
+</div>
+{% endblock %}

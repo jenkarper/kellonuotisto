@@ -1,68 +1,79 @@
 
+
 <!DOCTYPE html>
 <html>
    <head>
       <meta charset="utf-8">
       <title>Kellonuotisto</title>
       <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+      <link rel="stylesheet" href="/application/templates/tablestyle.css">
    </head>
    <body>
-<div class="mx-auto" style="width:1200px;">
-      <nav class="navbar navbar-expand-md navbar-dark bg-dark mb-4">
-         <a class="navbar-brand" href="#">Kellonuotisto</a><!-- MIKSI KUVA EI NÄY?? -->
-         <a class="navbar-brand" href="#"><img src="https://github.com/jenkarper/kellonuotisto/blob/master/documentation/musical_notes.png" alt=""></a>
-         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-         <span class="navbar-toggler-icon"></span>
-         </button>
-         <div class="collapse navbar-collapse" id="navbarCollapse">
-            <ul class="navbar-nav mr-auto">
-               <li class="nav-item">
-                  <a class="nav-link" href="{{ url_for('index') }} ">Koti</a>
-               </li>
-               <li class="nav-item dropdown">
-                  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Selaa musiikkia</a>
-                  <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                     <a class="dropdown-item" href="{{ url_for('pieces_index') }}">Kappaleet</a>
-                     <a class="dropdown-item" href="{{ url_for('composers_index') }}">Säveltäjät</a>
-                     <a class="dropdown-item" href="{{ url_for('arrangers_index') }}">Sovittajat</a>
-                     <a class="dropdown-item" href="{{ url_for('styles_index') }}">Tyylilajit</a>
-                     <a class="dropdown-item" href="{{ url_for('techniques_index') }}">Erikoistekniikat</a>
-                  </div>
-               </li>
-               {% if current_user.is_authenticated %}
-               <li class="nav-item dropdown">
-                  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Lisää musiikkia</a>
-                  <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                     <a class="dropdown-item" href="{{ url_for('pieces_form') }}">Lisää kappale</a>
-                     <a class="dropdown-item" href="{{ url_for('composers_form') }}">Lisää säveltäjä</a>
-                     <a class="dropdown-item" href="{{ url_for('arrangers_form') }}">Lisää sovittaja</a>
-                     <a class="dropdown-item" href="{{ url_for('styles_form') }}">Lisää tyylilaji</a>
-                     <a class="dropdown-item" href="{{ url_for('techniques_form') }}">Lisää erikoistekniikka</a>
-                  </div>
-               </li>
-               {% endif %}
-               {% if current_user.admin %}
-               <li class="nav-item dropdown">
-                  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Käyttäjät</a>
-                  <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                     <a class="dropdown-item" href="{{ url_for('auth_index') }}">Listaa käyttäjät</a>
-                     <a class="dropdown-item" href="{{ url_for('auth_form') }}">Luo uusi käyttäjä</a>
-                  </div>
-               </li>
-               {% endif %}
-            </ul>
-            <div class="form-inline mt-2 mt-md-0">
-               {% if current_user.is_authenticated %}
-               <a href="{{ url_for('auth_logout') }}">Hei {{ current_user.name }}! -- Kirjaudu ulos</a>
-               {% else %}
-               <a href="{{ url_for('auth_login') }}">Kirjaudu sisään</a>
-               {% endif %}
+      <div class="mx-auto" style="width:1200px;">
+         <nav class="navbar navbar-expand-md navbar-dark bg-dark mb-4">
+            <a class="navbar-brand" href="#">Kellonuotisto</a><!-- MIKSI KUVA EI NÄY?? -->
+            <a class="navbar-brand" href="#"><img src="https://github.com/jenkarper/kellonuotisto/blob/master/documentation/musical_notes.png" alt=""></a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarCollapse">
+               <ul class="navbar-nav mr-auto">
+                  <li class="nav-item">
+                     <a class="nav-link" href="{{ url_for('index') }} ">Koti</a>
+                  </li>
+                  <li class="nav-item dropdown">
+                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Selaa musiikkia</a>
+                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="{{ url_for('pieces_index') }}">Kappaleet</a>
+                        <a class="dropdown-item" href="{{ url_for('composers_index') }}">Säveltäjät</a>
+                        <a class="dropdown-item" href="{{ url_for('arrangers_index') }}">Sovittajat</a>
+                        {% if current_user.admin %}
+                        <a class="dropdown-item" href="{{ url_for('styles_index') }}">Tyylilajit</a>
+                        <a class="dropdown-item" href="{{ url_for('techniques_index') }}">Erikoistekniikat</a>
+                        <div class="dropdown-divider"></div>
+                        {% endif %}
+                        {% if current_user.is_authenticated %}
+                        <a class="dropdown-item" href="{{  url_for('concerts_index')  }}">Konsertit</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="{{  url_for('pieces_search')  }}">Hae musiikkia</a>
+                        {% endif %}
+                     </div>
+                  </li>
+                  {% if current_user.is_authenticated %}
+                  <li class="nav-item dropdown">
+                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Lisää musiikkia</a>
+                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="{{ url_for('pieces_form') }}">Lisää kappale</a>
+                        {% if current_user.admin %}
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="{{  url_for('concerts_form')  }}">Lisää konsertti</a>
+                        {% endif %}
+                     </div>
+                  </li>
+                  <li class="nav-item dropdown">
+                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Omat tiedot</a>
+                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="{{ url_for('auth_profile', user_id=current_user.id) }}">Profiili</a>
+                        {% if current_user.admin %}
+                        <a class="dropdown-item" href="{{ url_for('notes_index') }}">Omat muistiinpanot</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="{{ url_for('auth_index') }}">Listaa käyttäjät</a>
+                        <a class="dropdown-item" href="{{ url_for('auth_form') }}">Luo uusi käyttäjä</a>
+                        {% endif %}
+                     </div>
+                  </li>
+                  {% endif %}
+               </ul>
+               <div class="form-inline mt-2 mt-md-0">
+                  {% if current_user.is_authenticated %}
+                  <a href="{{ url_for('auth_logout') }}">Hei {{ current_user.name }}! -- Kirjaudu ulos</a>
+                  {% else %}
+                  <a href="{{ url_for('auth_login') }}">Kirjaudu sisään</a>
+                  {% endif %}
+               </div>
             </div>
-         </div>
-      </nav>
-</div>
-
-
+         </nav>
+      </div>
       <main role="main" class="container">
       {% block body %}
       <p>
@@ -74,3 +85,5 @@
       <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
    </body>
 </html>
+
+

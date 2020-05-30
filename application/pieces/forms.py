@@ -1,8 +1,12 @@
+from application import app
 from application.pieces.models import Piece
 
+from flask_bootstrap import Bootstrap
 from flask_wtf import FlaskForm
-from wtforms import BooleanField, IntegerField, SelectField, StringField, validators
+from wtforms import BooleanField, IntegerField, SelectField, StringField, SubmitField, validators
 from wtforms.validators import ValidationError
+
+Bootstrap(app)
 
 # uuden rivin luonti
 class PieceForm(FlaskForm):
@@ -12,6 +16,7 @@ class PieceForm(FlaskForm):
     composer = StringField("Composer", [validators.required(), validators.length(min=3, max=50)])
     arranger = StringField("Arranger", [validators.required(), validators.length(min=3, max=50)])
     style = StringField("Style", [validators.required(), validators.length(min=3, max=50)])
+    submit = SubmitField('Submit')
  
     class Meta:
         csrf = False
@@ -24,19 +29,24 @@ class PieceForm(FlaskForm):
 # rivin haku (kesken)
 class SearchForm(FlaskForm):
     name = StringField("Piece name")
-    composer = StringField("Composer")
-    arranger = StringField("Arranger")
-    style = StringField("Style")
+    composer = StringField("Composer name")
+    arranger = StringField("Arranger name")
+    style = StringField("Style name")
 
     class Meta:
         csrf = False
 
-# rivin muokkaus (kesken)
-class EditForm(FlaskForm):
-    technique = StringField("Special technique", [validators.required(), validators.length(min=3, max=50)])
-
+# rivin poisto
 class DeleteForm(FlaskForm):
     delete = BooleanField("Delete row")
 
     class Meta:
         csrf = False
+
+# konsertin lisäys
+class ProgrammeForm(FlaskForm):
+    concert_id = IntegerField("Concert id")
+
+    class Meta:
+        csrf = False
+

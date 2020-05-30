@@ -1,0 +1,46 @@
+
+{% extends "layout.html" %}
+{% block body %}
+<div class="mx-auto" style="width:800px;">
+   <h2>Profiili</h2>
+   {% if current_user.is_authenticated %}
+   <hr>
+   <p>Nimi: {{  user.name  }}</p>
+   <p>Käyttäjänimi: {{  user.username  }}</p>
+   <br>
+   <h5>Vaihda salasana</h5>
+   <br>
+   <form method="POST" action="{{ url_for('auth_profile', user_id = user.id) }}">
+      <table>
+         <tr>
+            <td>Syötä uusi salasana:</td>
+            <td>{{ form.newpassword }}</td>
+            <td>
+	       <ul>
+	       {% for error in form.newpassword.errors %}
+	          <li>{{ error }}</li>
+	       {% endfor %}
+	       </ul>
+	    </td>
+         </tr>
+         <tr>
+            <td>Vahvista salasana:</td>
+            <td>{{ form.newpassword2 }}</td>
+            <td>
+	       <ul>
+	       {% for error in form.newpassword2.errors %}
+	          <li>{{ error }}</li>
+	       {% endfor %}
+	       </ul>
+	    </td>
+         </tr>
+         <tr>
+            <td colspan="4">
+               <input type="submit" value="Päivitä"/>
+            </td>
+         </tr>
+      </table>
+   </form>
+   {% endif %}
+</div>
+{% endblock %}

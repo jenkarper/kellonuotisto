@@ -1,6 +1,7 @@
 from application import db
 from application.models import Base
 from application.supplements.models import piece_technique, Technique
+from application.concerts.models import piece_concert, Concert
 
 from sqlalchemy.sql import text
 
@@ -13,7 +14,8 @@ class Piece(Base):
     arranger_id = db.Column(db.Integer, db.ForeignKey('arranger.id'), nullable=False)
     style_id = db.Column(db.Integer, db.ForeignKey('style.id'), nullable=False)
 
-    techniques = db.relationship('Technique', secondary=piece_technique, backref=db.backref('pieces'))
+    techniques = db.relationship('Technique', secondary=piece_technique, backref=db.backref('pieces', lazy='dynamic'))
+    concerts = db.relationship('Concert', secondary=piece_concert, backref=db.backref('pieces', lazy='dynamic'))
 
     def __init__(self, name, octaves, length, composer_id, arranger_id, style_id):
         self.name = name
@@ -48,6 +50,35 @@ class Piece(Base):
 
         response = []
         for row in res:
+            response.append({"piece":row[0]})
+
+        return response
+
+    @staticmethod
+    def find_music_by_arranger(name):
+        stmt = text("SELECT Piece.name FROM Piece"
+                    " JOIN Arranger ON Arranger.id = Piece.arranger_id"
+                    " WHERE Arranger.name = :name").params(name=name)
+
+        res = db.engine.execute(stmt)
+
+        response = []
+        for row in res:
+            response.append({"piece":row[0]})
+
+        return response
+
+    @staticmethod
+    def find_music_by_style(name):
+        stmt = text("SELECT Piece.name FROM Piece"
+                    " JOIN Style ON Style.id = Piece.style_id"
+                    " WHERE Style.name = :name").params(name=name)
+
+        res = db.engine.execute(stmt)
+
+        response = []
+        for row in res:
             response.append({"style":row[0]})
 
         return response
+

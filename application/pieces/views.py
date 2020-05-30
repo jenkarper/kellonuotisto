@@ -1,50 +1,69 @@
 from flask import redirect, render_template, request, url_for
-from flask_login import login_required
+from flask_login import current_user, login_required
 
 from application import app, db
 from application.pieces.models import Piece
-from application.pieces.forms import DeleteForm, EditForm, PieceForm, SearchForm
+from application.pieces.forms import DeleteForm, PieceForm, ProgrammeForm, SearchForm
+from application.auth.forms import NoteForm
+from application.supplements.forms import TechniqueForm
 
 from application.supplements.models import Composer, Arranger, Style, Technique
+from application.auth.models import Note
+from application.concerts.models import Concert
 
 @app.route("/pieces", methods = ["GET"])
 def pieces_index():
     pieces = db.session.query(Piece).order_by(Piece.name)
     return render_template("pieces/list.html", pieces = pieces, pieces_by_style = Piece.count_pieces_by_style())
 
+# Näyttää yhden kappaleen tiedot
 @app.route("/pieces/<piece_id>/")
 def pieces_show(piece_id):
-    return render_template("pieces/show.html", piece = Piece.query.get(piece_id))
+    user_id = current_user.id
+    notes = Note.search_notes_by_piece_and_user(user_id, piece_id)
+    return render_template("pieces/show.html", piece = Piece.query.get(piece_id), notes = notes)
 
-@app.route("/pieces/edit/<piece_id>", methods = ["GET", "POST"])
-def pieces_edit(piece_id):
+# Palauttaa erikoistekniikan lisäyslomakkeen
+@app.route("/pieces/techniques/<piece_id>/")
+@login_required
+def pieces_techniques(piece_id):
+    piece = Piece.query.get(piece_id)
+    return render_template("techniques/new.html", form = TechniqueForm(), piece = piece, piece_id = piece_id)
+
+# Palauttaa muistiinpanon lisäyslomakkeen
+@app.route("/pieces/notes/<piece_id>")
+@login_required
+def pieces_notes(piece_id):
+    piece = Piece.query.get(piece_id)
+    return render_template("notes/new.html", form = NoteForm(), piece = piece, piece_id = piece_id)
+
+# Liittää olemassaolevan konsertin kappaleeseen
+@app.route("/pieces/concerts/<piece_id>", methods = ["GET", "POST"])
+@login_required
+def pieces_concerts(piece_id):
+    piece = Piece.query.get(piece_id)
+    concerts = Concert.query.all()
 
     if request.method == "GET":
-        piece = Piece.query.get(piece_id)
-        return render_template("pieces/edit.html", form = EditForm(), piece_id = piece_id, piece = piece)
+        return render_template("pieces/concerts.html", form = ProgrammeForm(), piece = piece, concerts = concerts)
 
-    form = EditForm(request.form)
-    
-    # VALIDOINNISSA ON JOTAIN VIKAA!
-    #if not form.validate():
-     #   return render_template("pieces/edit.html", form = form, piece_id = piece_id)
+    form = ProgrammeForm(request.form)
+    concert = Concert.query.get(form.concert_id.data)
 
-    p = Piece.query.get(piece_id)
-    technique = form.technique.data
+    piece.concerts.append(concert)
 
-    # tarkistetaan, onko erikoistekniikka jo tietokannassa
-    t = Technique.query.filter_by(name=form.technique.data).first()
-    if t is None:
-        t = Technique(technique)
-        db.session().add(t)
-        db.session().flush()
-
-    p.techniques.append(t)
-    
     db.session().commit()
 
-    return redirect(url_for("pieces_index"))
+    return redirect(url_for("pieces_show", piece_id=piece_id))
 
+# Muokkaa kappaleen tietoja
+@app.route("/pieces/edit/<piece_id>", methods = ["GET", "POST"])
+@login_required
+def pieces_edit(piece_id):
+    piece = Piece.query.get(piece_id)
+    return render_template("pieces/edit.html", piece = piece, piece_id = piece_id)
+
+# Poistaa kappaleen
 @app.route("/pieces/delete/<piece_id>", methods = ["GET", "POST"])
 @login_required
 def pieces_delete(piece_id):
@@ -58,13 +77,15 @@ def pieces_delete(piece_id):
     db.session().delete(p)
     db.session().commit()
     
-    return "Deleted successfully!"
+    return render_template("success.html")
 
+# Palauttaa kappaleen lisäyslomakkeen
 @app.route("/pieces/new/")
 @login_required
 def pieces_form():
     return render_template("pieces/new.html", form = PieceForm())
 
+# Lisää uuden kappaleen (tarvittaessa myös säveltäjän, sovittajan ja tyylilajin)
 @app.route("/pieces/", methods = ["POST"])
 @login_required
 def pieces_create():
@@ -112,5 +133,36 @@ def pieces_create():
   
     return redirect(url_for("pieces_index"))
 
+# Hakee tietoa taulusta Piece
+@app.route("/pieces/search/", methods = ["GET", "POST"])
+def pieces_search():
 
+    if request.method == "GET":
+        pieces = Piece.query.all()
+        return render_template("pieces/search.html", form = SearchForm(), pieces = pieces)
+    
+    form = SearchForm(request.form)
+    name = form.name.data
+    composer = form.composer.data
+    arranger = form.arranger.data
+    style = form.style.data
 
+    p = Piece.query.filter_by(name=name).first()
+    c = Composer.query.filter_by(name=composer).first()
+    a = Arranger.query.filter_by(name=arranger).first()
+    s = Style.query.filter_by(name=style).first()
+
+    if p is not None:
+        return render_template("pieces/show.html", piece = p)
+
+    elif c is not None:
+        return render_template("composers/show.html", composer = c)
+
+    elif a is not None:
+        return render_template("arrangers/show.html", arranger = a)
+
+    elif s is not None:
+        return render_template("styles/show.html", style = s)
+
+    else:
+        return "Annetuilla tiedoilla ei löydy yhtään musiikkia tietokannasta!"

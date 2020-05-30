@@ -1,0 +1,17 @@
+
+{% extends "layout.html" %}
+{% block body %}
+<div class="mx-auto" style="width:800px;">
+   <h2>Konsertit</h2>
+   <p>Valittuna: <i>{{ concert.name }}</i></p> <!--
+   {% if current_user.is_authenticated %}
+   <p><a href="{{ url_for('composers_edit', composer_id=composer.id) }}">Muokkaa nimeä</a>
+      {% if current_user.admin %}
+      <p><a href="{{ url_for('composers_delete', composer_id=composer.id) }}">poista koko rivi</a></p>
+      {% endif %}
+   {% endif %}-->
+   <br>
+   <p><b>Konsertin <i>{{ concert.name }}</i> ohjelma:</b></p>
+   <p><i>Tähän tulee kappalelistaus.</i></p>
+</div>
+{% endblock %}

@@ -1,0 +1,24 @@
+
+{% extends "layout.html" %}
+{% block body %}
+<div class="mx-auto" style="width:800px;">
+   <h2>Konsertit</h2>
+   <hr>
+   <h5>Kaikki tietokannassa olevat konsertit</h5>
+   <br>
+   <table>
+      <tr>
+         <th>Konsertti</th>
+         <th>Päivämäärä</th>
+         <th>Paikka</th>
+      </tr>
+      {% for concert in concerts %}
+      <tr>
+         <td style="padding:10px">{{ concert.name }}</td>
+         <td style="padding:10px">{{ concert.date }}</td>
+         <td style="padding:10px">{{ concert.venue }}</td>
+      </tr>
+      {% endfor %}
+   </table>
+</div>
+{% endblock %}

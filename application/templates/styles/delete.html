@@ -2,9 +2,8 @@
 {% extends "layout.html" %} 
 {% block body %}
 <div class="mx-auto" style="width:800px;">
-   <h2>Tyylilajit</h2>
-   <p>Valittuna: <i>{{ style.name }}</i></p>
-   <br>
+   <h3>{{ style.name }}</h3>
+   <hr>
    <p>Poista rivi <i>{{ style.name }}</i>:</p>
    <form method="POST" action="{{ url_for('styles_delete', style_id=style_id) }}">
       <table>
