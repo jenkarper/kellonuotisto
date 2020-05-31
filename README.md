@@ -20,8 +20,6 @@ Ohjelmaan voi kirjautua tavallisena käyttäjänä tai pääkäyttäjänä. Tava
 
 ## LINKIT
 
-[Tietokantakaavio](https://github.com/jenkarper/kellonuotisto/blob/master/documentation/kellonuotisto_kaavio_updated.jpg)
-
 [Käyttötapaukset](https://github.com/jenkarper/kellonuotisto/blob/master/documentation/userstories.md)
 
 [Sovellus Herokussa](https://kellonuotisto.herokuapp.com/) (Sovelluksen testaamiseen tarvitset pääkäyttäjän testitunnukset. Username: 'kellotar', password: 'salainen'.)
