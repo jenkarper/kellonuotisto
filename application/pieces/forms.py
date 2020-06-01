@@ -26,7 +26,13 @@ class PieceForm(FlaskForm):
         if piece is not None:
             raise ValidationError("This piece already exists in the database.")
 
-# rivin haku (kesken)
+# rivin muokkaus (kesken)
+class EditForm(FlaskForm):
+    name = StringField("Piece name", [validators.required(), validators.length(min=5, max=50)])
+    octaves = StringField("Used octaves", [validators.required(), validators.length(min=1, max=20)])
+    length = IntegerField("Length (in minutes)")
+
+# rivin haku
 class SearchForm(FlaskForm):
     name = StringField("Piece name")
     composer = StringField("Composer name")

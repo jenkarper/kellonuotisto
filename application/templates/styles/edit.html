@@ -7,22 +7,18 @@
    <p>Muokkaa nimeä <i>{{ style.name }}</i></p>
    <br>
    <form method="POST" action="{{ url_for('styles_edit', style_id=style_id) }}">
-      <table>
-         <tr>
-            <td>Syötä uusi nimi:</h5>
-            <td>{{ form.newname }}</td>
-            <td>
-               <ul>
-                  {% for error in form.newname.errors %}
-                  <li>{{ error }}</li>
-                  {% endfor %}
-               </ul>
-            </td>
-            <td colspan="4">
-               <input type="submit" value="Päivitä"/>
-            </td>
-         </tr>
-      </table>
+      <div class ="form-group">
+         <label for="newname">Nimi</label>
+         <input type="text" class="form-control" id="newname" name="newname" placeholder="Syötä uusi nimi...">
+      </div>
+      <ul>
+         {% for error in form.newname.errors %}
+         <span style="color: red;">
+         <li>{{ error }}</li>
+         </span>
+         {% endfor %}
+      </ul>
+      <button type="submit" class="btn btn-primary">Päivitä</button>
    </form>
 </div>
 {% endblock %}

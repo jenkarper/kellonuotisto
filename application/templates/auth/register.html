@@ -8,62 +8,55 @@
    <h5>Luo uusi käyttäjä</h5>
    <br>
    <form method="POST" action="{{ url_for('auth_create') }}">
-      <table>
-      <tr>
-         <td>Käyttäjän nimi:</td>
-         <td>{{ form.name }}</td>
-         <td>
-            <ul>
-               {% for error in form.name.errors %}
-               <span style="color: red;">
-                  <li>{{ error }}</li>
-               </span>
-               {% endfor %}
-            </ul>
-         </td>
-         <td>Käyttäjätunnus:</td>
-         <td>{{ form.username }}</td>
-         <td>
-            <ul>
-               {% for error in form.username.errors %}
-               <span style="color: red;">
-                  <li>{{ error }}</li>
-               </span>
-               {% endfor %}
-            </ul>
-         </td>
-         <td>Admin-oikeudet:</td>
-         <td>{{ form.admin }}</td>
-      </tr>
-      <tr>
-         <td>Salasana:</td>
-         <td>{{ form.password }}</td>
-         <td>
-            <ul>
-               {% for error in form.password.errors %}
-               <span style="color: red;">
-                  <li>{{ error }}</li>
-               </span>
-               {% endfor %}
-            </ul>
-         </td>
-         <td>Salasana uudestaan:</td>
-         <td>{{ form.password2 }}</td>
-         <td>
-            <ul>
-               {% for error in form.password2.errors %}
-               <span style="color: red;">
-                  <li>{{ error }}</li>
-               </span>
-               {% endfor %}
-            </ul>
-         </td>
-      </tr>
-      <tr>
-         <td colspan="4">
-            <input type="submit" value="Luo tunnus"/>
-         </td>
-      </tr>
+      <div class ="form-group">
+         <label for="name">Käyttäjän nimi:</label>
+         <input type="text" class="form-control" id="name" name="name" placeholder="Syötä käyttäjän nimi...">
+      </div>
+      <ul>
+         {% for error in form.name.errors %}
+         <span style="color: red;">
+         <li>{{ error }}</li>
+         </span>
+         {% endfor %}
+      </ul>
+      <div class ="form-group">
+         <label for="username">Käyttäjätunnus:</label>
+         <input type="text" class="form-control" id="username" name="username" placeholder="Syötä käyttäjätunnus...">
+      </div>
+      <ul>
+         {% for error in form.username.errors %}
+         <span style="color: red;">
+         <li>{{ error }}</li>
+         </span>
+         {% endfor %}
+      </ul>
+      <div class ="form-group">
+         <label for="password">Salasana:</label>
+         <input type="password" class="form-control" id="password" name="password" placeholder="Syötä salasana...">
+      </div>
+      <ul>
+         {% for error in form.password.errors %}
+         <span style="color: red;">
+         <li>{{ error }}</li>
+         </span>
+         {% endfor %}
+      </ul>
+      <div class ="form-group">
+         <label for="password2">Vahvista salasana:</label>
+         <input type="password" class="form-control" id="password2" name="password2" placeholder="Syötä sama salasana uudestaan...">
+      </div>
+      <ul>
+         {% for error in form.password2.errors %}
+         <span style="color: red;">
+         <li>{{ error }}</li>
+         </span>
+         {% endfor %}
+      </ul>
+      <div class ="form-group">
+         <input type="checkbox" class="form-check-input" id="admin" name="admin">
+         <label class="form-check-label" for="admin">Admin-oikeudet</label>
+      </div>
+      <button type="submit" class="btn btn-primary">Luo tunnus</button>
    </form>
    {% endif %}
 </div>

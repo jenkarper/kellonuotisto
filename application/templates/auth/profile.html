@@ -11,35 +11,29 @@
    <h5>Vaihda salasana</h5>
    <br>
    <form method="POST" action="{{ url_for('auth_profile', user_id = user.id) }}">
-      <table>
-         <tr>
-            <td>Syötä uusi salasana:</td>
-            <td>{{ form.newpassword }}</td>
-            <td>
-	       <ul>
-	       {% for error in form.newpassword.errors %}
-	          <li>{{ error }}</li>
-	       {% endfor %}
-	       </ul>
-	    </td>
-         </tr>
-         <tr>
-            <td>Vahvista salasana:</td>
-            <td>{{ form.newpassword2 }}</td>
-            <td>
-	       <ul>
-	       {% for error in form.newpassword2.errors %}
-	          <li>{{ error }}</li>
-	       {% endfor %}
-	       </ul>
-	    </td>
-         </tr>
-         <tr>
-            <td colspan="4">
-               <input type="submit" value="Päivitä"/>
-            </td>
-         </tr>
-      </table>
+      <div class ="form-group">
+         <label for="newpassword">Uusi salasana:</label>
+         <input type="password" class="form-control" id="newpassword" name="newpassword" placeholder="Syötä uusi salasana...">
+      </div>
+      <ul>
+         {% for error in form.newpassword.errors %}
+         <span style="color: red;">
+         <li>{{ error }}</li>
+         </span>
+         {% endfor %}
+      </ul>
+      <div class ="form-group">
+         <label for="newpassword2">Vahvista uusi salasana:</label>
+         <input type="password" class="form-control" id="newpassword2" name="newpassword2" placeholder="Syötä sama salasana uudestaan...">
+      </div>
+      <ul>
+         {% for error in form.newpassword2.errors %}
+         <span style="color: red;">
+         <li>{{ error }}</li>
+         </span>
+         {% endfor %}
+      </ul>
+      <button type="submit" class="btn btn-primary">Päivitä</button>
    </form>
    {% endif %}
 </div>

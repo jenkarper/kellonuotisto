@@ -4,27 +4,15 @@
 {{ error }}
 <form method="POST" action="{{ url_for('auth_login') }}">
   <table>
-    <tr>
-      <td>
-	Käyttäjätunnus: 
-      </td>
-      <td>
-	{{ form.username }}
-      </td>
-    </tr>
-    <tr>
-      <td>
-	Salasana: 
-      </td>
-      <td>
-	{{ form.password }}
-      </td>
-    </tr>
-    <tr>
-      <td colspan="2">
-	<input type="submit" value="Kirjaudu"/>
-      </td>
-    </tr>
+      <div class ="form-group">
+         <label for="username">Käyttäjätunnus</label>
+         <input type="text" class="form-control" id="username" name="username" placeholder="Syötä käyttäjätunnuksesi...">
+      </div>
+      <div class ="form-group">
+         <label for="user_password">Salasana</label>
+         <input type="password" class="form-control" id="user_password" name="user_password" placeholder="Syötä salasanasi...">
+      </div>
+      <button type="submit" class="btn btn-primary">Kirjaudu</button>
 </form>
 {% endblock %}
 

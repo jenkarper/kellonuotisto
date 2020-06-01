@@ -1,4 +1,4 @@
-from flask import redirect, render_template, request, url_for
+from flask import flash, redirect, render_template, request, url_for
 from flask_login import login_required
 
 from application import app, db
@@ -22,18 +22,18 @@ def arrangers_show(arranger_id):
 @app.route("/arrangers/edit/<arranger_id>", methods=["GET", "POST"])
 @login_required
 def arrangers_edit(arranger_id):
+    arranger = Arranger.query.get(arranger_id)
 
     if request.method == "GET":
-        arranger = Arranger.query.get(arranger_id)
-        return render_template("arrangers/edit.html", form = EditForm(), arranger_id=arranger_id, arranger=arranger)
+        return render_template("arrangers/edit.html", form = EditForm(), arranger_id = arranger_id, arranger = arranger)
 
     form = EditForm(request.form)
 
     if not form.validate():
-        return render_template("arrangers/edit.html", form = form, arranger_id=arranger_id, arranger=arranger)
+        return render_template("arrangers/edit.html", form = form, arranger_id = arranger_id, arranger = arranger)
 
-    a = Arranger.query.get(arranger_id)
-    a.name = form.newname.data
+    name = request.form["newname"]
+    arranger.name = name
     db.session().commit()
 
     return redirect(url_for("arrangers_index"))
@@ -52,7 +52,7 @@ def arrangers_delete(arranger_id):
     a = Arranger.query.get(arranger_id)
 
     for piece in a.pieces:
-        if piece.composer_id == a.id:
+        if piece.arranger_id == a.id:
             return "This arranger is referred to in another table and cannot be deleted!"
     
     db.session().delete(a)
@@ -73,9 +73,9 @@ def composers_show(composer_id):
 @app.route("/composers/edit/<composer_id>", methods=["GET", "POST"])
 @login_required
 def composers_edit(composer_id):
+    composer = Composer.query.get(composer_id)
 
     if request.method == "GET":
-        composer = Composer.query.get(composer_id)
         return render_template("composers/edit.html", form = EditForm(), composer_id = composer_id, composer = composer)
 
     form = EditForm(request.form)
@@ -83,8 +83,8 @@ def composers_edit(composer_id):
     if not form.validate():
         return render_template("composers/edit.html", form = form, composer_id = composer_id, composer = composer)
 
-    c = Composer.query.get(composer_id)
-    c.name = form.newname.data
+    name = request.form["newname"]
+    composer.name = name
     db.session().commit()
 
     return redirect(url_for("composers_index"))
@@ -129,7 +129,7 @@ def styles_edit(style_id):
         return render_template("styles/edit.html", form = form, style_id = style_id, style = style)
 
     s = Style.query.get(style_id)
-    s.name = form.newname.data
+    s.name = request.form["newname"]
     db.session().commit()
 
     return redirect(url_for("styles_index"))
@@ -173,12 +173,12 @@ def techniques_create(piece_id):
     if not form.validate():
         return render_template("techniques/new.html", form = form, piece = piece, piece_id = piece_id)
 
-    technique = form.name.data
+    technique = request.form["name"]
     t = Technique(technique)
 
     # tarkistetaan, onko erikoistekniikka jo tietokannassa
 
-    t = Technique.query.filter_by(name=form.name.data).first()
+    t = Technique.query.filter_by(name=technique).first()
 
     if t is None:
         t = Technique(technique)
@@ -205,7 +205,30 @@ def techniques_edit(technique_id):
         return render_template("techniques/edit.html", form = form, technique_id=technique_id, tech = tech)
 
     t = Technique.query.get(technique_id)
-    t.name = form.newname.data
+    t.name = request.form["newname"]
     db.session().commit()
 
     return redirect(url_for("techniques_index"))
+
+@app.route("/techniques/delete/<technique_id>", methods=["GET", "POST"])
+@login_required
+def techniques_delete(technique_id):
+
+    if request.method == "GET":
+        technique = Technique.query.get(technique_id)
+        return render_template("techniques/delete.html", form = DeleteForm(), technique_id = technique_id, tech = technique)
+
+    form = DeleteForm(request.form)
+
+    t = Technique.query.get(technique_id)
+
+    for piece in t.pieces:
+        print(piece.name)
+
+    if t.pieces is not None:
+        return "This technique is referred to in another table and cannot be deleted!"
+    
+    db.session().delete(t)
+    db.session().commit()
+
+    return render_template("success.html")

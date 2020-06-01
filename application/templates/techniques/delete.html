@@ -6,15 +6,11 @@
    <hr>
    <p>Poista rivi <i>{{ tech.name }}</i>:</p>
    <form method="POST" action="{{ url_for('techniques_delete', technique_id=technique_id) }}">
-      <table>
-         <tr>
-            <td>Vahvista poisto</td>
-            <td>{{ form.delete }}</td>
-            <td colspan="4">
-               <input type="submit" value="Poista"/>
-            </td>
-         </tr>
-      </table>
+      <div class ="form-check">
+         <input class="form-check-input" type="checkbox" value="" id="defaultChec1">
+         <label class="form-check-label1" for="defaultCheck1">Vahvista poisto</label>
+      </div>
+      <button type="submit" class="btn btn-primary">Päivitä</button>
    </form>
 </div>
 {% endblock %}

@@ -38,11 +38,9 @@ def auth_login():
     form = LoginForm(request.form)
     # mahdolliset validoinnit
 
-    user = User.query.filter_by(username=form.username.data, password_hash=form.password.data).first()
+    user = User.query.filter_by(username=request.form["username"], password_hash=request.form["user_password"]).first()
     if not user:
-        return render_template("auth/loginform.html", form = form,
-                               error = "Käyttäjätunnusta tai salasanaa ei löydy.")
-
+        return render_template("auth/loginform.html", form = form, error = "Käyttäjätunnusta tai salasanaa ei löydy.")
 
     login_user(user)
     return redirect(url_for("index"))
@@ -68,7 +66,7 @@ def auth_profile(user_id):
     if not form.validate():
         return render_template("auth/profile.html", user = current_user, form = form)
 
-    newpassword = form.newpassword.data
+    newpassword = request.form["newpassword"]
     u = User.query.get(current_user.id)
     u.password_hash = newpassword
 
@@ -82,28 +80,24 @@ def notes_index():
     notes = Note.query.filter_by(user_id=current_user.id)
     return render_template("notes/list.html", notes = notes, user = current_user)
 
-@app.route("/pieces/notes/<piece_id>", methods = ["GET", "POST"])
+@app.route("/pieces/notes/<piece_id>", methods=["GET", "POST"])
 @login_required
 def notes_create(piece_id):
     piece = Piece.query.get(piece_id)
 
     if request.method == "GET":
-        return render_template("notes/new.html", form = NoteForm(), piece = piece, user = current_user)
+        return render_template("notes/new.html", form = NoteForm(), piece = piece, piece_id = piece_id)
 
     form = NoteForm(request.form)
 
-    if not form.validate():
-        return render_template("notes/new.html", form = form, piece = piece, user = current_user)
-
-    comment = form.comment.data
+    comment = request.form.get("comment")
     user_id = current_user.id
     piece_id = piece_id
     piece_name = Piece.query.get(piece_id).name
 
     n = Note(comment, user_id, piece_id, piece_name)
-
+    
     db.session().add(n)
     db.session().commit()
 
     return redirect(url_for("pieces_show", piece_id=piece_id))
-

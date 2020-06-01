@@ -7,22 +7,18 @@
    <h5>Lisää uusi erikoistekniikka</h5>
    <br>
    <form method="POST" action="{{ url_for('techniques_create', piece_id = piece_id) }}">
-      <table>
-         <tr>
-	    <td>Tekniikan nimi: </td>
-	    <td>{{ form.name }}</td>
-            <td>
-	       <ul>
-	          {% for error in form.name.errors %}
-	          <li>{{ error }}</li>
-	          {% endfor %}
-	       </ul>
-            </td>
-            <td colspan="3">
-	       <input type="submit" value="Lisää"/>
-            </td>
-         </tr>
-      </table>
+      <div class ="form-group">
+         <label for="name"></label>
+         <input type="text" class="form-control" id="name" name="name" placeholder="Syötä erikoistekniikan nimi...">
+      </div>
+      <ul>
+         {% for error in form.name.errors %}
+         <span style="color: red;">
+         <li>{{ error }}</li>
+         </span>
+         {% endfor %}
+      </ul>
+      <button type="submit" class="btn btn-primary">Lisää</button>
    </form>
 </div>
 {% endblock %}

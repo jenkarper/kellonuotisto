@@ -11,6 +11,7 @@ from application.supplements.models import Composer, Arranger, Style, Technique
 from application.auth.models import Note
 from application.concerts.models import Concert
 
+# Näyttää tietokannassa olevat kappaleet listana
 @app.route("/pieces", methods = ["GET"])
 def pieces_index():
     pieces = db.session.query(Piece).order_by(Piece.name)
@@ -31,7 +32,7 @@ def pieces_techniques(piece_id):
     return render_template("techniques/new.html", form = TechniqueForm(), piece = piece, piece_id = piece_id)
 
 # Palauttaa muistiinpanon lisäyslomakkeen
-@app.route("/pieces/notes/<piece_id>")
+@app.route("/pieces/notes/<piece_id>/")
 @login_required
 def pieces_notes(piece_id):
     piece = Piece.query.get(piece_id)
@@ -48,13 +49,16 @@ def pieces_concerts(piece_id):
         return render_template("pieces/concerts.html", form = ProgrammeForm(), piece = piece, concerts = concerts)
 
     form = ProgrammeForm(request.form)
-    concert = Concert.query.get(form.concert_id.data)
+    concert = Concert.query.get(request.form["concert_id"])
 
-    piece.concerts.append(concert)
+    if concert is not None:
+        piece.concerts.append(concert)
+        db.session().commit()
 
-    db.session().commit()
+        return redirect(url_for("pieces_show", piece_id=piece_id))
 
-    return redirect(url_for("pieces_show", piece_id=piece_id))
+    else:
+        return "Tarkista syöttämäsi konsertin tunniste!"
 
 # Muokkaa kappaleen tietoja
 @app.route("/pieces/edit/<piece_id>", methods = ["GET", "POST"])

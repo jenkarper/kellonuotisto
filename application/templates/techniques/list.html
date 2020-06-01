@@ -4,7 +4,7 @@
 <div class="mx-auto" style="width:800px;">
    <h2>Erikoistekniikat</h2>
    <hr>
-   <h5>Kaikki tietokannassa olevat tyylilajit</h5>
+   <h5>Kaikki tietokannassa olevat erikoistekniikat</h5>
    <br>
    <table>
       <tr>
@@ -17,7 +17,7 @@
          <td><a href="{{ url_for('techniques_edit', technique_id=technique.id) }}">Muokkaa</a></td>
             {% if current_user.admin %}
             <td> tai </td>
-            <td>poista koko rivi</a></td>
+            <td><a href="{{ url_for('techniques_delete', technique_id=technique.id) }}">poista koko rivi</a></td>
             {% endif %}
          {% endif %}
       </tr>

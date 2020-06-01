@@ -6,23 +6,12 @@
    <hr>
    <h5>Lisää uusi muistiinpano</h5>
    <br>
-   <!--<form method="POST" action="{{ url_for('notes_create', piece_id = piece_id) }}">
-      <table>
-         <tr>
-         <td>Muistiinpano:</td>
-         <td>{{ form.comment }}</td>
-         <td>
-            <ul>
-               {% for error in form.comment.errors %}
-                  <li>{{ error }}</li>
-               {% endfor %}
-            </ul>
-         </td>
-         <td colspan="3">
-            <input type="submit" value="Lisää"/>
-         </td>
-      </tr>
-   </form>-->
-   <p>Muistiinpanon lisäys lakkasi jostain syystä toimimasta.</p>
+   <form method="POST" action="{{ url_for('notes_create', piece_id = piece_id) }}">
+      <div class ="form-group">
+         <label for="comment"></label>
+         <textarea class="form-control" id="comment" name="comment" rows="4" placeholder="Kirjoita muistiinpano..."></textarea>
+      </div>
+      <button type="submit" class="btn btn-primary">Lisää</button>
+   </form>
 </div>
 {% endblock %}
