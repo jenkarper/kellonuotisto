@@ -4,24 +4,10 @@
 <div class="mx-auto" style="width:800px;">
    <h2>Hae musiikkia</h2>
    <hr>
-   <p><i>Voit hakea yhden parametrin perusteella.</i></p>
-   <br>
    <form method="POST" action="{{ url_for('pieces_search') }}">
       <div class ="form-group">
-         <label for="name">Hae kappaleen nimen perusteella:</label>
-         <input type="text" class="form-control" id="name" name="name" placeholder="Syötä kappaleen nimi...">
-      </div>
-      <div class ="form-group">
-         <label for="composer">Hae säveltäjän nimen perusteella:</label>
-         <input type="text" class="form-control" id="composer" name="composer" placeholder="Syötä säveltäjän nimi...">
-      </div>
-      <div class ="form-group">
-         <label for="arranger">Hae sovittajan nimen perusteella:</label>
-         <input type="text" class="form-control" id="arranger" name="arranger" placeholder="Syötä sovittajan nimi...">
-      </div>
-      <div class ="form-group">
-         <label for="style">Hae tyylilajin perusteella:</label>
-         <input type="text" class="form-control" id="style" name="style" placeholder="Syötä tyylilajin nimi...">
+         <label for="searchword"></label>
+         <input type="text" class="form-control" id="searchword" name="searchword" placeholder="Kirjoita hakusana...">
       </div>
       <button type="submit" class="btn btn-primary">Hae</button>
    </form>

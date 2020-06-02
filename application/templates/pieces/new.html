@@ -51,21 +51,34 @@
          <li>{{ error }}</li>
          {% endfor %}
       </ul>
+      <div class="form-group">
+         <label for="arranger_list">Sovittaja (valitse listasta tai syötä uusi):</label>
+         <select multiple class="form-control" id="arranger_list" name="arranger_list">
+            {% for arranger in arrangers %}
+            <option name="{{  arranger.name  }}">{{  arranger.name  }}</option>
+            {% endfor %}
+         </select>
       <div class ="form-group">
-         <label for="arranger">Sovittaja:</label>
-         <input type="text" class="form-control" id="arranger" name="arranger" placeholder="Syötä sovittajan nimi...">
+         <label for="arranger_new"></label>
+         <input type="text" class="form-control" id="arranger_new" name="arranger_new" placeholder="Syötä uusi sovittaja...">
       </div>
       <ul>
-         {% for error in form.arranger.errors %}
+         {% for error in form.arranger_new.errors %}
          <li>{{ error }}</li>
          {% endfor %}
-      </ul>
+      </ul>      <div class="form-group">
+         <label for="style_list">Tyylilaji (valitse listasta tai syötä uusi):</label>
+         <select multiple class="form-control" id="style_list" name="style_list">
+            {% for style in styles %}
+            <option name="{{  style.name  }}">{{  style.name  }}</option>
+            {% endfor %}
+         </select>
       <div class ="form-group">
-         <label for="style">Tyylilaji:</label>
-         <input type="text" class="form-control" id="style" name="style" placeholder="Syötä tyylilajin nimi...">
+         <label for="style_new"></label>
+         <input type="text" class="form-control" id="style_new" name="style_new" placeholder="Syötä uusi tyylilaji...">
       </div>
       <ul>
-         {% for error in form.style.errors %}
+         {% for error in form.style_new.errors %}
          <li>{{ error }}</li>
          {% endfor %}
       </ul>

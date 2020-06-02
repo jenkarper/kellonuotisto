@@ -2,10 +2,29 @@
 {% import "bootstrap/wtf.html" as wtf %}
 {% block body %}
 <div class="mx-auto" style="width:800px;">
-         <h3>Create your account</h3>
-         <hr>
-         {{ wtf.quick_form(form) }}
-         <hr>
+   <h3>Hakutulokset</h3>
+   <hr>
+   {% if pieces is defined %}
+   <h5>Hakusanalla <i>{{ word }}</i> tietokannasta löytyivät seuraavat kappaleet:</h5>
+   <br>
+   <table>
+      <tr>
+         <th>Nimi</th>
+         <th>Tunniste</th>
+      </tr>
+      {% for entry in pieces %}
+      <tr>
+         <td>{{ entry.name }}</td>
+         <td>{{ entry.id }}</td>
+         {% if current_user.is_authenticated %}
+         <td><a href="{{ url_for('pieces_show', piece_id=entry.id) }}">Näytä tiedot</a></td>
+         {% endif %}
+      </tr>
+      {% endfor %}
+   </table>
+   {% else %}
+   <p>Hakusanalla <i>{{ word }}</i> ei löytynyt yhtään musiikkia tietokannasta!</p>
+   {% endif %}
 </div>
 {% endblock %}
 

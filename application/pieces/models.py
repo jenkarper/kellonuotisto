@@ -41,44 +41,20 @@ class Piece(Base):
         return response
 
     @staticmethod
-    def find_music_by_composer(name):
-        stmt = text("SELECT Piece.name FROM Piece"
-                    " JOIN Composer ON Composer.id = Piece.composer_id"
-                    " WHERE Composer.name = :name").params(name=name)
+    def find_music(word):
+        stmt = text ("SELECT Piece.name, Piece.id FROM Piece"
+                     " JOIN Style ON Style.id = Piece.style_id"
+                     " JOIN Composer ON Composer.id = Piece.composer_id"
+                     " JOIN Arranger ON Arranger.id = Piece.arranger_id"
+                     " WHERE Piece.name LIKE :word"
+                     " OR Style.name LIKE :word"
+                     " OR Composer.name LIKE :word"
+                     " OR Arranger.name LIKE :word").params(word='%'+word+'%')
 
         res = db.engine.execute(stmt)
 
         response = []
         for row in res:
-            response.append({"piece":row[0]})
+            response.append({"name":row[0], "id":row[1]})
 
         return response
-
-    @staticmethod
-    def find_music_by_arranger(name):
-        stmt = text("SELECT Piece.name FROM Piece"
-                    " JOIN Arranger ON Arranger.id = Piece.arranger_id"
-                    " WHERE Arranger.name = :name").params(name=name)
-
-        res = db.engine.execute(stmt)
-
-        response = []
-        for row in res:
-            response.append({"piece":row[0]})
-
-        return response
-
-    @staticmethod
-    def find_music_by_style(name):
-        stmt = text("SELECT Piece.name FROM Piece"
-                    " JOIN Style ON Style.id = Piece.style_id"
-                    " WHERE Style.name = :name").params(name=name)
-
-        res = db.engine.execute(stmt)
-
-        response = []
-        for row in res:
-            response.append({"style":row[0]})
-
-        return response
-

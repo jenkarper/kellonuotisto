@@ -88,7 +88,9 @@ def pieces_delete(piece_id):
 @login_required
 def pieces_form():
     composers = Composer.query.all()
-    return render_template("pieces/new.html", form = PieceForm(), composers = composers)
+    arrangers = Arranger.query.all()
+    styles = Style.query.all()
+    return render_template("pieces/new.html", form = PieceForm(), composers = composers, arrangers = arrangers, styles = styles)
 
 # Lisää uuden kappaleen (tarvittaessa myös säveltäjän, sovittajan ja tyylilajin)
 @app.route("/pieces/", methods = ["POST"])
@@ -97,14 +99,14 @@ def pieces_create():
     form = PieceForm(request.form)
 
     if not form.validate():
-        return render_template("pieces/new.html", form = form)
+        return render_template("pieces/new.html", form = form, composers = composers, arrangers = arrangers, styles = styles)
 
     name = request.form["name"]
     octaves = request.form["octaves"]
     length = request.form["length"]
 
+    # tarkistetaan, valitaanko säveltäjä listasta vai luodaanko uusi
     composer = request.form.get("composer_list")
-    
     if composer is None:
         composer = Composer(request.form["composer_new"])
         db.session().add(composer)
@@ -112,35 +114,26 @@ def pieces_create():
     else:
         composer = Composer.query.filter_by(name=composer).first()
 
-    arranger = request.form["arranger"]
-    style = request.form["style"]
-
-    # tarkistetaan, ovatko säveltäjä, sovittaja ja tyyli jo tietokannassa
-
-    #c = Composer.query.filter_by(name=composer).first()
-    a = Arranger.query.filter_by(name=arranger).first()
-    s = Style.query.filter_by(name=style).first()
-    
-   # if c is None:
-    #    c = Composer(composer)
-     #   db.session().add(c)
-      #  db.session().flush()
-
-    if a is None:
-        a = Arranger(arranger)
-        db.session().add(a)
+    # tarkistetaan, valitaanko sovittaja listasta vai luodaanko uusi
+    arranger = request.form.get("arranger_list")
+    if arranger is None:
+        arranger = Arranger(request.form["arranger_new"])
+        db.session().add(arranger)
         db.session().flush()
+    else:
+        arranger = Arranger.query.filter_by(name=arranger).first()
 
-    if s is None:
-        s = Style(style)
-        db.session().add(s)
+    # tarkistetaan, valitaanko tyylilaji listasta vai luodaanko uusi
+    style = request.form.get("style_list")
+    if style is None:
+        style = Style(request.form["style_new"])
+        db.session().add(style)
         db.session().flush()
+    else:
+        style = Style.query.filter_by(name=style).first()
 
-    #composer_id = c.id
-    arranger_id = a.id
-    style_id = s.id
-
-    p = Piece(name, octaves, length, composer.id, arranger_id, style_id)
+    # luodaan uusi rivi tauluun Piece
+    p = Piece(name, octaves, length, composer.id, arranger.id, style.id)
 
     db.session().add(p)
     db.session().commit()
@@ -153,31 +146,14 @@ def pieces_create():
 def pieces_search():
 
     if request.method == "GET":
-        pieces = Piece.query.all()
-        return render_template("pieces/search.html", form = SearchForm(), pieces = pieces)
+        return render_template("pieces/search.html", form = SearchForm())
     
     form = SearchForm(request.form)
-    name = request.form["name"]
-    composer = request.form["composer"]
-    arranger = request.form["arranger"]
-    style = request.form["style"]
+    word = request.form.get("searchword")
+    
+    pieces = Piece.find_music(word)
+    print(pieces)
+    print("TARKISTUS 2!")
 
-    p = Piece.query.filter_by(name=name).first()
-    c = Composer.query.filter_by(name=composer).first()
-    a = Arranger.query.filter_by(name=arranger).first()
-    s = Style.query.filter_by(name=style).first()
+    return render_template("pieces/results.html", pieces = pieces, word = word)
 
-    if p is not None:
-        return render_template("pieces/show.html", piece = p)
-
-    elif c is not None:
-        return render_template("composers/show.html", composer = c)
-
-    elif a is not None:
-        return render_template("arrangers/show.html", arranger = a)
-
-    elif s is not None:
-        return render_template("styles/show.html", style = s)
-
-    else:
-        return "Annetuilla tiedoilla ei löydy yhtään musiikkia tietokannasta!"

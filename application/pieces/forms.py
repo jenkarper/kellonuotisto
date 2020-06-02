@@ -15,9 +15,10 @@ class PieceForm(FlaskForm):
     length = IntegerField("Length (in minutes)")
     composer_list = StringField("Existing composer")
     composer_new = StringField("New Composer", [validators.length(max=50)])
-    arranger = StringField("Arranger", [validators.required(), validators.length(min=3, max=50)])
-    style = StringField("Style", [validators.required(), validators.length(min=3, max=50)])
-    submit = SubmitField('Submit')
+    arranger_list = StringField("Existing arranger", [validators.length(max=50)])
+    arranger_new = StringField("New arranger", [validators.length(max=50)])
+    style_list = StringField("Existing style", [validators.length(max=50)])
+    style_new = StringField("New style", [validators.length(max=50)])
  
     class Meta:
         csrf = False
@@ -35,10 +36,7 @@ class EditForm(FlaskForm):
 
 # rivin haku
 class SearchForm(FlaskForm):
-    name = StringField("Piece name")
-    composer = StringField("Composer name")
-    arranger = StringField("Arranger name")
-    style = StringField("Style name")
+    searchword = StringField("Search word", [validators.required(), validators.length(max=20)])
 
     class Meta:
         csrf = False
