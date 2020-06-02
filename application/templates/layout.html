@@ -27,7 +27,7 @@
                         <a class="dropdown-item" href="{{ url_for('pieces_index') }}">Kappaleet</a>
                         <a class="dropdown-item" href="{{ url_for('composers_index') }}">Säveltäjät</a>
                         <a class="dropdown-item" href="{{ url_for('arrangers_index') }}">Sovittajat</a>
-                        {% if current_user.admin %}
+                        {% if current_user.is_admin %}
                         <a class="dropdown-item" href="{{ url_for('styles_index') }}">Tyylilajit</a>
                         <a class="dropdown-item" href="{{ url_for('techniques_index') }}">Erikoistekniikat</a>
                         <div class="dropdown-divider"></div>
@@ -44,7 +44,7 @@
                      <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Lisää musiikkia</a>
                      <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <a class="dropdown-item" href="{{ url_for('pieces_form') }}">Lisää kappale</a>
-                        {% if current_user.admin %}
+                        {% if current_user.is_admin %}
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="{{  url_for('concerts_form')  }}">Lisää konsertti</a>
                         {% endif %}
@@ -54,7 +54,7 @@
                      <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Omat tiedot</a>
                      <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <a class="dropdown-item" href="{{ url_for('auth_profile', user_id=current_user.id) }}">Profiili</a>
-                        {% if current_user.admin %}
+                        {% if current_user.is_admin %}
                         <a class="dropdown-item" href="{{ url_for('notes_index') }}">Omat muistiinpanot</a>
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="{{ url_for('auth_index') }}">Listaa käyttäjät</a>

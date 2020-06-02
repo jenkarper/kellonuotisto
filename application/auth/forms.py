@@ -14,7 +14,7 @@ class LoginForm(FlaskForm):
 class RegistrationForm(FlaskForm):
     name = StringField("Name", validators=[DataRequired(), validators.length(min=5, max=30)])
     username = StringField("Username", validators=[DataRequired(), validators.length(min=5, max=15)])
-    admin = BooleanField("Admin")
+    role = StringField("Role", validators=[DataRequired()])
     password = PasswordField("Password", validators=[DataRequired(), validators.length(min=5, max=15)])
     password2 = PasswordField("Repeat password", validators=[DataRequired(), EqualTo("password")])
     #submit = SubmitField("Register")
@@ -30,6 +30,12 @@ class RegistrationForm(FlaskForm):
 class PasswordForm(FlaskForm):
     newpassword = PasswordField("Password", validators=[DataRequired(), validators.length(min=5, max=15)])
     newpassword2 = PasswordField("Repeat password", validators=[DataRequired(), EqualTo("newpassword")])
+
+    class Meta:
+        csrf = False
+
+class DeleteForm(FlaskForm):
+    delete = BooleanField("Delete row")
 
     class Meta:
         csrf = False

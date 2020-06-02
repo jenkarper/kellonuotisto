@@ -8,7 +8,7 @@
    <h5>Muokkausvaihtoehdot</h5>
    <ul>
       <li><a href="{{ url_for('composers_edit', composer_id=composer.id) }}">Muokkaa nimeä</a></li>
-      {% if current_user.admin %}
+      {% if current_user.is_admin %}
       <li><a href="{{ url_for('composers_delete', composer_id=composer.id) }}">Poista koko rivi</a></li>
       {% endif %}
    </ul>

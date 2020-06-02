@@ -6,7 +6,7 @@
    <p>Valittuna: <i>{{ concert.name }}</i></p> <!--
    {% if current_user.is_authenticated %}
    <p><a href="{{ url_for('composers_edit', composer_id=composer.id) }}">Muokkaa nimeä</a>
-      {% if current_user.admin %}
+      {% if current_user.is_admin %}
       <p><a href="{{ url_for('composers_delete', composer_id=composer.id) }}">poista koko rivi</a></p>
       {% endif %}
    {% endif %}-->

@@ -15,7 +15,7 @@
          <td>{{ style.name }}</td>
          {% if current_user.is_authenticated %}
          <td><a href="{{ url_for('styles_edit', style_id=style.id) }}">Muokkaa</a></td>
-            {% if current_user.admin %}
+            {% if current_user.is_admin %}
             <td> tai </td>
             <td><a href="{{ url_for('styles_delete', style_id=style.id) }}">poista koko rivi</a></td>
             {% endif %}

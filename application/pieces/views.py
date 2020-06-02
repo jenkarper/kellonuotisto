@@ -1,7 +1,7 @@
 from flask import redirect, render_template, request, url_for
-from flask_login import current_user, login_required
+from flask_login import current_user
 
-from application import app, db
+from application import app, db, login_required
 from application.pieces.models import Piece
 from application.pieces.forms import DeleteForm, PieceForm, ProgrammeForm, SearchForm
 from application.auth.forms import NoteForm
@@ -33,14 +33,14 @@ def pieces_techniques(piece_id):
 
 # Palauttaa muistiinpanon lisäyslomakkeen
 @app.route("/pieces/notes/<piece_id>/")
-@login_required
+@login_required(role="ADMIN")
 def pieces_notes(piece_id):
     piece = Piece.query.get(piece_id)
     return render_template("notes/new.html", form = NoteForm(), piece = piece, piece_id = piece_id)
 
 # Liittää olemassaolevan konsertin kappaleeseen
 @app.route("/pieces/concerts/<piece_id>", methods = ["GET", "POST"])
-@login_required
+@login_required(role="ADMIN")
 def pieces_concerts(piece_id):
     piece = Piece.query.get(piece_id)
     concerts = Concert.query.all()
@@ -69,7 +69,7 @@ def pieces_edit(piece_id):
 
 # Poistaa kappaleen
 @app.route("/pieces/delete/<piece_id>", methods = ["GET", "POST"])
-@login_required
+@login_required(role="ADMIN")
 def pieces_delete(piece_id):
 
     if request.method == "GET":
@@ -87,7 +87,8 @@ def pieces_delete(piece_id):
 @app.route("/pieces/new/")
 @login_required
 def pieces_form():
-    return render_template("pieces/new.html", form = PieceForm())
+    composers = Composer.query.all()
+    return render_template("pieces/new.html", form = PieceForm(), composers = composers)
 
 # Lisää uuden kappaleen (tarvittaessa myös säveltäjän, sovittajan ja tyylilajin)
 @app.route("/pieces/", methods = ["POST"])
@@ -98,23 +99,32 @@ def pieces_create():
     if not form.validate():
         return render_template("pieces/new.html", form = form)
 
-    name = form.name.data
-    octaves = form.octaves.data
-    length = form.length.data
-    composer = form.composer.data
-    arranger = form.arranger.data
-    style = form.style.data
+    name = request.form["name"]
+    octaves = request.form["octaves"]
+    length = request.form["length"]
+
+    composer = request.form.get("composer_list")
+    
+    if composer is None:
+        composer = Composer(request.form["composer_new"])
+        db.session().add(composer)
+        db.session().flush()
+    else:
+        composer = Composer.query.filter_by(name=composer).first()
+
+    arranger = request.form["arranger"]
+    style = request.form["style"]
 
     # tarkistetaan, ovatko säveltäjä, sovittaja ja tyyli jo tietokannassa
 
-    c = Composer.query.filter_by(name=composer).first()
+    #c = Composer.query.filter_by(name=composer).first()
     a = Arranger.query.filter_by(name=arranger).first()
     s = Style.query.filter_by(name=style).first()
     
-    if c is None:
-        c = Composer(composer)
-        db.session().add(c)
-        db.session().flush()
+   # if c is None:
+    #    c = Composer(composer)
+     #   db.session().add(c)
+      #  db.session().flush()
 
     if a is None:
         a = Arranger(arranger)
@@ -126,11 +136,11 @@ def pieces_create():
         db.session().add(s)
         db.session().flush()
 
-    composer_id = c.id
+    #composer_id = c.id
     arranger_id = a.id
     style_id = s.id
 
-    p = Piece(name, octaves, length, composer_id, arranger_id, style_id)
+    p = Piece(name, octaves, length, composer.id, arranger_id, style_id)
 
     db.session().add(p)
     db.session().commit()
@@ -139,6 +149,7 @@ def pieces_create():
 
 # Hakee tietoa taulusta Piece
 @app.route("/pieces/search/", methods = ["GET", "POST"])
+@login_required
 def pieces_search():
 
     if request.method == "GET":
@@ -146,10 +157,10 @@ def pieces_search():
         return render_template("pieces/search.html", form = SearchForm(), pieces = pieces)
     
     form = SearchForm(request.form)
-    name = form.name.data
-    composer = form.composer.data
-    arranger = form.arranger.data
-    style = form.style.data
+    name = request.form["name"]
+    composer = request.form["composer"]
+    arranger = request.form["arranger"]
+    style = request.form["style"]
 
     p = Piece.query.filter_by(name=name).first()
     c = Composer.query.filter_by(name=composer).first()

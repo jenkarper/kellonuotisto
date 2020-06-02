@@ -10,21 +10,15 @@ class User(Base):
 
     __tablename__ = "account" # koska 'user' on varattu avainsana PostgreSQL:ssä
   
-    id = db.Column(db.Integer, primary_key=True)
-    date_created = db.Column(db.DateTime, default=db.func.current_timestamp())
-    date_modified = db.Column(db.DateTime, default=db.func.current_timestamp(),
-                              onupdate=db.func.current_timestamp())
-
-    name = db.Column(db.String(144), nullable=False)
     username = db.Column(db.String(144), nullable=False)
     password_hash = db.Column(db.String(144), nullable=False)
-    admin = db.Column(db.Boolean, nullable=False)
+    role = db.Column(db.String(144), nullable=False)
 
-    def __init__(self, name, username, password_hash, admin):
+    def __init__(self, name, username, password_hash, role):
         self.name = name
         self.username = username
         self.password_hash = password_hash
-        self.admin = admin
+        self.role = role
   
     def get_id(self):
         return self.id
@@ -44,8 +38,11 @@ class User(Base):
     def check_password(self, password):
         return check_password_hash(self.password_hash, password)
 
+    def get_role(self):
+        return self.role
+
     def is_admin(self):
-        return self.admin
+        return self.role == "ADMIN"
 
 class Note(db.Model):
     id = db.Column(db.Integer, primary_key=True)

@@ -1,12 +1,13 @@
 from flask import redirect, render_template, request, url_for
-from flask_login import current_user, login_required
+from flask_login import current_user
 
-from application import app, db
+from application import app, db, login_required
 from application.concerts.models import Concert
 from application.concerts.forms import ConcertForm
 
 # CONCERT
 @app.route("/concerts", methods=["GET"])
+@login_required
 def concerts_index():
     concerts = db.session.query(Concert).order_by(Concert.date)
     return render_template("concerts/list.html", concerts = concerts)
@@ -17,12 +18,12 @@ def concerts_show(concert_id):
     return render_template("concerts/show.html", concert = Concert.query.get(concert_id))
 
 @app.route("/concerts/new/")
-@login_required
+@login_required(role="ADMIN")
 def concerts_form():
     return render_template("concerts/new.html", form = ConcertForm())
 
 @app.route("/concerts/", methods=["POST"])
-@login_required
+@login_required(role="ADMIN")
 def concerts_create():
     form = ConcertForm(request.form)
 

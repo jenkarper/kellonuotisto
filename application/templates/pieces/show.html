@@ -9,7 +9,7 @@
    <ul>
       <li><a href="{{ url_for('pieces_edit', piece_id=piece.id) }}">Muokkaa kappaleen tietoja</a></li>
       <li><a href="{{ url_for('pieces_techniques', piece_id=piece.id) }}">Lisää erikoistekniikka</a></li>
-      {% if current_user.admin %}
+      {% if current_user.is_admin %}
       <li><a href="{{ url_for('pieces_notes', piece_id=piece.id) }}">Lisää muistiinpano</a></li>
       <li><a href="{{ url_for('pieces_concerts', piece_id=piece.id) }}">Lisää konsertti</li>
       <li><a href="{{ url_for('pieces_delete', piece_id=piece.id) }}">Poista koko rivi</a></li>
@@ -33,7 +33,7 @@
          </ul>
    </ul>
    <hr>
-   {% if current_user.admin %}
+   {% if current_user.is_admin %}
    <h5>Lisätiedot</h5>
    <p><b>Konsertit:</b></p>
    <ul>

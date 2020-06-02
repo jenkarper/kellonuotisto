@@ -2,7 +2,7 @@
 {% extends "layout.html" %}
 {% block body %}
 <div class="mx-auto" style="width:800px;">
-   {% if current_user.admin %}
+   {% if current_user.is_admin %}
    <h2>Käyttäjät</h2>
    <hr>
    <h5>Luo uusi käyttäjä</h5>
@@ -52,9 +52,13 @@
          </span>
          {% endfor %}
       </ul>
-      <div class ="form-group">
-         <input type="checkbox" class="form-check-input" id="admin" name="admin">
-         <label class="form-check-label" for="admin">Admin-oikeudet</label>
+      <div class ="form-check">
+         <input class="form-check-input" type="radio" name="role" id="role1" value="REGULAR" checked>
+         <label class="form-check-label" for="role1">Tavallinen käyttäjä</label>
+      </div>
+      <div class ="form-check">
+         <input class="form-check-input" type="radio" name="role" id="role2" value="ADMIN">
+         <label class="form-check-label" for="role2">Pääkäyttäjä</label>
       </div>
       <button type="submit" class="btn btn-primary">Luo tunnus</button>
    </form>

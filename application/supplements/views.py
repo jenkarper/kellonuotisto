@@ -1,7 +1,6 @@
 from flask import flash, redirect, render_template, request, url_for
-from flask_login import login_required
 
-from application import app, db
+from application import app, db, login_required
 from application.pieces.models import Piece
 from application.supplements.models import Arranger, Composer, Style, Technique
 from application.supplements.forms import DeleteForm, EditForm, TechniqueForm
@@ -40,12 +39,12 @@ def arrangers_edit(arranger_id):
 
 # Poistaa yhden sovittajan tiedot
 @app.route("/arrangers/delete/<arranger_id>", methods=["GET", "POST"])
-@login_required
+@login_required(role="ADMIN")
 def arrangers_delete(arranger_id):
 
     if request.method == "GET":
         arranger = Arranger.query.get(arranger_id)
-        return render_template("arrangers/delete.html", form = DeleteForm(), arranger_id=arranger_id, arranger=arranger)
+        return render_template("arrangers/delete.html", form = DeleteForm(), arranger_id = arranger_id, arranger = arranger)
 
     form = DeleteForm(request.form)
 
@@ -90,7 +89,7 @@ def composers_edit(composer_id):
     return redirect(url_for("composers_index"))
 
 @app.route("/composers/delete/<composer_id>", methods=["GET", "POST"])
-@login_required
+@login_required(role="ADMIN")
 def composers_delete(composer_id):
 
     if request.method == "GET":
@@ -135,7 +134,7 @@ def styles_edit(style_id):
     return redirect(url_for("styles_index"))
 
 @app.route("/styles/delete/<style_id>", methods=["GET", "POST"])
-@login_required
+@login_required(role="ADMIN")
 def styles_delete(style_id):
 
     if request.method == "GET":
@@ -211,7 +210,7 @@ def techniques_edit(technique_id):
     return redirect(url_for("techniques_index"))
 
 @app.route("/techniques/delete/<technique_id>", methods=["GET", "POST"])
-@login_required
+@login_required(role="ADMIN")
 def techniques_delete(technique_id):
 
     if request.method == "GET":

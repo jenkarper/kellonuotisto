@@ -1,34 +1,36 @@
 from flask import render_template, request, redirect, url_for
-from flask_login import current_user, login_user, logout_user, login_required
+from flask_login import current_user, login_user, logout_user
 
-from application import app, db
+from application import app, db, login_required
 from application.auth.models import User, Note
-from application.auth.forms import LoginForm, PasswordForm, RegistrationForm, NoteForm
+from application.auth.forms import DeleteForm, LoginForm, PasswordForm, RegistrationForm, NoteForm
 from application.pieces.models import Piece
 
 # USER
 @app.route("/auth/register/")
+@login_required(role="ADMIN")
 def auth_form():
     return render_template("auth/register.html", form = RegistrationForm())
 
 @app.route("/auth/", methods = ["POST"])
+@login_required(role="ADMIN")
 def auth_create():
     form = RegistrationForm(request.form)
 
     if not form.validate():
         return render_template("auth/register.html", form = form)
 
-    name = form.name.data
-    username = form.username.data
-    password = form.password.data
-    admin = form.admin.data
+    name = request.form["name"]
+    username = request.form["username"]
+    password = request.form["password"]
+    role = request.form["role"]
 
-    u = User(name, username, password, admin)
+    u = User(name, username, password, role)
 
     db.session().add(u)
     db.session().commit()
   
-    return render_template("success.html")
+    return render_template("auth/list.html", users = User.query.all())
 
 @app.route("/auth/login", methods = ["GET", "POST"])
 def auth_login():
@@ -51,11 +53,12 @@ def auth_logout():
     return redirect(url_for("index"))
 
 @app.route("/auth/list", methods = ["GET"])
-@login_required
+@login_required(role="ADMIN")
 def auth_index():
     return render_template("auth/list.html", users = User.query.all())
 
 @app.route("/auth/<user_id>", methods = ["GET", "POST"])
+@login_required
 def auth_profile(user_id):
 
     if request.method == "GET":
@@ -74,14 +77,33 @@ def auth_profile(user_id):
 
     return render_template("success.html")
 
+@app.route("/auth/delete/<user_id>", methods = ["GET", "POST"])
+@login_required(role="ADMIN")
+def auth_delete(user_id):
+    user = User.query.get(user_id)
+
+    if request.method == "GET":
+        return render_template("auth/delete.html", form = DeleteForm(), user_id = user_id, user = user)
+
+    form = DeleteForm(request.form)
+
+    if user.role == "ADMIN":
+        return "Pääkäyttäjä, ei voida poistaa!"
+
+    db.session().delete(user)
+    db.session().commit()
+
+    return render_template("success.html")
+
 #NOTE
 @app.route("/notes", methods=["GET"])
+@login_required(role="ADMIN")
 def notes_index():
     notes = Note.query.filter_by(user_id=current_user.id)
     return render_template("notes/list.html", notes = notes, user = current_user)
 
 @app.route("/pieces/notes/<piece_id>", methods=["GET", "POST"])
-@login_required
+@login_required(role="ADMIN")
 def notes_create(piece_id):
     piece = Piece.query.get(piece_id)
 

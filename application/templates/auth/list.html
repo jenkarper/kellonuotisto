@@ -2,7 +2,7 @@
 {% extends "layout.html" %}
 {% block body %}
 <div class="mx-auto" style="width:800px;">
-   {% if current_user.admin %}
+   {% if current_user.is_admin %}
    <h2>Käyttäjät</h2>
    <hr>
    <h5>Kaikki tietokannassa olevat käyttäjät</h5>
@@ -11,13 +11,14 @@
       <tr>
          <th>Nimi</th>
          <th>Käyttäjätunnus</th>
-         <th>Admin</th>
+         <th>Rooli</th>
       </tr>
       {% for user in users %}
       <tr>
          <td>{{ user.name }}<td>
          <td>{{ user.username }}</td>
-         <td>{{ user.admin }}</td>
+         <td>{{ user.role }}</td>
+         <td><a href="{{ url_for('auth_delete', user_id=user.id) }}">Poista käyttäjä tietokannasta</a>
       </tr>
       {% endfor %}
    </table>
