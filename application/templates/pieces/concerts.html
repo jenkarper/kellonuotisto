@@ -5,34 +5,20 @@
    <h3>{{ piece.name }}</h3>
    <hr>
    <h5>Lisää konsertti</h5>
-   <p>Tietokannassa olevat konsertit:</p>
-   {% for concert in concerts %}
-   <table>
-      <tr>
-         <th>Tunniste</th>
-         <th>Konsertin nimi</th>
-         <th>Päivämäärä</th>
-      </tr>
-      <tr>
-         <td>{{  concert.id  }}</td>
-         <td>{{  concert.name  }}</td>
-         <td>{{  concert.date  }}</td>
-      </tr>
-   </table>
-   {% endfor %}
    <br>
-   <p>Kirjoita konsertin tunniste lomakkeen kenttään. Jos haluamaasi konserttia ei ole tietokannassa, <a href="{{  url_for('concerts_form')  }}">lisää</a> se ensin!</p>
-   <hr>
-   <form method="POST" action="{{ url_for('pieces_concerts', piece_id = piece.id) }}">
-      <div class ="form-group">
-         <label for="concert_id"></label>
-         <input type="number" class="form-control" id="concert_id" name="concert_id" placeholder="Syötä konsertin tunniste...">
+   <form method="POST" action="{{ url_for('pieces_concerts', piece_id = piece.id, concerts = concerts) }}">
+      <div class="form-group">
+         <label for="style_list">Valitse tietokannassa olevista konserteista:</label>
+         <select multiple class="form-control" id="concert_list" name="concert_list">
+            <option selected>Valitse...</option>
+            {% for concert in concerts %}
+            <option name="{{  concert.name }}">{{  concert.name  }}</option>
+            {% endfor %}
+         </select>
       </div>
-      <ul>
-         {% for error in form.concert_id.errors %}
-         <li>{{ error }}</li>
-         {% endfor %}
-      </ul>
       <button type="submit" class="btn btn-primary">Lisää</button>
+   </form>
+   <br>
+   <p>Jos haluamaasi konserttia ei ole tietokannassa, <a href="{{  url_for('concerts_form')  }}">lisää</a> se ensin!</p>
 </div>
 {% endblock %}

@@ -30,9 +30,9 @@ class PieceForm(FlaskForm):
 
 # rivin muokkaus (kesken)
 class EditForm(FlaskForm):
-    name = StringField("Piece name", [validators.required(), validators.length(min=5, max=50)])
-    octaves = StringField("Used octaves", [validators.required(), validators.length(min=1, max=20)])
-    length = IntegerField("Length (in minutes)")
+    newname = StringField("Piece name", [validators.required(), validators.length(min=5, max=50)])
+    newoctaves = StringField("Used octaves", [validators.required(), validators.length(min=1, max=20)])
+    newlength = IntegerField("Length (in minutes)")
 
 # rivin haku
 class SearchForm(FlaskForm):
@@ -50,7 +50,7 @@ class DeleteForm(FlaskForm):
 
 # konsertin lisäys
 class ProgrammeForm(FlaskForm):
-    concert_id = IntegerField("Concert id")
+    concert_list = StringField("Concert name")
 
     class Meta:
         csrf = False

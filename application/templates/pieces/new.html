@@ -38,6 +38,7 @@
       <div class="form-group">
          <label for="composer_list">Säveltäjä (valitse listasta tai syötä uusi):</label>
          <select multiple class="form-control" id="composer_list" name="composer_list">
+            <option selected>Valitse...</option>
             {% for composer in composers %}
             <option name="{{  composer.name  }}">{{  composer.name  }}</option>
             {% endfor %}
@@ -54,6 +55,7 @@
       <div class="form-group">
          <label for="arranger_list">Sovittaja (valitse listasta tai syötä uusi):</label>
          <select multiple class="form-control" id="arranger_list" name="arranger_list">
+            <option selected>Valitse...</option>
             {% for arranger in arrangers %}
             <option name="{{  arranger.name  }}">{{  arranger.name  }}</option>
             {% endfor %}
@@ -66,13 +68,16 @@
          {% for error in form.arranger_new.errors %}
          <li>{{ error }}</li>
          {% endfor %}
-      </ul>      <div class="form-group">
+      </ul>
+      <div class="form-group">
          <label for="style_list">Tyylilaji (valitse listasta tai syötä uusi):</label>
          <select multiple class="form-control" id="style_list" name="style_list">
+            <option selected>Valitse...</option>
             {% for style in styles %}
             <option name="{{  style.name  }}">{{  style.name  }}</option>
             {% endfor %}
          </select>
+      </div>
       <div class ="form-group">
          <label for="style_new"></label>
          <input type="text" class="form-control" id="style_new" name="style_new" placeholder="Syötä uusi tyylilaji...">
@@ -82,7 +87,6 @@
          <li>{{ error }}</li>
          {% endfor %}
       </ul>
-      </center>
       <button type="submit" class="btn btn-primary">Lisää</button>
    </form>
 </div>

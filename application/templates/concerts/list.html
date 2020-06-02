@@ -9,14 +9,11 @@
    <table>
       <tr>
          <th>Konsertti</th>
-         <th>Päivämäärä</th>
-         <th>Paikka</th>
       </tr>
       {% for concert in concerts %}
       <tr>
-         <td style="padding:10px">{{ concert.name }}</td>
-         <td style="padding:10px">{{ concert.date }}</td>
-         <td style="padding:10px">{{ concert.venue }}</td>
+         <td>{{ concert.name }}</td>
+         <td><a href="{{ url_for('concerts_show', concert_id=concert.id) }}">Näytä tiedot</a></td>
       </tr>
       {% endfor %}
    </table>

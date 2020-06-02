@@ -1,0 +1,16 @@
+
+{% extends "layout.html" %}
+{% block body %}
+<div class="mx-auto" style="width:800px;">
+   <h3>{{ concert.name }}</h3>
+   <hr>
+   <p>Poista rivi <i>{{ concert.name }}</i>:</p>
+   <form method="POST" action="{{ url_for('concerts_delete', concert_id=concert_id) }}">
+      <div class ="form-check">
+         <input class="form-check-input" type="checkbox" value="" id="defaultChec1">
+         <label class="form-check-label1" for="defaultCheck1">Vahvista poisto</label>
+      </div>
+      <button type="submit" class="btn btn-primary">Päivitä</button>
+   </form>
+</div>
+{% endblock %}

@@ -1,0 +1,40 @@
+
+{% extends "layout.html" %}
+{% block body %}
+<div class="mx-auto" style="width:800px;">
+   <h3>{{ concert.name }}</h3>
+   <hr>
+   <h5>Muokkaa konsertin tietoja</h5>
+   <br>
+   <div class=container">
+   <form method="POST" action="{{ url_for('concerts_edit', concert_id = concert_id, concert = concert) }}">
+      <div class ="form-group">
+         <label for="newname">Muokkaa nimeä:</label>
+         <input type="text" class="form-control" id="newname" name="newname" value="{{ concert.name }}">
+      </div>
+      <ul>
+         {% for error in form.newname.errors %}
+         <li>{{ error }}</li>
+         {% endfor %}
+      </ul>
+      <div class ="form-group">
+         <label for="newvenue">Muokkaa paikkaa:</label>
+         <input type="text" class="form-control" id="newvenue" name="newvenue" value="{{  concert.venue  }}">
+      </div>
+      <ul>
+         {% for error in form.newvenue.errors %}
+         <li>{{ error }}</li>
+         {% endfor %}
+      </ul>
+      <div class ="form-group">
+         <label for="newdate">Muokkaa päivämäärää:</label>
+         <input type="text" class="form-control" id="newdate" name="newdate" value="{{  concert.date  }}">
+      </div>
+      <ul>
+         {% for error in form.newdate.errors %}
+         <li>{{ error }}</li>
+         {% endfor %}
+      </ul>
+      <button type="submit" class="btn btn-primary">Päivitä</button>
+</div>
+{% endblock %}

@@ -3,7 +3,7 @@ from flask_login import current_user
 
 from application import app, db, login_required
 from application.pieces.models import Piece
-from application.pieces.forms import DeleteForm, PieceForm, ProgrammeForm, SearchForm
+from application.pieces.forms import EditForm, DeleteForm, PieceForm, ProgrammeForm, SearchForm
 from application.auth.forms import NoteForm
 from application.supplements.forms import TechniqueForm
 
@@ -38,7 +38,7 @@ def pieces_notes(piece_id):
     piece = Piece.query.get(piece_id)
     return render_template("notes/new.html", form = NoteForm(), piece = piece, piece_id = piece_id)
 
-# Liittää olemassaolevan konsertin kappaleeseen
+# Liittää olemassaolevan konsertin kappaleeseen (ei toimi tällä hetkellä!!!)
 @app.route("/pieces/concerts/<piece_id>", methods = ["GET", "POST"])
 @login_required(role="ADMIN")
 def pieces_concerts(piece_id):
@@ -49,23 +49,36 @@ def pieces_concerts(piece_id):
         return render_template("pieces/concerts.html", form = ProgrammeForm(), piece = piece, concerts = concerts)
 
     form = ProgrammeForm(request.form)
-    concert = Concert.query.get(request.form["concert_id"])
+    concert_name = request.form["concert_list"]
+    concert = Concert.query.filter_by(name=concert_name).first()
 
-    if concert is not None:
-        piece.concerts.append(concert)
-        db.session().commit()
+    # oikea konsertti löytyy tietokannasta, mutta seuraava komento ei lisää sitä kappaleeseen
 
-        return redirect(url_for("pieces_show", piece_id=piece_id))
+    piece.concerts.append(concert)
 
-    else:
-        return "Tarkista syöttämäsi konsertin tunniste!"
+    return redirect(url_for("pieces_show", piece_id=piece_id))
 
 # Muokkaa kappaleen tietoja
 @app.route("/pieces/edit/<piece_id>", methods = ["GET", "POST"])
 @login_required
 def pieces_edit(piece_id):
     piece = Piece.query.get(piece_id)
-    return render_template("pieces/edit.html", piece = piece, piece_id = piece_id)
+
+    if request.method == "GET":
+        return render_template("pieces/edit.html", form = EditForm(), piece = piece, piece_id = piece_id)
+
+    form = EditForm(request.form)
+    newname = request.form["newname"]
+    newoctaves = request.form["newoctaves"]
+    newlength = request.form["newlength"]
+
+    piece.name = newname
+    piece.octaves = newoctaves
+    piece.length = newlength
+
+    db.session().commit()
+
+    return redirect(url_for("pieces_show", piece_id=piece_id))
 
 # Poistaa kappaleen
 @app.route("/pieces/delete/<piece_id>", methods = ["GET", "POST"])
@@ -87,9 +100,9 @@ def pieces_delete(piece_id):
 @app.route("/pieces/new/")
 @login_required
 def pieces_form():
-    composers = Composer.query.all()
-    arrangers = Arranger.query.all()
-    styles = Style.query.all()
+    composers = db.session.query(Composer).order_by(Composer.name)
+    arrangers = db.session.query(Arranger).order_by(Arranger.name)
+    styles = db.session.query(Style).order_by(Style.name)
     return render_template("pieces/new.html", form = PieceForm(), composers = composers, arrangers = arrangers, styles = styles)
 
 # Lisää uuden kappaleen (tarvittaessa myös säveltäjän, sovittajan ja tyylilajin)
@@ -152,8 +165,6 @@ def pieces_search():
     word = request.form.get("searchword")
     
     pieces = Piece.find_music(word)
-    print(pieces)
-    print("TARKISTUS 2!")
 
     return render_template("pieces/results.html", pieces = pieces, word = word)
 
