@@ -2,7 +2,7 @@
 {% extends "layout.html" %}
 {% block body %}
 <div class="mx-auto" style="width:800px;">
-   {% if current_user.is_admin %}
+   {% if current_user.is_admin and current_user.is_admin() %}
    <h2>Muistiinpanot</h2>
    <hr>
    <p>Käyttäjä: {{  user.name  }}</p>

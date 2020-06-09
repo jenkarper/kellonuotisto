@@ -4,6 +4,7 @@
 <div class="mx-auto" style="width:800px;">
    <h3>{{ style.name }}</h3>
    <hr>
+   {% if current_user.is_admin and current_user.is_admin() %}
    <p>Poista rivi <i>{{ style.name }}</i>:</p>
    <form method="POST" action="{{ url_for('styles_delete', style_id=style_id) }}">
       <div class ="form-check">
@@ -12,5 +13,8 @@
       </div>
       <button type="submit" class="btn btn-primary">Päivitä</button>
    </form>
+   {% else %}
+   <p>Vain pääkäyttäjällä on oikeus poistaa rivejä tietokannasta!</p>
+   {% endif %}
 </div>
 {% endblock %}

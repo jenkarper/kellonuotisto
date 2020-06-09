@@ -6,8 +6,6 @@ from flask_wtf import FlaskForm
 from wtforms import BooleanField, IntegerField, SelectField, StringField, SubmitField, validators
 from wtforms.validators import ValidationError
 
-#Bootstrap(app)
-
 # uuden rivin luonti
 class PieceForm(FlaskForm):
     name = StringField("Piece name", [validators.required(), validators.length(min=5, max=50)])
