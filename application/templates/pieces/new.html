@@ -14,7 +14,9 @@
       </div>
       <ul>
          {% for error in form.name.errors %}
+         <span style="color: red;">
          <li>{{ error }}</li>
+         </span>
          {% endfor %}
       </ul>
       <div class ="form-group">
@@ -23,7 +25,9 @@
       </div>
       <ul>
          {% for error in form.octaves.errors %}
+         <span style="color: red;">
          <li>{{ error }}</li>
+         </span>
          {% endfor %}
       </ul>
       <div class ="form-group">
@@ -32,7 +36,9 @@
       </div>
       <ul>
          {% for error in form.length.errors %}
+         <span style="color: red;">
          <li>{{ error }}</li>
+         </span>
          {% endfor %}
       </ul>
       <div class="form-group">
@@ -49,7 +55,9 @@
       </div>
       <ul>
          {% for error in form.composer_new.errors %}
+         <span style="color: red;">
          <li>{{ error }}</li>
+         </span>
          {% endfor %}
       </ul>
       <div class="form-group">
@@ -66,7 +74,9 @@
       </div>
       <ul>
          {% for error in form.arranger_new.errors %}
+         <span style="color: red;">
          <li>{{ error }}</li>
+         </span>
          {% endfor %}
       </ul>
       <div class="form-group">
@@ -84,7 +94,9 @@
       </div>
       <ul>
          {% for error in form.style_new.errors %}
+         <span style="color: red;">
          <li>{{ error }}</li>
+         </span>
          {% endfor %}
       </ul>
       <button type="submit" class="btn btn-primary">Lisää</button>

@@ -11,9 +11,13 @@ from application.supplements.models import Composer, Arranger, Style, Technique
 from application.auth.models import Note
 from application.concerts.models import Concert
 
+#import os
+
 # Näyttää tietokannassa olevat kappaleet listana
 @app.route("/pieces", methods = ["GET"])
 def pieces_index():
+    #print("TARKISTUS!")
+    #print(os.path.dirname(__file__))
     pieces = db.session.query(Piece).order_by(Piece.name)
     return render_template("pieces/list.html", pieces = pieces, pieces_by_style = Piece.count_pieces_by_style())
 
@@ -43,13 +47,13 @@ def pieces_notes(piece_id):
 @login_required(role="ADMIN")
 def pieces_concerts(piece_id):
     piece = Piece.query.get(piece_id)
-    concerts = Concert.query.all()
+    concerts = db.session.query(Concert).order_by(Concert.date)
 
     if request.method == "GET":
         return render_template("pieces/concerts.html", form = ProgrammeForm(), piece = piece, concerts = concerts)
 
     form = ProgrammeForm(request.form)
-    concert_name = request.form["concert_list"]
+    concert_name = request.form["concert_listed"]
     concert = Concert.query.filter_by(name=concert_name).first()
 
     # oikea konsertti löytyy tietokannasta, mutta seuraava komento ei lisää sitä kappaleeseen
@@ -109,6 +113,9 @@ def pieces_form():
 @app.route("/pieces/", methods = ["POST"])
 @login_required
 def pieces_create():
+    composers = db.session.query(Composer).order_by(Composer.name)
+    arrangers = db.session.query(Arranger).order_by(Arranger.name)
+    styles = db.session.query(Style).order_by(Style.name)
     form = PieceForm(request.form)
 
     if not form.validate():

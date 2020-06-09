@@ -6,7 +6,7 @@ from flask_wtf import FlaskForm
 from wtforms import BooleanField, IntegerField, SelectField, StringField, SubmitField, validators
 from wtforms.validators import ValidationError
 
-Bootstrap(app)
+#Bootstrap(app)
 
 # uuden rivin luonti
 class PieceForm(FlaskForm):
@@ -15,9 +15,9 @@ class PieceForm(FlaskForm):
     length = IntegerField("Length (in minutes)")
     composer_list = StringField("Existing composer")
     composer_new = StringField("New Composer", [validators.length(max=50)])
-    arranger_list = StringField("Existing arranger", [validators.length(max=50)])
+    arranger_list = StringField("Existing arranger")
     arranger_new = StringField("New arranger", [validators.length(max=50)])
-    style_list = StringField("Existing style", [validators.length(max=50)])
+    style_list = StringField("Existing style")
     style_new = StringField("New style", [validators.length(max=50)])
  
     class Meta:
@@ -26,7 +26,14 @@ class PieceForm(FlaskForm):
     def validate_name(self, name):
         piece = Piece.query.filter_by(name=name.data).first()
         if piece is not None:
-            raise ValidationError("This piece already exists in the database.")
+            raise ValidationError("Tämän niminen kappale on jo tietokannassa.")
+
+    #def validate_composer(self, composer_list, composer_new):
+    #    composer_list = composer_list.data
+    #    composer_new = composer_new.data
+    #    if composer is None:
+    #        if composer_new is None:            
+    #            raise ValidationError("Säveltäjää ei voi jättää tyhjäksi!")
 
 # rivin muokkaus (kesken)
 class EditForm(FlaskForm):
@@ -50,7 +57,7 @@ class DeleteForm(FlaskForm):
 
 # konsertin lisäys
 class ProgrammeForm(FlaskForm):
-    concert_list = StringField("Concert name")
+    concert_listed = StringField("Concert name")
 
     class Meta:
         csrf = False

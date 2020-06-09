@@ -6,10 +6,10 @@
    <hr>
    <h5>Lisää konsertti</h5>
    <br>
-   <form method="POST" action="{{ url_for('pieces_concerts', piece_id = piece.id, concerts = concerts) }}">
+   <form method="POST" action="{{ url_for('pieces_concerts', piece = piece, piece_id = piece.id, concerts = concerts) }}">
       <div class="form-group">
          <label for="style_list">Valitse tietokannassa olevista konserteista:</label>
-         <select multiple class="form-control" id="concert_list" name="concert_list">
+         <select multiple class="form-control" id="concert_listed" name="concert_listed">
             <option selected>Valitse...</option>
             {% for concert in concerts %}
             <option name="{{  concert.name }}">{{  concert.name  }}</option>
