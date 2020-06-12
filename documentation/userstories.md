@@ -67,7 +67,7 @@ SELECT * FROM Arranger ORDER BY Arranger.name
 - Pääkäyttäjä voi luoda uusia Käyttäjiä.
 
    ```sql
-   SQL: INSERT INTO Account (name, username, password_hash, role)
+   INSERT INTO Account (name, username, password_hash, role)
    VALUES ('Uusi nimi', 'käyttäjänimi', 'salasana', 'REGULAR');
    ```
    
@@ -82,13 +82,13 @@ SELECT * FROM Arranger ORDER BY Arranger.name
 - Pääkäyttäjä voi lisätä uuden muistiinpanon ja liittää sen kappaleeseen.
 
    ```sql
-   SQL: INSERT INTO Note (comment, user_id, piece_id, piece_name)
+   INSERT INTO Note (comment, user_id, piece_id, piece_name)
    VALUES ('muistiinpano', 3, 5, 'Kappaleen nimi');
    ```
    
 - Pääkäyttäjä voi tarkastella omia muistiinpanojaan.
    
    ```sql
-   SQL: SELECT * FROM Note
+   SELECT * FROM Note
    WHERE user_id = current_user.id;
    ```
