@@ -12,8 +12,7 @@
       </tr>
       {% for concert in concerts %}
       <tr>
-         <td>{{ concert.name }}</td>
-         <td><a href="{{ url_for('concerts_show', concert_id=concert.id) }}">Näytä tiedot</a></td>
+         <td><a href="{{ url_for('concerts_show', concert_id=concert.id) }}">{{ concert.name }}</a></td>
       </tr>
       {% endfor %}
    </table>

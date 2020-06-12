@@ -56,7 +56,7 @@ def concerts_delete(concert_id):
 
     c = Concert.query.get(concert_id)
 
-    if c.pieces is not None:
+    if c.pieces:
         return "This concert is referred to in another table and cannot be deleted!"
     
     db.session().delete(c)

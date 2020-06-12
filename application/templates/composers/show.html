@@ -17,7 +17,7 @@
    <h5>Säveltäjän kappaleet tietokannassa</h5>
    <ul>
    {% for piece in composer.pieces %}
-   <li> {{ piece.name }} </li>
+   <li><a href="{{ url_for('pieces_show', piece_id = piece.id) }}">{{ piece.name }}</a></li>
    {% endfor %}
 </div>
 {% endblock %}

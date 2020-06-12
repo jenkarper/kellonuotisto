@@ -4,7 +4,6 @@
 <div class="mx-auto" style="width:800px;">
    <h3>{{ concert.name }}</h3>
    <hr>
-   {% if current_user.is_admin and current_user.is_admin() %}
    <p>Poista rivi <i>{{ concert.name }}</i>:</p>
    <form method="POST" action="{{ url_for('concerts_delete', concert_id=concert_id) }}">
       <div class ="form-check">

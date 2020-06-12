@@ -5,14 +5,25 @@
    <h2>Sovittajat</h2>
    <hr>
    <h5>Kaikki tietokannassa olevat sovittajat</h5>
+   {% if current_user.is_authenticated %}
+   <p><em>Klikkaa nimeä nähdäksesi lisätiedot!</em></p>
+   <br>
+   <table>
+      {% for arranger in arrangers %}
+      <tr>
+         <td><a href="{{ url_for('arrangers_show', arranger_id=arranger.id) }}">{{ arranger.name }}</a></td>
+      </tr>
+      {% endfor %}
+   </table>
+   {% else %}
    <br>
    <table>
       {% for arranger in arrangers %}
       <tr>
          <td>{{ arranger.name }}</td>
-         <td><a href="{{ url_for('arrangers_show', arranger_id=arranger.id) }}">Näytä tiedot</a></td>
       </tr>
       {% endfor %}
    </table>
+   {% endif %}
 </div>
 {% endblock %}

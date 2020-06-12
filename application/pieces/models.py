@@ -14,8 +14,8 @@ class Piece(Base):
     arranger_id = db.Column(db.Integer, db.ForeignKey('arranger.id'), nullable=False)
     style_id = db.Column(db.Integer, db.ForeignKey('style.id'), nullable=False)
 
-    techniques = db.relationship('Technique', secondary=piece_technique, backref=db.backref('pieces', lazy='dynamic'))
-    concerts = db.relationship('Concert', secondary=piece_concert, backref=db.backref('pieces', lazy='dynamic'))
+    techniques = db.relationship('Technique', secondary=piece_technique, backref=db.backref('pieces', lazy=True))
+    concerts = db.relationship('Concert', secondary=piece_concert, backref=db.backref('pieces', lazy=True))
 
     def __init__(self, name, octaves, length, composer_id, arranger_id, style_id):
         self.name = name

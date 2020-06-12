@@ -5,6 +5,20 @@
    <h2>Kappaleet</h2>
    <hr>
    <h5>Kaikki tietokannassa olevat kappaleet</h5>
+   {% if current_user.is_authenticated %}
+   <p><em>Klikkaa nimeä nähdäksesi lisätiedot!</em></p>
+   <br>
+   <table>
+      <tr>
+         <th>Nimi</th>
+      </tr>
+      {% for piece in pieces %}
+      <tr>
+         <td><a href="{{ url_for('pieces_show', piece_id=piece.id) }}">{{ piece.name }}</a></td>
+      </tr>
+      {% endfor %}
+   </table>
+   {% else %}
    <br>
    <table>
       <tr>
@@ -13,27 +27,25 @@
       {% for piece in pieces %}
       <tr>
          <td>{{ piece.name }}</td>
-         {% if current_user.is_authenticated %}
-         <td><a href="{{ url_for('pieces_show', piece_id=piece.id) }}">Näytä tiedot</a></td>
-         {% endif %}
       </tr>
       {% endfor %}
    </table>
+   {% endif %}
    <hr>
    {% if pieces_by_style is defined %}
    <h5>Tietokannan kappaleet tyylilajeittain</h5>
    <br>
    <table>
       <tr>
-         <th>Tyylilaji</th>
-         <th>Kappaleita</th>
-         <th>Minuutteja</th>
+         <th id="left">Tyylilaji</th>
+         <th id="center">Kappaleita</th>
+         <th id="center">Minuutteja</th>
       </tr>
       {% for entry in pieces_by_style %}
       <tr>
-         <td>{{ entry.style }}<td>
-         <td>{{ entry.pieces }}</td>
-         <td>{{ entry.minutes }}</td>
+         <td id="left">{{ entry.style }}</td>
+         <td id="center">{{ entry.pieces }}</td>
+         <td id="center">{{ entry.minutes }}</td>
       </tr>
       {% endfor %}
    </table>

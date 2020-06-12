@@ -5,14 +5,25 @@
    <h2>Säveltäjät</h2>
    <hr>
    <h5>Kaikki tietokannassa olevat säveltäjät</h5>
+   {% if current_user.is_authenticated %}
+   <p><em>Klikkaa nimeä nähdäksesi lisätiedot!</em></p>
+   <br>
+   <table>
+      {% for composer in composers %}
+      <tr>
+         <td><a href="{{ url_for('composers_show', composer_id=composer.id) }}">{{ composer.name }}</a></td>
+      </tr>
+      {% endfor %}
+   </table>
+   {% else %}
    <br>
    <table>
       {% for composer in composers %}
       <tr>
          <td>{{ composer.name }}</td>
-         <td><a href="{{ url_for('composers_show', composer_id=composer.id) }}">Näytä tiedot</a></td>
       </tr>
       {% endfor %}
    </table>
+   {% endif %}
 </div>
 {% endblock %}

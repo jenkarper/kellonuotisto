@@ -1,0 +1,9 @@
+table, th, td {
+   padding: 15px;
+   height: 50px;
+}
+
+#left { text-align: left; }
+#center { text-align: center; }
+tr:hover {background-color: #ddd;}
+
