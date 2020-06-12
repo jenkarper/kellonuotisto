@@ -6,11 +6,13 @@
 
 **SQL-kyselyt:**
 
+```sql
 SELECT * FROM Piece ORDER BY Piece.name
 
 SELECT * FROM Composer ORDER BY Composer.name
 
 SELECT * FROM Arranger ORDER BY Arranger.name
+```
 
 ## Käyttäjä
 
@@ -29,15 +31,32 @@ SELECT * FROM Arranger ORDER BY Arranger.name
 **SQL-kyselyt:**
 - Pääavaimen hakeminen viiteavaimen lisäämistä varten:
 
+   ```sql
    SELECT id FROM Composer WHERE name = 'nimi';
+   ```
    
 - Rivin lisääminen:
 
-   INSERT INTO Piece (name, octaves, length, composer_id, arranger_id, style_id) VALUES ('nimi', 'oktaavit', 3, 3, 7, 1);
+  ```sql
+  INSERT INTO Piece (name, octaves, length, composer_id, arranger_id, style_id)
+  VALUES ('nimi', 'oktaavit', 3, 3, 7, 1);
+  ```
    
 - Erikoistekniikan lisääminen kappaleeseen:
 
-   INSERT INTO PieceTechnique (piece_id, technique_id) VALUES (3, 5);
+   ```sql
+   INSERT INTO PieceTechnique (piece_id, technique_id)
+   VALUES (3, 5);
+   ```
+- Tyylilajien kappalemäärät ja raakaminuutit:
+
+   ```sql
+   SELECT Style.name, COUNT(*), SUM(length)
+   FROM Piece
+   LEFT JOIN Style ON Style.id = Piece.style_id
+   GROUP BY Style.name
+   ORDER BY Style.name
+   ```
 
 ## Pääkäyttäjä
 
@@ -47,18 +66,29 @@ SELECT * FROM Arranger ORDER BY Arranger.name
 
 - Pääkäyttäjä voi luoda uusia Käyttäjiä.
 
-   SQL: INSERT INTO Account (name, username, password_hash, role) VALUES ('Uusi nimi', 'käyttäjänimi', 'salasana', 'REGULAR');
+   ```sql
+   SQL: INSERT INTO Account (name, username, password_hash, role)
+   VALUES ('Uusi nimi', 'käyttäjänimi', 'salasana', 'REGULAR');
+   ```
    
 - Pääkäyttäjä voi tarkastella listaa sovelluksen Käyttäjistä (nimiä ja käyttäjänimiä) (SQL kuten muissakin listauksissa).
 - Pääkäyttäjä voi poistaa rivejä kaikista tietokantatauluista.
 
+   ```sql
    DELETE FROM Piece WHERE id = 3;
+   ```
    
 - Pääkäyttäjä voi lisätä uuden konsertin ja liittää sen kappaleeseen (SQL kuten erikoistekniikan lisäämisessä). *(konsertin liittäminen kappaleeseen ei tällä hetkellä toimi!)*
 - Pääkäyttäjä voi lisätä uuden muistiinpanon ja liittää sen kappaleeseen.
 
-   SQL: INSERT INTO Note (comment, user_id, piece_id, piece_name) VALUES ('muistiinpano', 3, 5, 'Kappaleen nimi');
+   ```sql
+   SQL: INSERT INTO Note (comment, user_id, piece_id, piece_name)
+   VALUES ('muistiinpano', 3, 5, 'Kappaleen nimi');
+   ```
    
 - Pääkäyttäjä voi tarkastella omia muistiinpanojaan.
    
-   SQL: SELECT * FROM Note WHERE user_id = current_user.id;
+   ```sql
+   SQL: SELECT * FROM Note
+   WHERE user_id = current_user.id;
+   ```
