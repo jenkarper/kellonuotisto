@@ -126,8 +126,12 @@ def pieces_create():
     length = request.form["length"]
 
     # tarkistetaan, valitaanko säveltäjä listasta vai luodaanko uusi
+    #global composer
     composer = request.form.get("composer_list")
+    
     if composer is None:
+        print("TARKISTUS!!!")
+        print(request.form.get("composer_new"))
         composer = Composer(request.form["composer_new"])
         db.session().add(composer)
         db.session().flush()
