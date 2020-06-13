@@ -7,3 +7,11 @@ table, th, td {
 #center { text-align: center; }
 tr:hover {background-color: #ddd;}
 
+.front_page {
+   text-align: center;
+   font-style: oblique;
+   font-weight: bold;
+   font-family: Garamond, serif;
+   font-size: 40px;
+}
+
