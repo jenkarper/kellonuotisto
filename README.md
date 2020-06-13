@@ -65,13 +65,17 @@ Kellonuotisto on käytettävissä myös Heroku-pilvipalvelussa. Pääset sinne k
 
 4. **Tietokannassa olevan tiedon muokkaaminen.** Tavallisena käyttäjänä voit muokata tietokannassa jo olevaa tietoa. Kappaleiden, säveltäjien ja sovittajien tietojen muokkaamiseen pääset yksittäisen tietueen tiedot näyttävältä sivulta "Muokkaa"-linkistä. Muuta haluamasi kohdan tietoja ja paina `Päivitä`.
 
-5. **Tiedon lisääminen tietokantaan.** *Tulossa.*
+5. **Tiedon lisääminen tietokantaan.** Tiedon lisääminen tietokantaan vaatii aina kirjautumisen. Joidenkin tietojen lisäämiseen vaaditaan lisäksi pääkäyttäjän oikeudet. Tiedon lisääminen tehdään navigointipalkin kohdasta "Lisää musiikkia". Tavallisena käyttäjänä voit lisätä tästä kohdasta uuden kappaleen klikkaamalla "Lisää kappale". Syötä aukeavaan lomakkeeseen pyydetyt tiedot niille varattuihin kenttiin. Mitään kenttää ei voi jättää tyhjäksi. Voit valita kappaleelle säveltäjän, sovittajan ja tyylilajin lomakkeen valikoista, tai jos oikeaa tietoa ei vielä ole tietokannassa, voit kirjoittaa uuden nimen kunkin valikon alla olevaan tekstikenttään. Paina lopuksi "Lisää". Huom! Säveltäjiä, sovittajia tai tyylilajeja ei voi lisätä tietokantaan erikseen, vaan ne lisätään aina kappaleen lisäyksen yhteydessä.
 
+   Pääkäyttäjänä voit kappaleen lisäämisen ohella lisätä myös konsertteja. Konsertin lisäyslomakkeeseen pääset samasta navigointipalkin kohdasta kuin kappaleen lisäämiseen klikkaamalla "Lisää konsertti". Täytä lomakkeen kentät pyydetyssä muodossa ja paina lopuksi "Lisää". Konsertin liittäminen yksittäiseen kappaleeseen tehdään kyseisen kappaleen näyttösivulla.
+   
+   YKSITTÄISEEN KAPPALEESEEN LIITTYVÄN LISÄTIEDON LISÄÄMINEN: uuden kappaleen lisäyslomakkeella syötettävien pakollisten tietojen lisäksi kappaleisiin voidaan liittää yksi tai useampi erikoistekniikka, yksi tai useampi konsertti sekä yksi tai useampi muistiinpano. Näistä erikoistekniikan lisääminen on sekä pääkäyttäjän että tavallisen käyttäjän tehtävissä, mutta vain pääkäyttäjä voi liittää kappaleeseen konsertin tai muistiinpanon. Lisätiedot liitetään kappaleeseen sen näyttösivulla luetelluista asianmukaisista linkeistä.
+   
 6. **Tiedon poistaminen tietokannasta.** Vain pääkäyttäjä voi poistaa tietoa tietokannasta. Myös tiedon poistamistoiminnallisuuteen pääset yksittäisen tietueen tiedot näyttävältä sivulta linkistä "Poista koko rivi".
 
-7. **Omien tietojen tarkastelu ja salasanan vaihtaminen.** *Tulossa.*
+7. **Omien tietojen tarkastelu ja salasanan vaihtaminen.** Kirjautuneena käyttäjänä voit tarkastella omia tietojasi ja vaihtaa salasanasi navigointipalkin kohdasta "Omat tiedot". Tavallinen käyttäjä näkee nimen ja käyttäjätunnuksen, joilla on rekisteröityneenä palveluun. Pääkäyttäjä näkee lisäksi listan omista muistiinpanoistaan.
 
-8. **Uuden käyttäjän luominen ja käyttäjien listaus.** *Tulossa.*
+8. **Uuden käyttäjän luominen ja käyttäjien listaus.** Pääkäyttäjä voi tarkastella kaikkien tietokannassa olevien käyttäjien nimiä ja käyttäjätunnuksia. Listaus löytyy navigointipalkin kohdasta "Omat tiedot" -> "Listaa käyttäjät". Samasta valikosta löytyy myös linkki uuden käyttäjän luovaan lomakkeeseen ("Luo uusi käyttäjä"). Uudelle käyttäjälle voi antaa joko tavallisen käyttäjän oikeudet tai pääkäyttäjän oikeudet. Syötä pyydetyt tiedot lomakkeeseen ja paina lopuksi "Luo tunnus".
 
 ## LINKIT
 
