@@ -15,7 +15,7 @@
       </tr>
       {% for user in users %}
       <tr>
-         <td>{{ user.name }}<td>
+         <td>{{ user.name }}</td>
          <td>{{ user.username }}</td>
          <td>{{ user.role }}</td>
          <td><a href="{{ url_for('auth_delete', user_id=user.id) }}">Poista käyttäjä tietokannasta</a>
