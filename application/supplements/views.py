@@ -9,7 +9,8 @@ from application.supplements.forms import DeleteForm, EditForm, TechniqueForm
 # Palauttaa listanäkymän sovittajista
 @app.route("/arrangers", methods=["GET"])
 def arrangers_index():
-    return render_template("arrangers/list.html", arrangers = Arranger.query.all())
+    arrangers = db.session.query(Arranger).order_by(Arranger.name)
+    return render_template("arrangers/list.html", arrangers = arrangers)
 
 # Näyttää yhden sovittajan tiedot
 @app.route("/arrrangers/<arranger_id>/")
@@ -62,7 +63,8 @@ def arrangers_delete(arranger_id):
 # COMPOSERS
 @app.route("/composers/", methods=["GET"])
 def composers_index():
-    return render_template("composers/list.html", composers = Composer.query.all(), form = EditForm)
+    composers = db.session.query(Composer).order_by(Composer.name)
+    return render_template("composers/list.html", composers = composers, form = EditForm)
 
 @app.route("/composers/<composer_id>/")
 def composers_show(composer_id):
@@ -112,7 +114,8 @@ def composers_delete(composer_id):
 # STYLES
 @app.route("/styles", methods=["GET"])
 def styles_index():
-    return render_template("styles/list.html", styles = Style.query.all())
+    styles = db.session.query(Style).order_by(Style.name)
+    return render_template("styles/list.html", styles = styles)
 
 @app.route("/styles/edit/<style_id>", methods=["GET", "POST"])
 @login_required
@@ -155,7 +158,8 @@ def styles_delete(style_id):
 # TECHNIQUES
 @app.route("/techniques", methods=["GET"])
 def techniques_index():
-    return render_template("techniques/list.html", techniques = Technique.query.all())
+    techniques = db.session.query(Technique).order_by(Technique.name)
+    return render_template("techniques/list.html", techniques = techniques)
 
 @app.route("/pieces/techniques/<piece_id>", methods=["GET", "POST"])
 @login_required
