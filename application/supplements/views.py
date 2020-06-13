@@ -52,7 +52,7 @@ def arrangers_delete(arranger_id):
 
     for piece in a.pieces:
         if piece.arranger_id == a.id:
-            return "This arranger is referred to in another table and cannot be deleted!"
+            return render_template("failure.html")
     
     db.session().delete(a)
     db.session().commit()
@@ -102,7 +102,7 @@ def composers_delete(composer_id):
 
     for piece in c.pieces:
         if piece.composer_id == c.id:
-            return "This composer is referred to in another table and cannot be deleted!"
+            return render_template("failure.html")
     
     db.session().delete(c)
     db.session().commit()
@@ -136,20 +136,18 @@ def styles_edit(style_id):
 @app.route("/styles/delete/<style_id>", methods=["GET", "POST"])
 @login_required(role="ADMIN")
 def styles_delete(style_id):
+    style = Style.query.get(style_id)
 
     if request.method == "GET":
-        style = Style.query.get(style_id)
         return render_template("styles/delete.html", form = DeleteForm(), style_id = style_id, style = style)
 
     form = DeleteForm(request.form)
-
-    s = Style.query.get(style_id)
-
-    for piece in s.pieces:
-        if piece.style_id == s.id:
-            return "This style is referred to in another table and cannot be deleted!"
-    
-    db.session().delete(s)
+    # Toteutin tyylilajin poistamisen ensin samalla tavoin kuin säveltäjän ja sovittajan, mutta se ei jostain syystä toiminut...?
+    pieces = Piece.find_piece_by_style(style_id)
+    if len(pieces) != 0:
+        return render_template("failure.html")
+  
+    db.session().delete(style)
     db.session().commit()
 
     return render_template("success.html")
@@ -233,11 +231,8 @@ def techniques_delete(technique_id):
 
     t = Technique.query.get(technique_id)
 
-    for piece in t.pieces:
-        print(piece.name)
-
     if t.pieces is not None:
-        return "This technique is referred to in another table and cannot be deleted!"
+        return render_template("failure.html")
     
     db.session().delete(t)
     db.session().commit()

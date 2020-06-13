@@ -11,13 +11,9 @@ from application.supplements.models import Composer, Arranger, Style, Technique
 from application.auth.models import Note
 from application.concerts.models import Concert
 
-#import os
-
 # Näyttää tietokannassa olevat kappaleet listana
 @app.route("/pieces", methods = ["GET"])
 def pieces_index():
-    #print("TARKISTUS!")
-    #print(os.path.dirname(__file__))
     pieces = db.session.query(Piece).order_by(Piece.name)
     return render_template("pieces/list.html", pieces = pieces, pieces_by_style = Piece.count_pieces_by_style())
 
@@ -42,7 +38,7 @@ def pieces_notes(piece_id):
     piece = Piece.query.get(piece_id)
     return render_template("notes/new.html", form = NoteForm(), piece = piece, piece_id = piece_id)
 
-# Liittää olemassaolevan konsertin kappaleeseen (ei toimi tällä hetkellä!!!)
+# Liittää olemassaolevan konsertin kappaleeseen
 @app.route("/pieces/concerts/<piece_id>", methods = ["GET", "POST"])
 @login_required(role="ADMIN")
 def pieces_concerts(piece_id):
@@ -56,9 +52,8 @@ def pieces_concerts(piece_id):
     concert_name = request.form["concert_listed"]
     concert = Concert.query.filter_by(name=concert_name).first()
 
-    # oikea konsertti löytyy tietokannasta, mutta seuraava komento ei lisää sitä kappaleeseen
-
     piece.concerts.append(concert)
+    db.session().commit()
 
     return redirect(url_for("pieces_show", piece_id=piece_id))
 
@@ -126,7 +121,6 @@ def pieces_create():
     length = request.form["length"]
 
     # tarkistetaan, valitaanko säveltäjä listasta vai luodaanko uusi
-    #global composer
     composer = request.form.get("composer_list")
     
     if composer is None:

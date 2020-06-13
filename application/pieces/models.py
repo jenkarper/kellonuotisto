@@ -32,6 +32,7 @@ class Piece(Base):
                     " LEFT JOIN Style ON Style.id = Piece.style_id"
                     " GROUP BY Style.name"
                     " ORDER BY Style.name")
+
         res = db.engine.execute(stmt)
 
         response = []
@@ -58,3 +59,17 @@ class Piece(Base):
             response.append({"name":row[0], "id":row[1]})
 
         return response
+
+    @staticmethod
+    def find_piece_by_style(style_id):
+        stmt = text ("SELECT Piece.name FROM Piece"
+                     " WHERE Piece.style_id = :style_id").params(style_id=style_id)
+
+        res = db.engine.execute(stmt)
+
+        response = []
+        for row in res:
+            response.append({"name":row[0]})
+
+        return response
+
