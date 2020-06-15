@@ -9,11 +9,6 @@ class TechniqueForm(FlaskForm):
     class Meta:
         csrf = False
 
-    def validate_name(self, name):
-        technique = Technique.query.filter_by(name=name.data).first()
-        if technique is not None:
-            raise ValidationError("Tämän niminen erikoistekniikka on jo tietokannassa.")
-
 class EditForm(FlaskForm):
     newname = StringField("New name", [validators.required(), validators.length(min=3, max=50)])
 

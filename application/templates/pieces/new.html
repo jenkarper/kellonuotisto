@@ -41,9 +41,9 @@
          </span>
          {% endfor %}
       </ul>
-      <div class="autocomplete">
+      <div class="autocomplete form-group">
          <label for="composer">Säveltäjä:</label>
-         <input id="composer" type="text" name="composer" placeholder="Syötä säveltäjän nimi...">
+         <input type="text" class="form-control" id="composer" name="composer" placeholder="Syötä säveltäjän nimi...">
       </div>
       <ul>
          {% for error in form.composer.errors %}
@@ -52,9 +52,9 @@
          </span>
          {% endfor %}
       </ul>
-      <div class="autocomplete">
+      <div class="autocomplete form-group">
          <label for="arranger">Sovittaja:</label>
-         <input id="arranger" type="text" name="arranger" placeholder="Syötä sovittajan nimi...">
+         <input type="text" class="form-control" id="arranger" name="arranger" placeholder="Syötä sovittajan nimi...">
       </div>
       <ul>
          {% for error in form.arranger.errors %}
@@ -65,7 +65,7 @@
       </ul>
       <div class="autocomplete">
          <label for="style">Tyylilaji:</label>
-         <input id="style" type="text" name="style" placeholder="Syötä tyylilajin nimi...">
+         <input type="text" class="form-control" id="style" name="style" placeholder="Syötä tyylilajin nimi...">
       </div>
       <ul>
          {% for error in form.style.errors %}
@@ -113,31 +113,6 @@ function autocomplete(inp, arr) {
               closeAllLists();
           });
           a.appendChild(b);
-        }
-      }
-  });
-  /*execute a function presses a key on the keyboard:*/
-  inp.addEventListener("keydown", function(e) {
-      var x = document.getElementById(this.id + "autocomplete-list");
-      if (x) x = x.getElementsByTagName("div");
-      if (e.keyCode == 40) {
-        /*If the arrow DOWN key is pressed,
-        increase the currentFocus variable:*/
-        currentFocus++;
-        /*and and make the current item more visible:*/
-        addActive(x);
-      } else if (e.keyCode == 38) { //up
-        /*If the arrow UP key is pressed,
-        decrease the currentFocus variable:*/
-        currentFocus--;
-        /*and and make the current item more visible:*/
-        addActive(x);
-      } else if (e.keyCode == 13) {
-        /*If the ENTER key is pressed, prevent the form from being submitted,*/
-        e.preventDefault();
-        if (currentFocus > -1) {
-          /*and simulate a click on the "active" item:*/
-          if (x) x[currentFocus].click();
         }
       }
   });
