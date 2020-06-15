@@ -29,7 +29,9 @@ def pieces_show(piece_id):
 @login_required
 def pieces_techniques(piece_id):
     piece = Piece.query.get(piece_id)
-    return render_template("techniques/new.html", form = TechniqueForm(), piece = piece, piece_id = piece_id)
+    techniques = db.session().query(Technique).order_by(Technique.name)
+    technique_names = [t.name for t in techniques]
+    return render_template("techniques/new.html", form = TechniqueForm(), piece = piece, piece_id = piece_id, techniques = technique_names)
 
 # Palauttaa muistiinpanon lisäyslomakkeen
 @app.route("/pieces/notes/<piece_id>/")

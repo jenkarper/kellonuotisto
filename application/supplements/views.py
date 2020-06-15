@@ -167,23 +167,23 @@ def techniques_index():
 def techniques_create(piece_id):
     piece = Piece.query.get(piece_id)
     techniques = db.session.query(Technique).order_by(Technique.name) # lista muodostuu oikein, mutta lomakkeen listavalikko on tyhjä.
+    technique_names = [t.name for t in techniques]
 
     if request.method == "GET":
-        return render_template("techniques/new.html", form = TechniqueForm(), piece = piece, piece_id = piece_id, techniques = techniques)
+        return render_template("techniques/new.html", form = TechniqueForm(), piece = piece, piece_id = piece_id, techniques = technique_names)
 
     form = TechniqueForm(request.form)
 
     if not form.validate():
-        return render_template("techniques/new.html", form = form, piece = piece, piece_id = piece_id, techniques = techniques)
+        return render_template("techniques/new.html", form = form, piece = piece, piece_id = piece_id, techniques = technique_names)
 
-    # tarkistetaan, valitaanko erikoistekniikka listasta vai luodaanko uusi
-    t = request.form.get("technique_list")
+    # tarkistetaan, onko erikoistekniikka jo tietokannassa vai luodaanko uusi
+
+    t = Technique.query.filter_by(name=request.form.get("name")).first()
     if t is None:
-        t = Technique(request.form["technique_new"])
+        t = Technique(request.form.get("name"))
         db.session().add(t)
         db.session().flush()
-    else:
-       t = Technique.query.filter_by(name=t).first()
 
     piece.techniques.append(t)
     
