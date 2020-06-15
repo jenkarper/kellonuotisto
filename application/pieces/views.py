@@ -100,55 +100,56 @@ def pieces_delete(piece_id):
 @login_required
 def pieces_form():
     composers = db.session.query(Composer).order_by(Composer.name)
+    composer_names = [c.name for c in composers]
     arrangers = db.session.query(Arranger).order_by(Arranger.name)
+    arranger_names = [a.name for a in arrangers]
     styles = db.session.query(Style).order_by(Style.name)
-    return render_template("pieces/new.html", form = PieceForm(), composers = composers, arrangers = arrangers, styles = styles)
+    style_names = [s.name for s in styles]
+
+    return render_template("pieces/new.html", form = PieceForm(), composers = composer_names, arrangers = arranger_names, styles = style_names)
 
 # Lisää uuden kappaleen (tarvittaessa myös säveltäjän, sovittajan ja tyylilajin)
 @app.route("/pieces/", methods = ["POST"])
 @login_required
 def pieces_create():
     composers = db.session.query(Composer).order_by(Composer.name)
+    composer_names = [c.name for c in composers]
     arrangers = db.session.query(Arranger).order_by(Arranger.name)
+    arranger_names = [a.name for a in arrangers]
     styles = db.session.query(Style).order_by(Style.name)
+    style_names = [s.name for s in styles]
     form = PieceForm(request.form)
 
     if not form.validate():
-        return render_template("pieces/new.html", form = form, composers = composers, arrangers = arrangers, styles = styles)
+        return render_template("pieces/new.html", form = form, composers = composer_names, arrangers = arranger_names, styles = style_names)
 
     name = request.form["name"]
     octaves = request.form["octaves"]
     length = request.form["length"]
 
-    # tarkistetaan, valitaanko säveltäjä listasta vai luodaanko uusi
-    composer = request.form.get("composer_list")
-    
+    # tarkistetaan, onko säveltäjä jo tietokannassa vai luodaanko uusi
+
+    composer = Composer.query.filter_by(name=request.form.get("composer")).first()
     if composer is None:
-        print("TARKISTUS!!!")
-        print(request.form.get("composer_new"))
-        composer = Composer(request.form["composer_new"])
+        composer = Composer(request.form.get("composer"))
         db.session().add(composer)
         db.session().flush()
-    else:
-        composer = Composer.query.filter_by(name=composer).first()
 
-    # tarkistetaan, valitaanko sovittaja listasta vai luodaanko uusi
-    arranger = request.form.get("arranger_list")
+    # tarkistetaan, onko sovittaja jo tietokannassa vai luodaanko uusi
+
+    arranger = Arranger.query.filter_by(name=request.form.get("arranger")).first()
     if arranger is None:
-        arranger = Arranger(request.form["arranger_new"])
+        arranger = Arranger(request.form.get("arranger"))
         db.session().add(arranger)
         db.session().flush()
-    else:
-        arranger = Arranger.query.filter_by(name=arranger).first()
 
-    # tarkistetaan, valitaanko tyylilaji listasta vai luodaanko uusi
-    style = request.form.get("style_list")
+    # tarkistetaan, onko tyylilaji jo tietokannassa vai luodaanko uusi
+
+    style = Style.query.filter_by(name=request.form.get("style")).first()
     if style is None:
-        style = Style(request.form["style_new"])
+        style = Style(request.form.get("style"))
         db.session().add(style)
         db.session().flush()
-    else:
-        style = Style.query.filter_by(name=style).first()
 
     # luodaan uusi rivi tauluun Piece
     p = Piece(name, octaves, length, composer.id, arranger.id, style.id)

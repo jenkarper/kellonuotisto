@@ -161,11 +161,12 @@ def techniques_index():
     techniques = db.session.query(Technique).order_by(Technique.name)
     return render_template("techniques/list.html", techniques = techniques)
 
+# Tässä metodissa on ongelmia!
 @app.route("/pieces/techniques/<piece_id>", methods=["GET", "POST"])
 @login_required
 def techniques_create(piece_id):
     piece = Piece.query.get(piece_id)
-    techniques = db.session.query(Technique).order_by(Technique.name)
+    techniques = db.session.query(Technique).order_by(Technique.name) # lista muodostuu oikein, mutta lomakkeen listavalikko on tyhjä.
 
     if request.method == "GET":
         return render_template("techniques/new.html", form = TechniqueForm(), piece = piece, piece_id = piece_id, techniques = techniques)
@@ -175,34 +176,20 @@ def techniques_create(piece_id):
     if not form.validate():
         return render_template("techniques/new.html", form = form, piece = piece, piece_id = piece_id, techniques = techniques)
 
-    technique = request.form["name"]
-    t = Technique(technique)
-
-    # tarkistetaan, onko erikoistekniikka jo tietokannassa
-
-    t = Technique.query.filter_by(name=technique).first()
-
+    # tarkistetaan, valitaanko erikoistekniikka listasta vai luodaanko uusi
+    t = request.form.get("technique_list")
     if t is None:
-        t = Technique(technique)
+        t = Technique(request.form["technique_new"])
         db.session().add(t)
         db.session().flush()
+    else:
+       t = Technique.query.filter_by(name=t).first()
 
     piece.techniques.append(t)
     
     db.session().commit()
 
     return redirect(url_for("pieces_show", piece_id=piece_id))
-
-# Yritin tehdä erikoistekniikan lisäämisen samanlaisen lomakkeen kuin kappaleen lisäyksessä, jossa säveltäjän, sovittajan ja tyylilajin voi valita listasta, mutta siinä on joku vika!
-
-    # tarkistetaan, valitaanko erikoistekniikka listasta vai luodaanko uusi
-    #technique = request.form.get("technique_list")
-    #if technique is None:
-    #    technique = Technique(request.form["technique_new"])
-    #    db.session().add(technique)
-    #    db.session().flush()
-    #else:
-    #   technique = Technique.query.filter_by(name=technique).first()
 
 @app.route("/techniques/edit/<technique_id>", methods=["GET", "POST"])
 @login_required
