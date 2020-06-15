@@ -15,7 +15,14 @@ tr:hover {background-color: #ddd;}
    font-size: 40px;
 }
 
-.update_message {
+.success {
+   text-align: center;
+   font-family: Garamond, serif;
+   font-size: 20px;
+   color: green;
+}
+
+.failure {
    text-align: center;
    font-family: Garamond, serif;
    font-size: 20px;
