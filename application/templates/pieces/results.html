@@ -3,21 +3,16 @@
 <div class="mx-auto" style="width:800px;">
    <h3>Hakutulokset</h3>
    <hr>
-   {% if pieces is defined %}
-   <h5>Hakusanalla <i>{{ word }}</i> tietokannasta löytyivät seuraavat kappaleet:</h5>
+   {% if pieces is defined and pieces|length > 0 %}
+   <p>Hakusanalla <i>{{ word }}</i> tietokannasta löytyivät seuraavat kappaleet:</p>
    <br>
    <table>
       <tr>
          <th>Nimi</th>
-         <th>Tunniste</th>
       </tr>
       {% for entry in pieces %}
       <tr>
-         <td>{{ entry.name }}</td>
-         <td>{{ entry.id }}</td>
-         {% if current_user.is_authenticated %}
-         <td><a href="{{ url_for('pieces_show', piece_id=entry.id) }}">Näytä tiedot</a></td>
-         {% endif %}
+         <td><a href="{{ url_for('pieces_show', piece_id=entry.id) }}">{{ entry.name }}</a></td>
       </tr>
       {% endfor %}
    </table>
