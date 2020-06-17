@@ -1,8 +1,9 @@
 from application.concerts.models import Concert
 
 from flask_wtf import FlaskForm
-from wtforms import DateField, IntegerField, StringField, validators
-from wtforms.validators import ValidationError
+from wtforms import IntegerField, StringField, validators
+from wtforms.validators import ValidationError, InputRequired
+from datetime import date
 
 class ConcertForm(FlaskForm):
     name = StringField("Concert name", [validators.required(), validators.length(min=5, max=50)])

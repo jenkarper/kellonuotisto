@@ -75,3 +75,16 @@ class Note(db.Model):
 
         return response
 
+    @staticmethod
+    def order_notes_by_piece(user_id):
+        stmt = text(" SELECT comment, piece_name, date_created FROM Note"
+                    " WHERE user_id = :user_id"
+                    " ORDER BY piece_name, date_created").params(user_id=user_id)
+
+        res = db.engine.execute(stmt)
+
+        response = []
+        for row in res:
+            response.append({"comment":row[0], "piece":row[1], "created":row[2]})
+
+        return response

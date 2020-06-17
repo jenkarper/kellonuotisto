@@ -99,7 +99,7 @@ def auth_delete(user_id):
 @app.route("/notes", methods=["GET"])
 @login_required(role="ADMIN")
 def notes_index():
-    notes = Note.query.filter_by(user_id=current_user.id)
+    notes = Note.order_notes_by_piece(current_user.id)
     return render_template("notes/list.html", notes = notes, user = current_user)
 
 @app.route("/pieces/notes/<piece_id>", methods=["GET", "POST"])

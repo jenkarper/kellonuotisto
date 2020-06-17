@@ -9,10 +9,12 @@
    <table>
       <tr>
          <th>Konsertti</th>
+         <th>Kappaleita ohjelmistossa</th>
       </tr>
       {% for concert in concerts %}
       <tr>
          <td><a href="{{ url_for('concerts_show', concert_id=concert.id) }}">{{ concert.name }}</a></td>
+         <td align="center">{{ concert.pieces }} </td>
       </tr>
       {% endfor %}
    </table>

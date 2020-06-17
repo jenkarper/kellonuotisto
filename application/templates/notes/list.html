@@ -8,8 +8,8 @@
    <p>Käyttäjä: {{  user.name  }}</p>
    <br>
       {% for note in notes %}
-      <p><i>Muistiinpano luotu: {{ note.date_created }}</i></p>
-      <p><i>Kappale: <b>{{  note.piece_name  }}</b></i></p>
+      <p><strong>{{  note.piece  }}</strong></p>
+      <p><em>Muistiinpano luotu: {{ note.created }}</em></p>
       <p>{{ note.comment }}</p>
       <hr>
       {% endfor %}

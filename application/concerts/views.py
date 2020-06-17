@@ -10,7 +10,7 @@ from application.supplements.forms import DeleteForm
 @app.route("/concerts", methods=["GET"])
 @login_required
 def concerts_index():
-    concerts = db.session.query(Concert).order_by(Concert.date)
+    concerts = Concert.list_concerts()
     return render_template("concerts/list.html", concerts = concerts)
 
 @app.route("/concerts/<concert_id>/")
@@ -33,13 +33,13 @@ def concerts_create():
     if not form.validate():
         return render_template("concerts/new.html", form = form)
 
-    name = form.name.data
-    venue = form.venue.data
-    date = form.date.data
+    name = request.form["name"]
+    venue = request.form["venue"]
+    date = request.form["date"]
 
-    c = Concert(name, venue, date)
+    concert = Concert(name, venue, date)
 
-    db.session().add(c)
+    db.session().add(concert)
     db.session().commit()
   
     return redirect(url_for("concerts_index"))
