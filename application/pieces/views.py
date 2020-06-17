@@ -51,6 +51,10 @@ def pieces_concerts(piece_id):
         return render_template("pieces/concerts.html", form = ProgrammeForm(), piece = piece, concerts = concerts)
 
     form = ProgrammeForm(request.form)
+
+    if not form.validate():
+        return render_template("pieces/concerts.html", form = form, piece = piece, concerts = concerts)
+
     concert_name = request.form["concert_listed"]
     concert = Concert.query.filter_by(name=concert_name).first()
 
@@ -69,6 +73,10 @@ def pieces_edit(piece_id):
         return render_template("pieces/edit.html", form = EditForm(), piece = piece, piece_id = piece_id)
 
     form = EditForm(request.form)
+
+    if not form.validate():
+        return render_template("pieces/edit.html", form = form, piece = piece, piece_id = piece_id)
+
     newname = request.form["newname"]
     newoctaves = request.form["newoctaves"]
     newlength = request.form["newlength"]

@@ -14,7 +14,9 @@
       </div>
       <ul>
          {% for error in form.newname.errors %}
+         <span style="color: red;">
          <li>{{ error }}</li>
+         </span>
          {% endfor %}
       </ul>
       <div class ="form-group">
@@ -23,7 +25,9 @@
       </div>
       <ul>
          {% for error in form.newoctaves.errors %}
+         <span style="color: red;">
          <li>{{ error }}</li>
+         </span>
          {% endfor %}
       </ul>
       <div class ="form-group">
@@ -32,7 +36,9 @@
       </div>
       <ul>
          {% for error in form.newlength.errors %}
+         <span style="color: red;">
          <li>{{ error }}</li>
+         </span>
          {% endfor %}
       </ul>
       <button type="submit" class="btn btn-primary">Päivitä</button>

@@ -23,7 +23,7 @@ class PieceForm(FlaskForm):
         if piece is not None:
             raise ValidationError("Tämän niminen kappale on jo tietokannassa.")
 
-# rivin muokkaus (kesken)
+# rivin muokkaus
 class EditForm(FlaskForm):
     newname = StringField("Piece name", [validators.required(), validators.length(min=5, max=50)])
     newoctaves = StringField("Used octaves", [validators.required(), validators.length(min=1, max=20)])
@@ -45,7 +45,7 @@ class DeleteForm(FlaskForm):
 
 # konsertin lisäys
 class ProgrammeForm(FlaskForm):
-    concert_listed = StringField("Concert name")
+    concert_listed = StringField("Concert name", [validators.required(), validators.length(min=5, max=50)])
 
     class Meta:
         csrf = False

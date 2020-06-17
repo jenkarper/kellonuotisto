@@ -10,12 +10,18 @@
       <div class="form-group">
          <label for="style_list">Valitse tietokannassa olevista konserteista:</label>
          <select multiple class="form-control" id="concert_listed" name="concert_listed">
-            <option selected>Valitse...</option>
             {% for concert in concerts %}
             <option name="{{  concert.name }}">{{  concert.name  }}</option>
             {% endfor %}
          </select>
       </div>
+      <ul>
+         {% for error in form.concert_listed.errors %}
+         <span style="color: red;">
+         <li>{{ error }}</li>
+         </span>
+         {% endfor %}
+      </ul>
       <button type="submit" class="btn btn-primary">Lisää</button>
    </form>
    <br>
