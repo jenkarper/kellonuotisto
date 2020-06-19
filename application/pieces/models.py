@@ -47,10 +47,10 @@ class Piece(Base):
                      " JOIN Style ON Style.id = Piece.style_id"
                      " JOIN Composer ON Composer.id = Piece.composer_id"
                      " JOIN Arranger ON Arranger.id = Piece.arranger_id"
-                     " WHERE Piece.name LIKE :word"
-                     " OR Style.name LIKE :word"
-                     " OR Composer.name LIKE :word"
-                     " OR Arranger.name LIKE :word").params(word='%'+word+'%')
+                     " WHERE LOWER(Piece.name) LIKE LOWER(:word)"
+                     " OR LOWER(Style.name) LIKE LOWER(:word)"
+                     " OR LOWER(Composer.name) LIKE LOWER(:word)"
+                     " OR LOWER(Arranger.name) LIKE LOWER(:word)").params(word='%'+word+'%')
 
         res = db.engine.execute(stmt)
 
