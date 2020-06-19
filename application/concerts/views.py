@@ -6,7 +6,6 @@ from application.concerts.models import Concert
 from application.concerts.forms import ConcertForm, EditForm
 from application.supplements.forms import DeleteForm
 
-# CONCERT
 @app.route("/concerts", methods=["GET"])
 @login_required
 def concerts_index():

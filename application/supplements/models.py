@@ -1,6 +1,5 @@
 from application import db
 from application.models import Base
-#from application.pieces.models import Piece
 
 piece_technique = db.Table('piece_technique',
     db.Column('piece_id', db.Integer, db.ForeignKey('piece.id')),

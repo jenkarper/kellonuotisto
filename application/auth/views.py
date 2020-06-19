@@ -38,7 +38,6 @@ def auth_login():
         return render_template("auth/loginform.html", form = LoginForm())
 
     form = LoginForm(request.form)
-    # mahdolliset validoinnit
 
     user = User.query.filter_by(username=request.form["username"], password_hash=request.form["user_password"]).first()
     if not user:

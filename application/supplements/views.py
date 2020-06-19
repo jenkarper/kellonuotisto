@@ -161,12 +161,11 @@ def techniques_index():
     techniques = db.session.query(Technique).order_by(Technique.name)
     return render_template("techniques/list.html", techniques = techniques)
 
-# Tässä metodissa on ongelmia!
 @app.route("/pieces/techniques/<piece_id>", methods=["GET", "POST"])
 @login_required
 def techniques_create(piece_id):
     piece = Piece.query.get(piece_id)
-    techniques = db.session.query(Technique).order_by(Technique.name) # lista muodostuu oikein, mutta lomakkeen listavalikko on tyhjä.
+    techniques = db.session.query(Technique).order_by(Technique.name)
     technique_names = [t.name for t in techniques]
 
     if request.method == "GET":

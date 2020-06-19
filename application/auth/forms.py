@@ -17,7 +17,6 @@ class RegistrationForm(FlaskForm):
     role = StringField("Role", validators=[DataRequired()])
     password = PasswordField("Password", validators=[DataRequired(), validators.length(min=5, max=15)])
     password2 = PasswordField("Repeat password", validators=[DataRequired(), EqualTo("password")])
-    #submit = SubmitField("Register")
 
     def validate_username(self, username):
         user = User.query.filter_by(username=username.data).first()
