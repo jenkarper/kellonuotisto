@@ -26,7 +26,7 @@ Sovelluksen käyttäjää kuvaa taulu User, ja käyttäjän luomaa muistiinpanoa
 
 Tietokantaa on tarkoitus kasvattaa vielä yhdellä taululla Instrument, joka sekin liittyisi kappaletauluun liitostaulun kautta samaan tapaan kuin erikoistekniikka. Instrument kuvaa soolo- tai säestävää soitinta, jota kappaleessa voidaan käsikellojen lisäksi käyttää. Lisäksi kappaletauluun lisätään attribuutti, joka kertoo kappaleen vaatiman minimimäärän soittajia. Sovelluksessa voi sitten suodattaa kappaleita sen perusteella, kuinka monta soittajaa on käytettävissä.
 
-Tietokantaan voisi mahdollisesti lisätä vielä avainsanat, joiden perusteella musiikkia voisi hakea. Avainsanalista voisi jopa korvata tyylilajitaulun, niin että myös tyylilaji liitettäisiin kappaleeseen avainsanana.
+Tietokantaan voisi mahdollisesti lisätä vielä avainsanat, joiden perusteella musiikkia voisi hakea. Avainsanalista voisi jopa korvata tyylilajitaulun, niin että myös tyylilaji liitettäisiin kappaleeseen avainsanana. Avainsanoja varten tarvittaisiin tällöin oma tietokantataulu, ja sen ja Piece-taulun väliin tarvittaisiin uusi liitostaulu.
 
 ## TOIMINNALLISUUDET
 
@@ -35,6 +35,14 @@ Ohjelmaan voi kirjautua tavallisena käyttäjänä tai pääkäyttäjänä. Tava
 ## ASENNUS JA KÄYTTÖ
 
 Sovelluksen voi asentaa paikallisesti omalle koneelle tai Heroku-pilvipalveluun ([ohjeet](documentation/kayttoohje.md) asennukseen ja käyttöön).
+
+## PUUTTEET
+
+Tietokannan Piece-taulussa rivejä tulee luultavasti olemaan kaksi tai kolme sataa, joten ainakin päälistausnäkymän sivutus olisi tarpeen. Listausnäkymässä voisi myös olla tarjolla vaihtoehtoisia näkymiä, esimeriksi kappaleiden ryhmittely säveltäjän tai sovittajan mukaan. Myös indeksointi ainakin Piece-taulun pää- ja viiteavaimille voisi olla hyvä lisätä.
+
+Lomakkeissa validointivirheen jälkeen täyttäminen on aloitettava alusta, mikä varsinkin uuden kappaleen lisäyslomakkeessa tuottaa käyttäjälle paljon turhaa vaivaa. Validoinnin voisi tehdä nykyisen ratkaisun sijaan esimerkiksi JavaScriptillä, niin että lomakkeen lähetys ei onnistu, jos joku kentistä on täytetty väärin. Tällöin muu, jo syötetty sisältö säilyisi lomakkeella. Käytettävyyttä parantaisi myös se, että kappaleeseen voisi kerralla lisätä useamman erikoistekniikan, koska niitä kuitenkin yleensä on enemmän kuin yksi.
+
+Concert-taulussa päivämäärät käsitellään tällä hetkellä merkkijonoina. Ne tulisi muuttaa Date-objekteiksi, jotta päivämääräkenttään ei voisi syöttää väärää tietoa: validointi tarkistaa vain syötetyn merkkijonon pituuden.
 
 ## LINKIT
 
