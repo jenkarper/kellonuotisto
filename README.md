@@ -1,3 +1,5 @@
+Tämä repositorio on luotu Helsingin yliopiston kurssille Tietokantasovellus, kesä 2020.
+
 # KELLONUOTISTO
 ## AIHEKUVAUS
 
