@@ -1,4 +1,4 @@
-Tämä repositorio on luotu Helsingin yliopiston kurssille Tietokantasovellus, kesä 2020.
+_Tämä repositorio on luotu Helsingin yliopiston kurssille Tietokantasovellus, kesä 2020._
 
 # KELLONUOTISTO
 ## AIHEKUVAUS
